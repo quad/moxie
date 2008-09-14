@@ -1,0 +1,23 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Indent text ala Muxtape
+desc: |-
+  Indenting the text just plain looks better.
+  
+  http://www.mrbrown.com/blog/images/2008/04/10/muxtape3.png
+  
+  Like that.
+type: :bugfix
+component: moxie
+release: "8.10"
+reporter: Scott Robinson <scott@quadhome.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-09-14 23:24:20.133530 Z
+references: []
+
+id: 3736027630cfdaa0b8820be128bd9a1b1f1f2269
+log_events: 
+- - 2008-09-14 23:24:20.763745 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""

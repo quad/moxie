@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: RSS feed with podcast enclosures
+desc: This should be Web 2.0 compatible. An RSS feed with enclosures for podcasting should exist.
+type: :feature
+component: moxie
+release: "8.10"
+reporter: Scott Robinson <scott@quadhome.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-09-14 23:20:44.096372 Z
+references: []
+
+id: 067dba769e08141d59928e99f16bf4df99c6b816
+log_events: 
+- - 2008-09-14 23:20:44.876825 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""

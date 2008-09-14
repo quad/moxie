@@ -1,0 +1,16 @@
+--- !ditz.rubyforge.org,2008-03-06/project 
+name: moxie
+version: "0.5"
+components: 
+- !ditz.rubyforge.org,2008-03-06/component 
+  name: moxie
+releases: 
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: "8.10"
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-09-14 23:13:34.843667 Z
+    - Scott Robinson <scott@quadhome.com>
+    - created
+    - Feature complete, for an incomplete definition of features.

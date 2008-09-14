@@ -1,0 +1,23 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Transcode music for streaming
+desc: |-
+  The music should be transcoded to 128k for streaming purposes.
+  
+  There should be a link to download, with an appropriately edgy text like "TAKE", for downloading the full MP3.
+  
+  Also, the RSS feed should point at the full MP3s.
+type: :feature
+component: moxie
+release: 
+reporter: Scott Robinson <scott@quadhome.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-09-14 23:26:35.966641 Z
+references: []
+
+id: 134801b64e4529da843149cb98ec6645ffa07953
+log_events: 
+- - 2008-09-14 23:26:36.716410 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""
