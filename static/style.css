@@ -1,0 +1,63 @@
+/* Variables */
+
+div#header {
+	color: white;
+	background-color: red;
+}
+
+/* Statics */
+
+body {
+	margin: 0px;
+}
+
+div#header {
+	padding: 1ex 0px;
+}
+
+div#header h1, h2 {
+	margin: 0px;
+}
+
+ul.songs {
+	display: block;
+	margin: 0px;
+	padding: 0px;
+}
+
+li.song {
+	display: block;
+	padding: 0.5ex 0;
+	border-bottom: thin solid #E0E0E0;
+}
+
+li.song:hover {
+	background-color: #F0F0F0;
+}
+
+noscript {
+	display: block;
+	background-color: #FFFA67;
+	margin: 1ex 0px;
+	padding: 0.5ex 0.5em;
+	text-align: center;
+	border: thin dotted black;
+}
+
+/* Fonts */
+
+div#header h1 {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: x-large;
+}
+
+div#header h2 {
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: normal;
+	font-size: medium;
+}
+
+ul.songs {
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-size: xx-large;
+}
