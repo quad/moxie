@@ -1,6 +1,7 @@
 import glob
 import mimetypes
 import os.path
+import shutil
 import sys
 import urlparse
 import xml.etree.ElementTree as ET
@@ -42,22 +43,25 @@ class TrackInfo:
         self.title = short_tags['title'][0]
         self.duration = "%u:%.2d" % (full_tags.info.length / 60, full_tags.info.length % 60)
 
-def tracklist():
+def tracklist(url_root = ''):
     for count, fn in enumerate(files):
         info = TrackInfo(fn)
-        url = urlparse.urljoin(web.ctx.homedomain,
+        url = urlparse.urljoin(url_root,
                                web.net.urlquote(web.http.url(fn)))
 
         yield count, info, url
 
+def cgi_tracklist():
+    return tracklist(web.ctx.homedomain)
+
 class XSPF:
     def GET(self):
         web.header('Content-Type', 'application/xspf+xml')
-        print render.xspf(tracklist())
+        print render.xspf(cgi_tracklist())
 
 class Index:
     def GET(self):
-        print render.index(header, tracklist())
+        print render.index(header, cgi_tracklist())
 
 class Static:
     def leak_file(self, f):
@@ -94,6 +98,16 @@ def cgi():
 
 def static():
     # Generate the templates. (xspf, index)
-    # Copy the music files.
+    templates = {'xspf': render.xspf(tracklist()),
+                 'index.html': render.index(header, tracklist())}
+
+    for fn, data in templates.items():
+        f = file(fn, 'w')
+        f.write(data)
+        f.close()
+
     # Copy all the static files.
-    raise NotImplementedError
+    for fn in pkg_resources.resource_listdir(__name__, 'static'):
+        resource_fn = os.path.join('static', fn)
+        resource = pkg_resources.resource_filename(__name__, resource_fn)
+        shutil.copy(resource, fn)
