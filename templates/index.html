@@ -1,4 +1,4 @@
-$def with (xspf, header, tracklist)
+$def with (header, tracklist)
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="style.css" />
@@ -7,7 +7,7 @@ $def with (xspf, header, tracklist)
 		<script type="text/javascript" src="jquery.timers.js"></script>
 		<script type="text/javascript" src="moxie.js"></script>
 		<script type="text/javascript">
-			swfobject.embedSWF("MusicPlayer.swf", "player", "0", "0", "8.0.0", "expressInstall.swf", {playlist: "$xspf"}, {}, {});
+			swfobject.embedSWF("MusicPlayer.swf", "player", "0", "0", "8.0.0", "expressInstall.swf", {playlist: "xspf"}, {}, {});
 		</script>
 	</head>
 	<body>
