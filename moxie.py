@@ -52,29 +52,30 @@ class Index:
         xspf_url = urlparse.urljoin(web.ctx.homedomain, '/xspf')
         print render.index(xspf_url, tracklist())
 
-def leak_file(f):
-    while True:
-        buf = f.read(16 * 1024)
-        if not buf:
-            break
-        yield buf
-    f.close()
 
 class Static:
+    def leak_file(self, f):
+        while True:
+            buf = f.read(16 * 1024)
+            if not buf:
+                break
+            yield buf
+        f.close()
+
     def GET(self, filename):
         content_type, encoding = mimetypes.guess_type(filename)
         web.header('Content-Type', content_type)
 
         # Serve the music.
         if filename in files:
-            return leak_file(file(filename))
+            return self.leak_file(file(filename))
 
         # Serve the necessities.
         fn_static = os.path.join('static', filename)
 
         if pkg_resources.resource_exists(__name__, fn_static):
             f = pkg_resources.resource_stream(__name__, fn_static)
-            return leak_file(f)
+            return self.leak_file(f)
 
         # Give up.
         return web.notfound()
