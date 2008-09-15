@@ -33,7 +33,7 @@ class TrackInfo:
 
         self.artist = short_tags['artist'][0]
         self.title = short_tags['title'][0]
-        self.duration = "%u:%u" % (full_tags.info.length / 60, full_tags.info.length % 60)
+        self.duration = "%u:%.2d" % (full_tags.info.length / 60, full_tags.info.length % 60)
 
 def tracklist():
     for count, fn in enumerate(files):

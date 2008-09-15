@@ -35,6 +35,12 @@ li.song:hover {
 	background-color: #F0F0F0;
 }
 
+.duration {
+	font-weight:bold;
+	margin-left:5px;
+	font-size:80%;
+}
+
 noscript {
 	display: block;
 	background-color: #FFFA67;
