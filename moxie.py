@@ -1,8 +1,9 @@
 import glob
+import mimetypes
 import os.path
 import sys
-import xml.etree.ElementTree as ET
 import urlparse
+import xml.etree.ElementTree as ET
 
 import pkg_resources
 
@@ -61,6 +62,9 @@ def leak_file(f):
 
 class Static:
     def GET(self, filename):
+        content_type, encoding = mimetypes.guess_type(filename)
+        web.header('Content-Type', content_type)
+
         # Serve the music.
         if filename in files:
             return leak_file(file(filename))
