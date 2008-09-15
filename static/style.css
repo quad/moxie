@@ -16,7 +16,7 @@ div#header {
 }
 
 div#header h1, h2 {
-	margin: 0px;
+	margin: 0px 13px;
 }
 
 ul.songs {
@@ -27,7 +27,7 @@ ul.songs {
 
 li.song {
 	display: block;
-	padding: 0.5ex 0;
+	padding: 0.5ex 0.9ex;
 	border-bottom: thin solid #E0E0E0;
 }
 
