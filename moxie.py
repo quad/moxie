@@ -87,8 +87,14 @@ class Static:
         # Give up.
         return web.notfound()
 
-def main():
+def cgi():
     urls = ('/xspf', 'XSPF',
             '/', 'Index',
             '/(.*)', 'Static',)
     web.run(urls, globals())
+
+def static():
+    # Generate the templates. (xspf, index)
+    # Copy the music files.
+    # Copy all the static files.
+    raise NotImplementedError

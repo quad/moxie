@@ -19,7 +19,8 @@ setup(
 
     entry_points = {
         'console_scripts': [
-            'moxie = moxie:main',
+            'moxie-cgi = moxie:cgi',
+            'moxie-static = moxie:static',
         ]
     },
 
