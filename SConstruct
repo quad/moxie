@@ -1,6 +1,6 @@
 debug = ARGUMENTS.get('debug', 0)
 
-mtasc_options = ['-strict', '-header 0:0:0', '-version 8', '-main']
+mtasc_options = ['-strict', '-header 0:0:0', '-version 8', '-main', '-cp src/']
 
 if debug:
   mtasc_options.append('-trace MusicPlayer.log')

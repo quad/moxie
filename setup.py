@@ -3,14 +3,24 @@
 from setuptools import setup, find_packages
 
 setup(
-  name = 'moxie',
-  version = '0.1',
-  packages = find_packages(),
+    name = 'moxie',
+    version = '8.10',
 
-  install_requires = [
-    'web.py >= 0.23',
-    'mutagen >= 1.11',
-  ],
+    packages = find_packages(),
+    package_data = {
+        '': ['templates/*', 'static/*'],
+    },
 
-  test_suite = 'nose.collector'
+    install_requires = [
+        'web.py >= 0.22',
+        'mutagen >= 1.11',
+    ],
+
+    entry_points = {
+        'console_scripts': [
+            'moxie = moxie:main',
+        ]
+    },
+
+    test_suite = 'nose.collector',
 )

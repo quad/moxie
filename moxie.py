@@ -1,20 +1,18 @@
-#!/usr/bin/env python
-
 import glob
 import os.path
 import sys
 import xml.etree.ElementTree as ET
 import urlparse
 
+import pkg_resources
+
 import web
 import mutagen
 import mutagen.id3
 import mutagen.easyid3
 
-path = 'static/'
-
-files = sorted(glob.glob(os.path.join(path, '*.mp3')))
-render = web.template.render('templates/')
+files = sorted(glob.glob('*.mp3'))
+render = web.template.render(pkg_resources.resource_filename(__name__, 'templates/'))
 
 class TrackInfo:
     def __init__(self, filename):
@@ -38,7 +36,8 @@ class TrackInfo:
 def tracklist():
     for count, fn in enumerate(files):
         info = TrackInfo(fn)
-        url = urlparse.urljoin(web.ctx.homedomain, web.net.urlquote(web.http.url(fn)))
+        url = urlparse.urljoin(web.ctx.homedomain,
+                               web.net.urlquote(web.http.url(fn)))
 
         yield count, info, url
 
@@ -52,7 +51,32 @@ class Index:
         xspf_url = urlparse.urljoin(web.ctx.homedomain, '/xspf')
         print render.index(xspf_url, tracklist())
 
-if __name__ == '__main__':
+def leak_file(f):
+    while True:
+        buf = f.read(16 * 1024)
+        if not buf:
+            break
+        yield buf
+    f.close()
+
+class Static:
+    def GET(self, filename):
+        # Serve the music.
+        if filename in files:
+            return leak_file(file(filename))
+
+        # Serve the necessities.
+        fn_static = os.path.join('static', filename)
+
+        if pkg_resources.resource_exists(__name__, fn_static):
+            f = pkg_resources.resource_stream(__name__, fn_static)
+            return leak_file(f)
+
+        # Give up.
+        return web.notfound()
+
+def main():
     urls = ('/xspf', 'XSPF',
-            '/', 'Index',)
-    web.run(urls, locals())
+            '/', 'Index',
+            '/(.*)', 'Static',)
+    web.run(urls, globals())
