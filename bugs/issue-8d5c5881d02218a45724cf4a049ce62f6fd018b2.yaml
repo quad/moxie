@@ -1,0 +1,52 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Figure out deployment scenarios.
+desc: |-
+  I would prefer two deployment scenarios:
+  
+    1. CGI script.
+    2. Static directory.
+  
+  Other options include the various other WSGI mechanisms. But, I figure the CGI
+  script method is a failure case of this.
+  
+  We presume we're a full setup.py installed instance in all situations.
+  
+  == CGI Script ==
+  
+    $ moxie
+  
+  This means the "develop" mode needs to be fixed. (See {issue 8d5c5881d02218a45724cf4a049ce62f6fd018b2})
+  
+  The MP3s come from, in order of priority:
+  
+    1. Working directory.
+    2. Environment variable "MOXIE_DIR"
+  
+  == Static Directory ==
+  
+    $ moxie -o ~/public_html/mixtape ~/music/1
+  
+  The "-o" argument should be short for "--output". This is the directory to which the files are written.
+  
+  We should work on music in the specified directory.
+  
+    * This music is copied to the output directory.
+    * The index.html, XSPF, and RSS are all wrote out.
+    * All the static files are dropped into static/
+  
+  It would be nice to share static/ between multiple mixtapes. But, that's version 2.
+type: :feature
+component: moxie
+release: "8.10"
+reporter: Scott Robinson <scott@quadhome.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-09-15 04:50:36.888349 Z
+references: []
+
+id: 8d5c5881d02218a45724cf4a049ce62f6fd018b2
+log_events: 
+- - 2008-09-15 04:50:37.728890 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""
