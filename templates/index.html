@@ -23,11 +23,11 @@ $def with (xspf, tracklist)
 		<ul class="songs">
 		$for count, info, url in tracklist:
 			<li class="song" id="$count">
-			$info.artist - $info.title
-			<span class="time"></span>
 			<span class="duration">
 			$info.duration
 			</span>
+			$info.artist - $info.title
+			<span class="time"></span>
 			</li>
 		</ul>
 
