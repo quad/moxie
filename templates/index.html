@@ -1,4 +1,4 @@
-$def with (xspf, tracklist)
+$def with (xspf, header, tracklist)
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="style.css" />
@@ -12,8 +12,11 @@ $def with (xspf, tracklist)
 	</head>
 	<body>
 		<div id="header">
-			<h1>Moxie Demo</h1>
-			<h2>It's, like, our first release... man.</h2>
+		$if header:
+			$:markdown(header)
+		$else:
+			<h1>A Moxie Mixtape</h1>
+			<h2>Make a README!</h2>
 		</div>
 
 		<noscript>

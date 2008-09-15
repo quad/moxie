@@ -7,13 +7,21 @@ import xml.etree.ElementTree as ET
 
 import pkg_resources
 
-import web
+import markdown
 import mutagen
-import mutagen.id3
 import mutagen.easyid3
+import mutagen.id3
+import web
+
+header_fn = 'README'
+if os.path.exists(header_fn):
+    header = file(header_fn).read()
+else:
+    header = None
 
 files = sorted(glob.glob('*.mp3'))
 render = web.template.render(pkg_resources.resource_filename(__name__, 'templates/'))
+web.template.Template.globals['markdown'] = markdown.markdown
 
 class TrackInfo:
     def __init__(self, filename):
@@ -50,7 +58,7 @@ class XSPF:
 class Index:
     def GET(self):
         xspf_url = urlparse.urljoin(web.ctx.homedomain, '/xspf')
-        print render.index(xspf_url, tracklist())
+        print render.index(xspf_url, header, tracklist())
 
 
 class Static:

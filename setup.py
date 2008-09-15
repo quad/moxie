@@ -14,6 +14,7 @@ setup(
     install_requires = [
         'web.py >= 0.22',
         'mutagen >= 1.11',
+        'markdown',
     ],
 
     entry_points = {
