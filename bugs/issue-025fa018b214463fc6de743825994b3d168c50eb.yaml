@@ -1,0 +1,28 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: An announce feature!
+desc: |-
+  There should be a very simple command to announce new moxies.
+  
+    $ moxie-announce http://blah.com/
+  
+  It pulls either the page or xspf (or both). Does appropriate scraping for the
+  titles, length, and other fun.
+  
+  Then pops up an editor with a proposed headline.
+  
+  When done, it e-mails to post@posterous.com from moxie@quadhome.com.
+type: :feature
+component: moxie
+release: 
+reporter: Scott Robinson <scott@quadhome.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-09-15 11:20:21.357274 Z
+references: []
+
+id: 025fa018b214463fc6de743825994b3d168c50eb
+log_events: 
+- - 2008-09-15 11:20:22.388531 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""
