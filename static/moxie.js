@@ -14,9 +14,9 @@ function render_duration(time) {
 	var duration = ":" + leadingZero(seconds);
 
 	if (hours)
-		duration = hours + ":" + leadingZero(minutes) + message;
+		duration = hours + ":" + leadingZero(minutes) + duration;
 	else if (minutes)
-		duration = minutes + message;
+		duration = minutes + duration;
 
 	return duration;
 }
