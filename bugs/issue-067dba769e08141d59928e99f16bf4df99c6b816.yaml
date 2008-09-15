@@ -16,3 +16,16 @@ log_events:
   - Scott Robinson <scott@quadhome.com>
   - created
   - ""
+- - 2008-09-15 11:11:59.770941 Z
+  - Scott Robinson <scott@quadhome.com>
+  - commented
+  - |-
+    http://www.mnot.net/python/RSS.py is convenient for this sort of things.
+    
+    If we pull it as a dependency, it needs to be registered properly in the setup.py.
+    
+    I think setuptools can do direct URL based dependencies.
+    
+    Furthermore, I think there is a URL schema of http://www.mnot.net/python/RSS.py?version=blahlblah
+    
+    So we can lock to it properly.
