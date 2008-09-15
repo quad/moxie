@@ -8,26 +8,26 @@ div#header {
 /* Statics */
 
 body {
-	margin: 0px;
+	margin: 0;
 }
 
 div#header {
-	padding: 1ex 0px;
+	padding: 1ex 0;
 }
 
 div#header h1, h2 {
-	margin: 0px;
+	margin: 0 0.5em;
 }
 
 ul.songs {
 	display: block;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 }
 
 li.song {
 	display: block;
-	padding: 0.5ex 0;
+	padding: 0.5ex 1ex;
 	border-bottom: thin solid #E0E0E0;
 }
 
@@ -42,7 +42,7 @@ span.time {
 noscript {
 	display: block;
 	background-color: #FFFA67;
-	margin: 1ex 0px;
+	margin: 1ex 0;
 	padding: 0.5ex 0.5em;
 	text-align: center;
 	border: thin dotted black;
