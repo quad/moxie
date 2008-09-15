@@ -57,9 +57,8 @@ class XSPF:
 
 class Index:
     def GET(self):
-        xspf_url = urlparse.urljoin(web.ctx.homedomain, '/xspf')
+        xspf_url = urlparse.urljoin(web.ctx.homedomain, web.http.url('xspf'))
         print render.index(xspf_url, header, tracklist())
-
 
 class Static:
     def leak_file(self, f):
