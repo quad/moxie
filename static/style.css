@@ -35,11 +35,8 @@ li.song:hover {
 	background-color: #F0F0F0;
 }
 
-.duration {
-	float:right;
-	font-weight:bold;
-	margin-left:5px;
-	font-size:80%;
+span.time {
+	float: right;
 }
 
 noscript {
@@ -67,4 +64,8 @@ div#header h2 {
 ul.songs {
 	font-family: Tahoma, Arial, Helvetica, sans-serif;
 	font-size: xx-large;
+}
+
+span.position {
+	font-size: x-large;
 }

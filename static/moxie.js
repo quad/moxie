@@ -56,7 +56,7 @@ function track_update(event) {
 		message = "";
 	}
 
-	$(this).find(".time").html(message);
+	$(this).find("span.position").html(message);
 }
 
 function MusicPlayer_callback() {
