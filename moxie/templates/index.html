@@ -1,0 +1,39 @@
+$def with (header, tracklist)
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<script type="text/javascript" src="swfobject.js"></script>
+		<script type="text/javascript" src="jquery-1.2.6.min.js"></script>
+		<script type="text/javascript" src="jquery.timers.js"></script>
+		<script type="text/javascript" src="moxie.js"></script>
+		<script type="text/javascript">
+			swfobject.embedSWF("MusicPlayer.swf", "player", "0", "0", "8.0.0", "expressInstall.swf", {playlist: "xspf"}, {}, {});
+		</script>
+	</head>
+	<body>
+		<div id="header">
+		$if header:
+			$:markdown(header)
+		$else:
+			<h1>A Moxie Mixtape</h1>
+			<h2>Make a README!</h2>
+		</div>
+
+		<noscript>
+			Javascript + Flash = Tunes!
+		</noscript>
+
+		<ul class="songs">
+		$for count, info, url in tracklist:
+			<li class="song" id="$count">
+				<span class="time">
+					<span class="position"></span>
+					<span class="duration">$info.duration</span>
+				</span>
+				$info.artist - $info.title
+			</li>
+		</ul>
+
+		<div id="player" />
+	</body>
+</html>
