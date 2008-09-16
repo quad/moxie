@@ -11,4 +11,4 @@ mtasc = Builder(action = "mtasc %s $SOURCE -swf $TARGET" % (' '.join(mtasc_optio
 
 env = Environment(BUILDERS = {'ActionScript': mtasc})
 
-env.ActionScript(source = 'MusicPlayer', target = 'static/MusicPlayer')
+env.ActionScript(source = 'MusicPlayer', target = 'moxie/static/MusicPlayer')
