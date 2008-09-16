@@ -1,4 +1,3 @@
-$def with (header, tracklist)
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="style.css" />
@@ -12,11 +11,12 @@ $def with (header, tracklist)
 	</head>
 	<body>
 		<div id="header">
-		$if header:
-			$:markdown(header)
-		$else:
+		% if header:
+			${markdown(header)}
+		% else:
 			<h1>A Moxie Mixtape</h1>
 			<h2>Make a README!</h2>
+		% endif
 		</div>
 
 		<noscript>
@@ -24,14 +24,15 @@ $def with (header, tracklist)
 		</noscript>
 
 		<ul class="songs">
-		$for count, info, url in tracklist:
+		% for fn, info in tracklist:
 			<li class="song" id="$count">
 				<span class="time">
 					<span class="position"></span>
-					<span class="duration">$info.duration</span>
+					<span class="duration">${info.duration | h}</span>
 				</span>
-				$info.artist - $info.title
+				${info.artist | h} - ${info.title | h}
 			</li>
+		% endfor
 		</ul>
 
 		<div id="player" />

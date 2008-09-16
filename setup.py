@@ -16,7 +16,7 @@ setup(
         'Mako >= 0.2.2',
         'Markdown >= 1.6',
         'mutagen >= 1.14',
-        'Routes >= 1.9.2',
+        'selector',
         'WebOb >= 0.9.3',
     ],
     dependency_links = [
@@ -26,8 +26,7 @@ setup(
 
     entry_points = {
         'console_scripts': [
-            'moxie-cgi = moxie:cgi',
-            'moxie-static = moxie:static',
+            'moxie-test = moxie.deploy:local',
         ]
     },
 
