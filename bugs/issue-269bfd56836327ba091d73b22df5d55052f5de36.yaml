@@ -1,0 +1,35 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Write a README.md
+desc: |-
+  The README should contain:
+  
+    * A friendly bio of moxie.
+    * A note about installing, testing, and using:
+  
+      $ ./setup install
+      $ moxie-test
+      $ moxie-static
+  
+    * And something for the developers:
+  
+      $ virtualenv moxie
+      $ git clone git://github.com/quad/moxie.git moxie/src
+      $ cd moxie/src
+      $ ./setup develop
+  
+    * And maybe a link to a demo moxie? http://mixtape.quadhome.com/
+type: :task
+component: moxie
+release: "8.10"
+reporter: Scott Robinson <scott@quadhome.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-09-17 05:47:40.642913 Z
+references: []
+
+id: 269bfd56836327ba091d73b22df5d55052f5de36
+log_events: 
+- - 2008-09-17 05:47:41.713639 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""
