@@ -10,7 +10,7 @@
 			<album>${info.album | x}</album>
 			<creator>${info.artist | x}</creator>
 			<duration>${int(info.length * 1000) | x}</duration>
-			<location>${urlparse.urljoin(request.path_url, urllib.quote(fn))}</location>
+			<location>${urllib.quote(fn)}</location>
 			<title>${info.title | x}</title>
 		</track>
 	% endfor
