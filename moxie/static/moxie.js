@@ -43,24 +43,27 @@ function track_click(event, shouldStop) {
 
 function track_update(event) {
 	var player = $("#player")[0];
-	var track = $(this)[0].id;
+	var player_status = player.getStatus();
+	var player_track = player.getTrack();
 
-	var message;
-
-	if (player.getStatus() && player.getTrack() == track) {
+	if (player_status) {
 		var time = Math.round(player.getPosition() / 1000);
+		var message = render_duration(time) + "&nbsp;/";
 
-		message = render_duration(time) + "&nbsp;/";
-	}
-	else {
-		message = "";
+		$(this).find("li.song#" + player_track)
+		       .find("span.position").html(message);
 	}
 
-	$(this).find("span.position").html(message);
+	$(this).find("li.song").each(function(index) {
+		if (player_status && player_track == index)
+			return;
+
+		$(this).find("span.position").html("");
+	});
 }
 
 function MusicPlayer_callback() {
 	$("li.song").click(function(event) { track_click(event, false); });
 	$("li.song").dblclick(function(event) { track_click(event, true); });
-	$("li.song").everyTime("1s", track_update);
+	$("ul.songs").everyTime("1s", track_update);
 }
