@@ -28,6 +28,7 @@ setup(
     entry_points = {
         'console_scripts': [
             'moxie-test = moxie.deploy:local',
+            'moxie-static = moxie.deploy:static',
         ]
     },
 
