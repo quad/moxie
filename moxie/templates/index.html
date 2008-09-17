@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<link rel="alternate" type="application/xspf+xml" href="xspf" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<script type="text/javascript" src="swfobject.js"></script>
 		<script type="text/javascript" src="jquery-1.2.6.min.js"></script>
@@ -24,8 +25,8 @@
 		</noscript>
 
 		<ul class="songs">
-		% for fn, info in tracklist:
-			<li class="song" id="$count">
+		% for count, (fn, info) in enumerate(sorted(tracklist.items())):
+			<li class="song" id="${count}">
 				<span class="time">
 					<span class="position"></span>
 					<span class="duration">${info.duration | h}</span>

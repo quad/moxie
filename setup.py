@@ -12,12 +12,13 @@ setup(
     },
 
     install_requires = [
-        'flup >= 1.0',
-        'Mako >= 0.2.2',
-        'Markdown >= 1.6',
+        'flup',
+        'Mako',
+        'Markdown >= 1.7',
         'mutagen >= 1.14',
         'selector',
-        'WebOb >= 0.9.3',
+        'static',
+        'WebOb',
     ],
     dependency_links = [
         # mutagen

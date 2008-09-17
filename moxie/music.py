@@ -18,7 +18,7 @@ class TrackList(dict):
             self.header = None
 
         for fn in glob.glob(os.path.join(directory, '*.mp3')):
-            self[fn] = TrackInfo(fn)
+            self[os.path.basename(fn)] = TrackInfo(fn)
 
 class TrackInfo:
     def __init__(self, filename):

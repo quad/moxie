@@ -1,79 +1,81 @@
-import pkg_resources
-
 import mako.lookup
 import markdown
 import selector
+import static
 import webob
+
+import pkg_resources
 
 import moxie.music
 
-class app(selector.Selector):
-    templates = mako.lookup.TemplateLookup(directories = [pkg_resources.resource_filename(__name__, 'templates/')],
+class uri(object):
+    """A decorator for instance functions to attach a .uri_path and associate a template."""
+
+    TEMPLATES = mako.lookup.TemplateLookup(directories = [pkg_resources.resource_filename(__name__, 'templates/')],
                                            filesystem_checks = True)
-    index_template, xspf_template = map(templates.get_template, ('index.html', 'xspf.xml'))
 
+    def __init__(self, path, template):
+        self.uri_path = path
+        self.template = template
+
+    def __call__(self, func):
+        def replacement(instance, environ, start_response):
+            req = webob.Request(environ)
+            tmpl = self.TEMPLATES.get_template(self.template)
+
+            resp = func(instance, req, tmpl, **req.urlvars)
+
+            if isinstance(resp, basestring):
+                resp = webob.Response(body = resp)
+            elif isinstance(resp, dict):
+                resp = webob.Response(**resp)
+
+            return resp(environ, start_response)
+
+        replacement.uri_path = self.uri_path
+
+        return replacement
+
+    @classmethod
+    def uris(cls, instance):
+        """Return the (uri, function) pairs on an instance class."""
+
+        for name in dir(instance):
+            func = getattr(instance, name)
+
+            if hasattr(func, 'uri_path'):
+                yield func.uri_path, func
+
+class app(selector.Selector):
     def __init__(self, directory = '.'):
-        selector.Selector.__init__(self)
+        selector.Selector.__init__(self, consume_path = False, prefix = '/')
 
-        self.music = moxie.music.Directory(directory)
+        self.music = moxie.music.TrackList(directory)
 
-        self.add('/', GET = self.index)
-        #app.add('/xspf', GET = XSPF)
-        #app.add('/{file}', GET = Static)
+        # Register the dynamic URIs.
+        for path, func in uri.uris(self):
+            self.add(path, GET = func)
 
-    index_template = templates.get_template('index.html')
-    def index(self, environ, start_response):
-        res = webob.Response()
-        res.body = self.index_template.render(markdown = markdown.markdown,
-                                              header = self.music.header,
-                                              tracklist = self.music.tracks)
-        return res(environ, start_response)
+        # Register the static URIs.
+        static_app = static.Cling(pkg_resources.resource_filename(__name__, 'static/'))
 
-"""
-def tracklist(url_root = ''):
-    for count, fn in enumerate(files):
-        info = TrackInfo(fn)
-        url = urlparse.urljoin(url_root,
-                               web.net.urlquote(web.http.url(fn)))
+        for fn in pkg_resources.resource_listdir(__name__, 'static/'):
+            self.add(fn, GET = static_app)
 
-        yield count, info, url
+        # Register the music.
+        music_app = static.Cling(directory)
 
-#render = web.template.render(
-#web.template.Template.globals['markdown'] = markdown.markdown
+        for fn in self.music:
+            self.add(fn, GET = music_app)
 
+    @uri('', 'index.html')
+    def index(self, request, template):
+        return template.render(header = self.music.header,
+                               markdown = markdown.markdown,
+                               tracklist = self.music)
 
-def cgi_tracklist():
-    return tracklist(web.ctx.homedomain)
-
-class XSPF:
-    def GET(self):
-        web.header('Content-Type', 'application/xspf+xml')
-        print render.xspf(cgi_tracklist())
-
-class Static:
-    def leak_file(self, f):
-        while True:
-            buf = f.read(16 * 1024)
-            if not buf:
-                break
-            yield buf
-        f.close()
-
-    def GET(self, filename):
-        content_type, encoding = mimetypes.guess_type(filename)
-        web.header('Content-Type', content_type)
-
-        # Serve the music.
-        if filename in files:
-            return self.leak_file(file(filename))
-
-        # Serve the necessities.
-        fn_static = os.path.join('static', filename)
-
-        if pkg_resources.resource_exists(__name__, fn_static):
-            f = pkg_resources.resource_stream(__name__, fn_static)
-            return self.leak_file(f)
-
-        # Give up.
-        return web.notfound()
-"""
+    @uri('xspf', 'xspf.xml')
+    def xspf(self, request, template):
+        return {'content_type': 'application/xspf+xml',
+                'body': template.render(tracklist = self.music,
+                                        request = request)}

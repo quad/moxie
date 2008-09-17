@@ -7,9 +7,9 @@ import unittest
 
 from nose.tools import raises
 
-from moxie.music import TrackList, TrackInfo
+from tests import DATA
 
-DATA = os.path.join(os.path.dirname(__file__), 'data')
+from moxie.music import TrackList, TrackInfo
 
 class TrackListTests(unittest.TestCase):
     """TrackListTest tests."""
@@ -29,7 +29,15 @@ class TrackListTests(unittest.TestCase):
         assert tracks.header == None
 
         for fn in glob.glob(os.path.join(DATA, '*.mp3')):
-            assert fn in tracks
+            assert os.path.basename(fn) in tracks
+
+    def test_filename_purity(self):
+        """TrackList uses filenames as keys."""
+
+        tracks = TrackList(DATA)
+
+        for fn in tracks:
+            assert fn == os.path.basename(fn)
 
 class TrackListHeaderTest(unittest.TestCase):
     def setUp(self):

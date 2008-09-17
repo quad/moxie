@@ -1,12 +1,18 @@
-$def with (tracklist)
 <?xml version='1.0' encoding='UTF-8'?>
 <playlist version='1' xmlns='http://xspf.org/ns/0/'>
 	<trackList>
-	$for count, info, url in tracklist:
+	<%!
+	import urllib
+	import urlparse
+	%>
+	% for fn, info in sorted(tracklist.items()):
 		<track>
-			<artist>$info.artist</artist>
-			<title>$info.title</title>
-			<location>$url</location>
+			<album>${info.album | x}</album>
+			<creator>${info.artist | x}</creator>
+			<duration>${int(info.length * 1000) | x}</duration>
+			<location>${urlparse.urljoin(request.path_url, urllib.quote(fn))}</location>
+			<title>${info.title | x}</title>
 		</track>
+	% endfor
 	</trackList>
 </playlist>
