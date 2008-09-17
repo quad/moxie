@@ -4,8 +4,8 @@ var PAUSED = 2;
 
 function render_duration(time) {
 	var seconds = time % 60;
-	var minutes = Math.round(time / 60) % 60;
-	var hours   = Math.round(time / (60 * 60));
+	var minutes = Math.floor(time / 60) % 60;
+	var hours   = Math.floor(time / (60 * 60));
 
 	function leadingZero(s) {
 		return (s > 9) ? s : ("0" + s);
