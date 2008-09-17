@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: moxie.js rounds seconds incorrectly
+desc: At :30 the timer will jump to 1:30.
+type: :bugfix
+component: moxie
+release: "8.10"
+reporter: Scott Robinson <scott@quadhome.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-09-17 05:39:11.318405 Z
+references: []
+
+id: e7811d7244c3d4509274d74409d696788d3324fd
+log_events: 
+- - 2008-09-17 05:39:12.503984 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""
