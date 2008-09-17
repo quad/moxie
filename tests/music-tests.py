@@ -31,18 +31,26 @@ class TrackListTests(unittest.TestCase):
         for fn in glob.glob(os.path.join(DATA, '*.mp3')):
             assert fn in tracks
 
+class TrackListHeaderTest(unittest.TestCase):
+    def setUp(self):
+        self.dirname = tempfile.mkdtemp()
+        self.headername = os.path.join(self.dirname, TrackList.HEADER)
+
+        self.header = "# Hello!"
+
+        with file(self.headername, 'w') as f:
+            f.write(self.header)
+
+    def tearDown(self):
+        os.unlink(self.headername)
+        os.rmdir(self.dirname)
+
     def test_only_header(self):
         """Only with a header."""
 
-        header = "# Hello!"
-        dirname = tempfile.mkdtemp()
+        tracks = TrackList(self.dirname)
 
-        with file(os.path.join(dirname, TrackList.HEADER), 'w') as f:
-            f.write(header)
-
-        tracks = TrackList(dirname)
-
-        assert tracks.header == header
+        assert tracks.header == self.header
         assert len(tracks) == 0
 
 class TrackInfoTests(unittest.TestCase):
