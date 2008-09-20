@@ -12,6 +12,8 @@ class TrackList(dict):
         if not os.path.isdir(directory):
             raise IOError("%s not a directory" % directory)
 
+        self.directory = directory
+
         try:
             self.header = file(os.path.join(directory, self.HEADER)).read()
         except IOError:
