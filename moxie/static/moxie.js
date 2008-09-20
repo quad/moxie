@@ -2,6 +2,13 @@ var STOPPED = 0;
 var PLAYING = 1;
 var PAUSED = 2;
 
+var _player;
+var _player_status;
+var _player_track;
+var _player_position;
+
+var _songs;
+
 function render_duration(time) {
 	var seconds = time % 60;
 	var minutes = Math.floor(time / 60) % 60;
@@ -21,41 +28,30 @@ function render_duration(time) {
 	return duration;
 }
 
-function track_click(event, shouldStop) {
-	var player = $("#player")[0];
+function track_click(event) {
 	var track = parseInt($(event.currentTarget)[0].id, 10);
 
-	// Pause/stop if we're playing the track, otherwise play it!
+	// Pause if we're playing the track, otherwise play it!
 
-	if (player.getStatus() == PLAYING && player.getTrack() == track) {
-		if (shouldStop)
-			player.stop();
+	if (_player_status == PLAYING && _player_track == track)
+		_player.pause();
+	else
+		if (_player_track == track)
+			_player.play();
 		else
-			player.pause();
-	}
-	else {
-		if (player.getTrack() == track)
-			player.play();
-		else
-			player.play(track);
-	}
+			_player.play(track);
 }
 
 function track_update(event) {
-	var player = $("#player")[0];
-	var player_status = player.getStatus();
-	var player_track = player.getTrack();
-
-	if (player_status) {
-		var time = Math.round(player.getPosition() / 1000);
+	if (_player_status) {
+		var time = Math.round(_player_position / 1000);
 		var message = render_duration(time) + "&nbsp;/";
 
-		$(this).find("li.song#" + player_track)
-		       .find("span.position").html(message);
+		$("li.song#" + _player_track).find("span.position").html(message);
 	}
 
-	$(this).find("li.song").each(function(index) {
-		if (player_status && player_track == index)
+	_songs.each(function(index) {
+		if (_player_status && _player_track == index)
 			return;
 
 		$(this).find("span.position").html("");
@@ -63,7 +59,16 @@ function track_update(event) {
 }
 
 function MusicPlayer_callback() {
-	$("li.song").click(function(event) { track_click(event, false); });
-	$("li.song").dblclick(function(event) { track_click(event, true); });
+	_player = $("#player")[0];
+
+	_songs = $("li.song");
+	_songs.click(function(event) { track_click(event, false); });
+
 	$("ul.songs").everyTime("1s", track_update);
+}
+
+function MusicPlayer_update(status, track, position) {
+	_player_status = status;
+	_player_track = track;
+	_player_position = position;
 }
