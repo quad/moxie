@@ -13,6 +13,8 @@ import webob
 import moxie.web
 
 def local(bindaddr = '127.0.0.1', port = 8080):
+    """Deploy a test web server."""
+
     server = make_server(bindaddr, port, moxie.web.app())
 
     print 'http://%s:%u/' % (bindaddr, port)
@@ -20,6 +22,8 @@ def local(bindaddr = '127.0.0.1', port = 8080):
     server.serve_forever()
 
 def static():
+    """Deploy a set of static files to a directory."""
+
     app = moxie.web.app()
 
     if not app.music:
