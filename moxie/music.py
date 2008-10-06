@@ -6,6 +6,8 @@ import mutagen.easyid3
 import mutagen.id3
 
 class TrackList(dict):
+    """A dictionary with keys as MP3 files and values as TrackInfo instances."""
+
     HEADER = 'README'
 
     def __init__(self, directory):
@@ -23,6 +25,8 @@ class TrackList(dict):
             self[os.path.basename(fn)] = TrackInfo(fn)
 
 class TrackInfo:
+    """Metadata for audio files."""
+
     def __init__(self, filename):
         try:
             self._load(filename)

@@ -47,6 +47,8 @@ class uri(object):
                 yield func.uri_path, func
 
 class app(selector.Selector):
+    """WSGI application for Moxie."""
+
     def __init__(self, directory = '.'):
         selector.Selector.__init__(self, consume_path = False, prefix = '/')
 

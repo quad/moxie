@@ -7,7 +7,6 @@ import shutil
 from wsgiref.simple_server import make_server
 
 import pkg_resources
-
 import webob
 
 import moxie.web
