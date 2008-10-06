@@ -10,7 +10,7 @@ type: :feature
 component: moxie
 release: 
 reporter: Scott Robinson <scott@quadhome.com>
-status: :unstarted
+status: :in_progress
 disposition: 
 creation_time: 2008-09-14 23:26:35.966641 Z
 references: []
@@ -21,3 +21,12 @@ log_events:
   - Scott Robinson <scott@quadhome.com>
   - created
   - ""
+- - 2008-10-06 08:29:11.917944 Z
+  - Scott Robinson <scott@quadhome.com>
+  - changed status from unstarted to in_progress
+  - |-
+    Added initial code for transcoding.
+    
+    Still need to integrate into Moxie static drops.
+    
+    (And maybe somehow implement streaming for dynamic drops?)
