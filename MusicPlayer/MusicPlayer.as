@@ -79,6 +79,9 @@ class MusicPlayer {
 
 			this.playing_track.play();
 		}
+
+		// Immediately update, don't wait a second.
+		this._update();
 	}
 
 	public function pause() : Void {
