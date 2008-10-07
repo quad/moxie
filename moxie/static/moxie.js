@@ -94,5 +94,5 @@ function MusicPlayer_update(status, track, position) {
 	_player_track = track;
 	_player_position = position;
 
-	track_update();
+	track_update(null);
 }
