@@ -1,5 +1,5 @@
 def lame_builder(options):
-  return Builder(action = "env lame %s $SOURCE $TARGET" % ' '.join(options),
+  return Builder(action = "env lame -r %s $SOURCE $TARGET" % ' '.join(options),
                  suffix = '.mp3')
 
 lame_options = ['--ta "Null Artist"',
