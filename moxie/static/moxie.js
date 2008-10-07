@@ -50,15 +50,18 @@ function track_update(event) {
 		var message = $(this).find("span.position");
 
 		if (_player_status && _player_track == index) {
+			var counter;
+
 			if (_player_position) {
 				var time = Math.round(_player_position / 1000);
-				var counter = render_duration(time) + "&nbsp;/";
+
+				counter = render_duration(time) + "&nbsp;/";
 			}
 			else {
-				var counter = "&hellip;&nbsp;/"
+				counter = "&hellip;&nbsp;/";
 			}
 
-			message.html(counter)
+			message.html(counter);
 
 			$(this).addClass("active");
 
