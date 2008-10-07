@@ -40,30 +40,52 @@ function track_click(event) {
 			_player.play();
 		else
 			_player.play(track);
+
+	// Immediately update.
+	track_update(null);
 }
 
 function track_update(event) {
-	if (_player_status) {
-		var time = Math.round(_player_position / 1000);
-		var message = render_duration(time) + "&nbsp;/";
-
-		$("li.song#" + _player_track).find("span.position").html(message);
-	}
-
 	_songs.each(function(index) {
-		if (_player_status && _player_track == index)
-			return;
+		var message = $(this).find("span.position");
 
-		$(this).find("span.position").html("");
+		if (_player_status && _player_track == index) {
+			if (_player_position) {
+				var time = Math.round(_player_position / 1000);
+				var counter = render_duration(time) + "&nbsp;/";
+			}
+			else {
+				var counter = "&hellip;&nbsp;/"
+			}
+
+			message.html(counter)
+
+			$(this).addClass("active");
+
+			if (_player_status == PLAYING) {
+				$(this).addClass("playing");
+				$(this).removeClass("paused");
+			}
+			else if (_player_status == PAUSED) {
+				$(this).addClass("paused");
+				$(this).removeClass("playing");
+			}
+		}
+		else {
+			message.html("");
+
+			$(this).removeClass("active");
+			$(this).removeClass("playing");
+			$(this).removeClass("paused");
+		}
 	});
 }
 
 function MusicPlayer_callback() {
 	_player = $("#player")[0];
-
 	_songs = $("li.song");
-	_songs.click(function(event) { track_click(event, false); });
 
+	_songs.click(function(event) { track_click(event, false); });
 	$("ul.songs").everyTime("1s", track_update);
 }
 
@@ -71,4 +93,6 @@ function MusicPlayer_update(status, track, position) {
 	_player_status = status;
 	_player_track = track;
 	_player_position = position;
+
+	track_update();
 }

@@ -29,9 +29,14 @@ li.song {
 	display: block;
 	padding: 0.5ex 1ex;
 	border-bottom: thin solid #E0E0E0;
+	cursor: pointer;
 }
 
 li.song:hover {
+	background-color: #FAFAFA;
+}
+
+li.playing {
 	background-color: #F0F0F0;
 }
 
@@ -39,7 +44,7 @@ span.time {
 	float: right;
 }
 
-noscript {
+noscript div {
 	display: block;
 	background-color: #FFFA67;
 	margin: 1ex 0;
@@ -68,4 +73,12 @@ ul.songs {
 
 span.position {
 	font-size: x-large;
+}
+
+li.playing span.position {
+	color: green;
+}
+
+li.paused span.position {
+	color: gray;
 }

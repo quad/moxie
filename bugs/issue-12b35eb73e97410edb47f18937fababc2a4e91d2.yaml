@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Update title with current track.
+desc: When a track is playing, its name should be in the page title.
+type: :bugfix
+component: moxie
+release: "8.10"
+reporter: Scott Robinson <scott@quadhome.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-10-06 18:56:31.131208 Z
+references: []
+
+id: 12b35eb73e97410edb47f18937fababc2a4e91d2
+log_events: 
+- - 2008-10-06 18:56:32.382015 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""

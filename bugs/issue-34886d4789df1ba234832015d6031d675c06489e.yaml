@@ -1,0 +1,27 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Highlight the background of the currently playing track.
+desc: |-
+  We have hightlight on selection.
+  
+  But, there should be a latent highlight on the currently playing track.
+  
+  In fact, this should be client-side as opposed to the playback which is flash-side. That way there is an immediate UI response for the user.
+type: :bugfix
+component: moxie
+release: "8.10"
+reporter: Scott Robinson <scott@quadhome.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-10-06 18:59:25.495976 Z
+references: []
+
+id: 34886d4789df1ba234832015d6031d675c06489e
+log_events: 
+- - 2008-10-06 18:59:26.569982 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""
+- - 2008-10-07 04:27:26.480956 Z
+  - Scott Robinson <scott@quadhome.com>
+  - closed with disposition fixed
+  - ""
