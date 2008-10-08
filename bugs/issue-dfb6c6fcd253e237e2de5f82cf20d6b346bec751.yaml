@@ -1,0 +1,24 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Unbreak IE
+desc: |-
+  Flash is failing in IE, but it looks like someone has found a solution:
+  see http://www.bobbyvandersluis.com/swfobject/testsuite_2_1/test_dynamic_com.html
+type: :bugfix
+component: moxie
+release: 
+reporter: Chris Faulkner <thefaulkner@gmail.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-10-08 20:05:04.275712 Z
+references: []
+
+id: dfb6c6fcd253e237e2de5f82cf20d6b346bec751
+log_events: 
+- - 2008-10-08 20:05:19.396273 Z
+  - cd bugs/ <thefaulkner@gmail.com>
+  - created
+  - ""
+- - 2008-10-08 20:06:24.652063 Z
+  - cd bugs/ <thefaulkner@gmail.com>
+  - edited reporter
+  - ""
