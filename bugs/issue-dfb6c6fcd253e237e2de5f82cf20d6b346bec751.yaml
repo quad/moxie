@@ -5,7 +5,7 @@ desc: |-
   see http://www.bobbyvandersluis.com/swfobject/testsuite_2_1/test_dynamic_com.html
 type: :bugfix
 component: moxie
-release: 
+release: "8.10"
 reporter: Chris Faulkner <thefaulkner@gmail.com>
 status: :unstarted
 disposition: 
@@ -21,4 +21,8 @@ log_events:
 - - 2008-10-08 20:06:24.652063 Z
   - cd bugs/ <thefaulkner@gmail.com>
   - edited reporter
+  - ""
+- - 2008-10-18 02:41:33.322536 Z
+  - Scott Robinson <scott@quadhome.com>
+  - assigned to release 8.10 from unassigned
   - ""
