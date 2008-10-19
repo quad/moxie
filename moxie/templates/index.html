@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>A Moxie Mixtape!</title>
 		<link rel="alternate" type="application/xspf+xml" href="xspf" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<script type="text/javascript" src="swfobject.js"></script>
@@ -16,7 +17,7 @@
 		% if header:
 			${markdown(header)}
 		% else:
-			<h1>A Moxie Mixtape</h1>
+			<h1>A Moxie Mixtape!</h1>
 			<h2>Make a README!</h2>
 		% endif
 		</div>
@@ -34,7 +35,9 @@
 					<span class="position"></span>
 					<span class="duration">${info.duration | h}</span>
 				</span>
-				${info.artist | h} - ${info.title | h}
+				<span class="title">
+					${info.artist | h} - ${info.title | h}
+				</span>
 			</li>
 		% endfor
 		</ul>

@@ -5,8 +5,8 @@ type: :bugfix
 component: moxie
 release: "8.10"
 reporter: Scott Robinson <scott@quadhome.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-10-06 18:56:31.131208 Z
 references: []
 
@@ -15,4 +15,8 @@ log_events:
 - - 2008-10-06 18:56:32.382015 Z
   - Scott Robinson <scott@quadhome.com>
   - created
+  - ""
+- - 2008-10-19 00:24:35.178585 Z
+  - Scott Robinson <scott@quadhome.com>
+  - closed with disposition fixed
   - ""

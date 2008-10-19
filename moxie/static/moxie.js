@@ -7,6 +7,8 @@ var _player_status;
 var _player_track;
 var _player_position;
 
+var _original_title;
+
 var _songs;
 
 function render_duration(time) {
@@ -42,6 +44,7 @@ function track_click(event) {
 			_player.play(track);
 
 	// Immediately update.
+
 	track_update(null);
 }
 
@@ -73,6 +76,9 @@ function track_update(event) {
 				$(this).addClass("paused");
 				$(this).removeClass("playing");
 			}
+
+			var title = $(this).find(".title");
+			document.title = jQuery.trim(title.text()) + " | " + _original_title;
 		}
 		else {
 			message.html("");
@@ -87,6 +93,8 @@ function track_update(event) {
 function MusicPlayer_callback() {
 	_player = $("#player")[0];
 	_songs = $("li.song");
+
+	_original_title = document.title;
 
 	_songs.click(function(event) { track_click(event, false); });
 	$("ul.songs").everyTime("1s", track_update);
