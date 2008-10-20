@@ -36,6 +36,8 @@ class MusicPlayer {
 
 		if (next_index < this.urls.length)
 			this.play(next_index);
+		else
+			this.playing_index = undefined;
 	}
 
 	public function connectExternal() : Void {
