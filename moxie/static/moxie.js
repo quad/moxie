@@ -22,35 +22,18 @@ function render_duration(time) {
 
 	var duration = ":" + leadingZero(seconds);
 
-	if (hours)
+	if (hours) {
 		duration = hours + ":" + leadingZero(minutes) + duration;
-	else if (minutes)
+	}
+	else if (minutes) {
 		duration = minutes + duration;
+	}
 
 	return duration;
 }
 
-function track_click(event) {
-	// This is a work-around for IE not supporting .currentTarget.
-	// http://www.quirksmode.org/js/events_order.html
-	var target = event.currentTarget || event.srcElement;
-	var track = parseInt($(target).attr("id"), 10);
-
-	// Pause if we're playing the track, otherwise play it!
-	if (_player_status == PLAYING && _player_track == track)
-		_player.MusicPlayer_pause();
-	else
-		if (_player_track == track)
-			_player.MusicPlayer_play();
-		else
-			_player.MusicPlayer_play(track);
-
-	// Immediately update.
-	track_update(null);
-}
-
-function track_update(event) {
-	_songs.each(function(index) {
+function track_update() {
+	_songs.each(function (index) {
 		var message = $(this).find("span.position");
 
 		if (_player_status && _player_track == index) {
@@ -98,6 +81,28 @@ function track_update(event) {
 	});
 }
 
+function track_click() {
+	// This is a work-around for IE not supporting .currentTarget.
+	// http://www.quirksmode.org/js/events_order.html
+	var track = parseInt($(this).attr("id"), 10);
+
+	// Pause if we're playing the track, otherwise play it!
+	if (_player_status == PLAYING && _player_track == track) {
+		_player.MusicPlayer_pause();
+	}
+	else {
+		if (_player_track == track) {
+			_player.MusicPlayer_play();
+		}
+		else {
+			_player.MusicPlayer_play(track);
+		}
+	}
+
+	// Immediately update.
+	track_update();
+}
+
 function MusicPlayer_callback() {
 	// Cache repeated references.
 	_player = swfobject.getObjectById("player");    // Use swfobject for browser compatibility.
@@ -105,7 +110,7 @@ function MusicPlayer_callback() {
 	_original_title = document.title;
 
 	// Bind DOM events.
-	_songs.click(function(event) { track_click(event, false); });
+	_songs.click(track_click);
 	$("ul.songs").everyTime("1s", track_update);
 }
 
