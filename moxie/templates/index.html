@@ -1,7 +1,15 @@
 <!DOCTYPE html>
+<%
+	if header:
+		title = header[0]
+		subtitle = markdown(header[1:])
+	else:
+		title = "A Moxie Mixtape!"
+		subtitle = "Make a README"
+%>
 <html>
 	<head>
-		<title>A Moxie Mixtape!</title>
+		<title>${title}</title>
 		<link rel="alternate" type="application/xspf+xml" href="xspf" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<script type="text/javascript" src="swfobject.js"></script>
@@ -16,12 +24,8 @@
 	</head>
 	<body>
 		<div id="header">
-		% if header:
-			${markdown(header)}
-		% else:
-			<h1>A Moxie Mixtape!</h1>
-			<h2>Make a README!</h2>
-		% endif
+			<h1>${title}</h1>
+			<h2>${subtitle}</h2>
 		</div>
 
 		<noscript>
