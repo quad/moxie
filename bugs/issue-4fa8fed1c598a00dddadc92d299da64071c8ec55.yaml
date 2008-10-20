@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Reset title when no track is playing.
+desc: It currently shows the title of the last track indefinitely.
+type: :bugfix
+component: moxie
+release: "8.10"
+reporter: Scott Robinson <scott@quadhome.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-10-20 10:31:43.096839 Z
+references: []
+
+id: 4fa8fed1c598a00dddadc92d299da64071c8ec55
+log_events: 
+- - 2008-10-20 10:31:44.168346 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""
