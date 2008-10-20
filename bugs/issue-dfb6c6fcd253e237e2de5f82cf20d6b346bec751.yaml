@@ -7,8 +7,8 @@ type: :bugfix
 component: moxie
 release: "8.10"
 reporter: Chris Faulkner <thefaulkner@gmail.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-10-08 20:05:04.275712 Z
 references: []
 
@@ -42,3 +42,17 @@ log_events:
     I switched the handle retrieval to using swfobject's API.
     
     Now, I wait to see if these changes close the IE issue.
+- - 2008-10-20 04:33:18.441601 Z
+  - Scott Robinson <scott@quadhome.com>
+  - closed with disposition fixed
+  - |-
+    All the solutions ended up being necessary. To summarize:
+    
+    Problem: jQuery wasn't giving a handle to the Flash DOM object.
+    Solution: Use swfobject's API.
+    
+    Problem: IE prevents binding .play / .stop
+    Solution: Ghetto namespacing by prefixing "MusicPlayer_"
+    
+    Problem: IE doesn't support .currentTarget
+    Solution: var target = event.currentTarget || event.srcElement;

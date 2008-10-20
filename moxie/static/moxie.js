@@ -31,7 +31,10 @@ function render_duration(time) {
 }
 
 function track_click(event) {
-	var track = parseInt($(event.currentTarget)[0].id, 10);
+	// This is a work-around for IE not supporting .currentTarget.
+	// http://www.quirksmode.org/js/events_order.html
+	var target = event.currentTarget || event.srcElement;
+	var track = parseInt($(target).attr("id"), 10);
 
 	// Pause if we're playing the track, otherwise play it!
 	if (_player_status == PLAYING && _player_track == track)
@@ -97,7 +100,7 @@ function track_update(event) {
 
 function MusicPlayer_callback() {
 	// Cache repeated references.
-	_player = swfobject.getObjectById('player');    // Use swfobject for browser compatibility.
+	_player = swfobject.getObjectById("player");    // Use swfobject for browser compatibility.
 	_songs = $("li.song");
 	_original_title = document.title;
 

@@ -10,7 +10,7 @@ class MusicPlayer {
 	private var urls : Array = [];
 	private var tracks : Object = {};
 
-	private var playing_index : Number = 0;
+	private var playing_index : Number = undefined;
 	private var playing_track : Object = undefined;
 
 	public function MusicPlayer(urls : Array) {
@@ -69,22 +69,18 @@ class MusicPlayer {
 	}
 
 	public function play(index : Number) : Void {
-		if (index == null && this.playing_track.isPaused()) {
-			// With no parameters, unpause the current track.
-			this.playing_track.play();
-		}
-		else {
-			// Start a track, defaulting to 0.
+		if (index != null) {
+			// Start a given track.
 
-			this.playing_track.stop();
-
-			index = (index == null) ? 0 : index;
+			if (this.playing_track != null)
+				this.playing_track.stop();
 
 			this.playing_index = index;
 			this.playing_track = this.tracks[this.urls[index]];
-
-			this.playing_track.play();
 		}
+
+		if (this.playing_track != null)
+			this.playing_track.play();
 
 		// Immediately update, don't wait a second.
 		this._update();
