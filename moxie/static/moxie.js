@@ -111,11 +111,12 @@ function MusicPlayer_callback() {
 
 	// Bind DOM events.
 	_songs.click(track_click);
-	$("ul.songs").everyTime("1s", track_update);
 }
 
 function MusicPlayer_update(status, track, position) {
 	_player_status = status;
 	_player_track = track;
 	_player_position = position;
+
+	track_update();
 }
