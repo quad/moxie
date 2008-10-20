@@ -34,17 +34,15 @@ function track_click(event) {
 	var track = parseInt($(event.currentTarget)[0].id, 10);
 
 	// Pause if we're playing the track, otherwise play it!
-
 	if (_player_status == PLAYING && _player_track == track)
-		_player.pause();
+		_player.MusicPlayer_pause();
 	else
 		if (_player_track == track)
-			_player.play();
+			_player.MusicPlayer_play();
 		else
-			_player.play(track);
+			_player.MusicPlayer_play(track);
 
 	// Immediately update.
-
 	track_update(null);
 }
 
@@ -54,6 +52,8 @@ function track_update(event) {
 
 		if (_player_status && _player_track == index) {
 			var counter;
+
+			// Update the position counter.
 
 			if (_player_position) {
 				var time = Math.round(_player_position / 1000);
@@ -66,6 +66,8 @@ function track_update(event) {
 
 			message.html(counter);
 
+			// Update the CSS styles.
+
 			$(this).addClass("active");
 
 			if (_player_status == PLAYING) {
@@ -77,12 +79,15 @@ function track_update(event) {
 				$(this).removeClass("playing");
 			}
 
-			var title = $(this).find(".title");
-			document.title = jQuery.trim(title.text()) + " | " + _original_title;
+			// Update the title with the track name.
+			var title_dom = $(this).find(".title");
+			document.title = $.trim(title_dom.text()) + " | " + _original_title;
 		}
 		else {
+			// Clear any stale position counters.
 			message.html("");
 
+			// Clear any stale CSS styles.
 			$(this).removeClass("active");
 			$(this).removeClass("playing");
 			$(this).removeClass("paused");
@@ -91,11 +96,12 @@ function track_update(event) {
 }
 
 function MusicPlayer_callback() {
-	_player = $("#player")[0];
+	// Cache repeated references.
+	_player = swfobject.getObjectById('player');    // Use swfobject for browser compatibility.
 	_songs = $("li.song");
-
 	_original_title = document.title;
 
+	// Bind DOM events.
 	_songs.click(function(event) { track_click(event, false); });
 	$("ul.songs").everyTime("1s", track_update);
 }

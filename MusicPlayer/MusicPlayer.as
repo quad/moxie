@@ -16,8 +16,10 @@ class MusicPlayer {
 	public function MusicPlayer(urls : Array) {
 		this.urls = urls;
 
+		// Bind the callback for when tracks end.
 		var OSC_callback : Function = Delegate.create(this, this.onSoundComplete);
 
+		// Pre-allocate the tracks.
 		for (var url : String in this.urls)
 		{
 			url = this.urls[url];
@@ -28,16 +30,17 @@ class MusicPlayer {
 	}
 
 	private function onSoundComplete() {
-                // If there is another track, play it.
-                var next_index : Number = this.playing_index + 1;
+		// If there is another track, play it.
+
+		var next_index : Number = this.playing_index + 1;
 
 		if (next_index < this.urls.length)
 			this.play(next_index);
 	}
 
 	public function connectExternal() : Void {
-		ExternalInterface.addCallback("play", this, this.play);
-		ExternalInterface.addCallback("pause", this, this.pause);
+		ExternalInterface.addCallback("MusicPlayer_play", this, this.play);
+		ExternalInterface.addCallback("MusicPlayer_pause", this, this.pause);
 
 		ExternalInterface.call("MusicPlayer_callback");
 
@@ -67,9 +70,12 @@ class MusicPlayer {
 
 	public function play(index : Number) : Void {
 		if (index == null && this.playing_track.isPaused()) {
+			// With no parameters, unpause the current track.
 			this.playing_track.play();
 		}
 		else {
+			// Start a track, defaulting to 0.
+
 			this.playing_track.stop();
 
 			index = (index == null) ? 0 : index;
@@ -92,6 +98,8 @@ class MusicPlayer {
 	public static function main() : Void {
 		if (_root.playlist == undefined)
 			return;
+
+		// Instantiate the MusicPlayer from the XSPF playlist.
 
 		var playlist : XSPF = new XSPF();
 

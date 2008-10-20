@@ -26,3 +26,19 @@ log_events:
   - Scott Robinson <scott@quadhome.com>
   - assigned to release 8.10 from unassigned
   - ""
+- - 2008-10-20 02:40:17.834284 Z
+  - Scott Robinson <scott@quadhome.com>
+  - commented
+  - |-
+    Testing with Sarah and Tom indicates the Flash -> Browser FFI is working.
+    
+    And, our event binding is all working.
+    
+    I changed over the Browser -> Flash FFI to MusicPlayer_*. There are whispering on the Internet that this will have a positive effect.
+    
+    It doesn't immediately, because I think jQuery is giving back the wrong handle
+    to the player's DOM reference.
+    
+    I switched the handle retrieval to using swfobject's API.
+    
+    Now, I wait to see if these changes close the IE issue.

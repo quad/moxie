@@ -9,7 +9,9 @@
 		<script type="text/javascript" src="jquery.timers.js"></script>
 		<script type="text/javascript" src="moxie.js"></script>
 		<script type="text/javascript">
-			swfobject.embedSWF("MusicPlayer.swf", "player", "0", "0", "8.0.0", "expressInstall.swf", {playlist: "xspf"}, {}, {});
+			$(function() {
+				swfobject.embedSWF("MusicPlayer.swf", "player", "0", "0", "8.0.0", "expressInstall.swf", {playlist: "xspf"}, {}, {});
+			});
 		</script>
 	</head>
 	<body>
