@@ -1,0 +1,18 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Handle VBR in track lengths
+desc: The mutagen track lengths don't handle VBR properly and display too long of track lengths.
+type: :bugfix
+component: moxie
+release: 
+reporter: Scott Robinson <scott@quadhome.com>
+status: :unstarted
+disposition: 
+creation_time: 2008-10-20 04:53:13.611586 Z
+references: []
+
+id: f8194f1bdb07f13e56c067e9108e67f7d8d95315
+log_events: 
+- - 2008-10-20 04:53:14.236557 Z
+  - Scott Robinson <scott@quadhome.com>
+  - created
+  - ""
