@@ -17,9 +17,14 @@ class TrackList(dict):
         self.directory = directory
 
         try:
-            self.header = file(os.path.join(directory, self.HEADER)).read()
+            header = [line.strip()
+                      for line in file(os.path.join(directory, self.HEADER)).readlines()]
         except IOError:
-            self.header = None
+            self.title = "A Moxie Mixtape!"
+            self.subtitle = "Make a README"
+        else:
+            self.title = header[0]
+            self.subtitle = '\n'.join(header[1:])
 
         for fn in glob.glob(os.path.join(directory, '*.mp3')):
             self[os.path.basename(fn)] = TrackInfo(fn)

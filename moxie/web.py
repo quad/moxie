@@ -72,8 +72,7 @@ class app(selector.Selector):
 
     @uri('', 'index.html')
     def index(self, request, template):
-        return template.render(header = self.music.header,
-                               markdown = markdown.markdown,
+        return template.render(markdown = markdown.markdown,
                                tracklist = self.music)
 
     @uri('xspf', 'xspf.xml')

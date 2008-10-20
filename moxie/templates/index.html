@@ -1,15 +1,7 @@
 <!DOCTYPE html>
-<%
-	if header:
-		title = header[0]
-		subtitle = markdown(header[1:])
-	else:
-		title = "A Moxie Mixtape!"
-		subtitle = "Make a README"
-%>
 <html>
 	<head>
-		<title>${title}</title>
+		<title>${tracklist.title}</title>
 		<link rel="alternate" type="application/xspf+xml" href="xspf" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<script type="text/javascript" src="swfobject.js"></script>
@@ -23,8 +15,8 @@
 	</head>
 	<body>
 		<div id="header">
-			<h1>${title}</h1>
-			<h2>${subtitle}</h2>
+			<h1>${tracklist.title}</h1>
+			<h2>${markdown(tracklist.subtitle)}</h2>
 		</div>
 
 		<noscript>
