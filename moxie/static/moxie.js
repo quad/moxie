@@ -60,16 +60,16 @@ function track_update() {
 				$(this).addClass("playing");
 				$(this).removeClass("paused");
 
-	            // Update the title with the track name.
-	            var title_dom = $(this).find(".title");
-	            document.title = $.trim(title_dom.text()) + " | " + _original_title;
+				// Update the title with the track name.
+				var title_dom = $(this).find(".title");
+				document.title = $.trim(title_dom.text()) + " | " + _original_title;
 			}
 			else if (_player_status == PAUSED) {
 				$(this).addClass("paused");
 				$(this).removeClass("playing");
 	    
-	            // Reset title
-	            document.title = _original_title;
+				// Reset title
+				document.title = _original_title;
 			}
 		}
 		else {
@@ -82,7 +82,7 @@ function track_update() {
 			$(this).removeClass("paused");
 			
 			// Reset title
-		    document.title = _original_title;
+			document.title = _original_title;
 		}
 	});
 }
