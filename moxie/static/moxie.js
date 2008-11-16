@@ -61,15 +61,18 @@ function track_update() {
 			if (_player_status == PLAYING) {
 				$(this).addClass("playing");
 				$(this).removeClass("paused");
+
+				// Update the title with the track name.
+				var title_dom = $(this).find(".title");
+				document.title = $.trim(title_dom.text()) + " | " + _original_title;
 			}
 			else if (_player_status == PAUSED) {
 				$(this).addClass("paused");
 				$(this).removeClass("playing");
+	    
+				// Reset title
+				document.title = _original_title;
 			}
-
-			// Update the title with the track name.
-			var title_dom = $(this).find(".title");
-			document.title = $.trim(title_dom.text()) + " | " + _original_title;
 		}
 		else {
 			// Clear any stale position counters.
@@ -79,6 +82,9 @@ function track_update() {
 			$(this).removeClass("active");
 			$(this).removeClass("playing");
 			$(this).removeClass("paused");
+			
+			// Reset title
+			document.title = _original_title;
 		}
 	});
 }
