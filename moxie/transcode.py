@@ -43,7 +43,7 @@ class Transcoder:
         t = message.type
 
         if t == gst.MESSAGE_EOS:
-            logging.info('%s transcoded to %s.', self.fn_source, self.fn_sink)
+            logging.debug('%s transcoded to %s.', self.fn_source, self.fn_sink)
         elif t == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
             logging.error(err)
