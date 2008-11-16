@@ -44,11 +44,13 @@ function track_update() {
 			if (_player_position) {
 				var time = Math.round(_player_position / 1000);
 
-				counter = render_duration(time) + "&nbsp;/";
+				counter = render_duration(time);
 			}
 			else {
-				counter = "&hellip;&nbsp;/";
+				counter = "&hellip;";
 			}
+
+			counter = counter + "&nbsp;/&nbsp;";
 
 			message.html(counter);
 
