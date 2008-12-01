@@ -34,10 +34,13 @@ class MusicPlayer {
 
 		var next_index : Number = this.playing_index + 1;
 
-		if (next_index < this.urls.length)
+		if (next_index < this.urls.length) {
 			this.play(next_index);
-		else
+		}
+		else {
 			this.playing_index = undefined;
+			this.playing_track = undefined;
+		}
 	}
 
 	public function connectExternal() : Void {
