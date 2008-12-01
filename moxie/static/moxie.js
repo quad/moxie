@@ -79,14 +79,13 @@ function track_update() {
 			$(this).removeClass("active");
 			$(this).removeClass("playing");
 			$(this).removeClass("paused");
-			
-			if (_player_track == index)
-			{
-				// Reset title
-				document.title = _original_title;
-			}
 		}
 	});
+
+	if (_player_status == STOPPED) {
+		// Reset the title.
+		document.title = _original_title;
+	}
 }
 
 function track_click() {
