@@ -69,9 +69,6 @@ function track_update() {
 			else if (_player_status == PAUSED) {
 				$(this).addClass("paused");
 				$(this).removeClass("playing");
-	    
-				// Reset title
-				document.title = _original_title;
 			}
 		}
 		else {
@@ -83,8 +80,11 @@ function track_update() {
 			$(this).removeClass("playing");
 			$(this).removeClass("paused");
 			
-			// Reset title
-			document.title = _original_title;
+			if (_player_track == index)
+			{
+				// Reset title
+				document.title = _original_title;
+			}
 		}
 	});
 }
