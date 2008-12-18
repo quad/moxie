@@ -40,7 +40,8 @@ def static():
 
     # Parse the command-line.
 
-    parser = optparse.OptionParser()
+    parser = optparse.OptionParser(usage='Usage: %prog [options] [directories ...]',
+                                   description='Moxie Makes Mixtapes!')
     parser.add_option('-f', '--force', help='overwrite existing files', action='store_true')
     parser.add_option('-v', '--verbose', help='explain what is being done', action='store_true')
     parser.add_option('-u', '--url', help='the directory\'s base URL', action='store')
@@ -55,38 +56,48 @@ def static():
     else:
         log.setLevel(logging.WARN)
 
-    # Look for the music!
+    # Deploy to all specified directories. Use the current directory if none
+    # were specified.
 
-    app = moxie.web.app()
+    if not args:
+        args = ['.']
+        log.info('Using current directory...')
 
-    if not app.music:
-        return log.fatal('Aborting: no music.')
+    for d in args:
+        app = moxie.web.app(d)
 
-    # Generate the dynamic files.
+        if not app.music:
+            log.error("Skipping %s (no music)" % d)
+            continue
 
-    if not options.url:
-        log.warn('No base URL specified (--url). Expect weirdness!')
-        options.url = '/'
+        # Generate the dynamic files.
 
-    for uri, func in moxie.web.uri.uris(app):
-        req = webob.Request.blank(urlparse.urljoin(options.url, uri))
-        res = req.get_response(app)
+        if not options.url:
+            log.warn('No base URL specified (--url). Expect weirdness!')
+            options.url = '/'
 
-        fn = uri if uri else 'index.html'
+        for uri, func in moxie.web.uri.uris(app):
+            req = webob.Request.blank(urlparse.urljoin(options.url, uri))
+            res = req.get_response(app)
 
-        if os.path.exists(fn) and not options.force:
-            log.warn("Skipping %s (file exists)" % fn)
-        else:
-            with file(fn, 'w') as f:
-                f.write(res.body)
-                log.info("Wrote %s" % fn)
+            fn = os.path.join(d, uri if uri else 'index.html')
 
-    # Generate the static files.
-    for fn in pkg_resources.resource_listdir(__name__, 'static/'):
-        with pkg_resources.resource_stream(__name__, os.path.join('static', fn)) as f_in:
             if os.path.exists(fn) and not options.force:
                 log.warn("Skipping %s (file exists)" % fn)
             else:
-                with file(fn, 'w') as f_out:
-                    shutil.copyfileobj(f_in, f_out)
+                with file(fn, 'w') as f:
+                    f.write(res.body)
                     log.info("Wrote %s" % fn)
+
+        # Generate the static files.
+
+        for bfn in pkg_resources.resource_listdir(__name__, 'static/'):
+            with pkg_resources.resource_stream(__name__, os.path.join('static', bfn)) as f_in:
+                fn = os.path.join(d, bfn)
+
+                if os.path.exists(fn) and not options.force:
+                    log.warn("Skipping %s (file exists)" % fn)
+                else:
+                    with file(fn, 'w') as f_out:
+                        shutil.copyfileobj(f_in, f_out)
+                        log.info("Wrote %s" % fn)
