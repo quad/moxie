@@ -23,7 +23,7 @@ def _setup_logging():
 
     log.addHandler(_log_handler)
 
-def local(bindaddr = '127.0.0.1', port = 8080):
+def local(bindaddr = 'localhost', port = 8080):
     """Deploy a test web server."""
 
     server = make_server(bindaddr, port, moxie.web.app())
