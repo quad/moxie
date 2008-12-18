@@ -61,13 +61,12 @@ div#header h1 {
 }
 
 div#header h2 {
-	font-family: 'Times New Roman', Times, serif;
 	font-weight: normal;
 	font-size: medium;
 }
 
 ul.songs {
-	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-family: Helvetica, "Microsoft Sans Serif", Arial, sans-serif;
 	font-size: xx-large;
 }
 
