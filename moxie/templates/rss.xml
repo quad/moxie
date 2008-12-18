@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<%! import urllib, urlparse, markdown %>
+<%! import markdown, urllib %>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
 	<channel>
-		<atom:link href="${request.relative_url('rss')}" rel="self" type="application/rss+xml" />
+		<atom:link href="${request.relative_url('index.rss')}" rel="self" type="application/rss+xml" />
 		<title>${tracklist.title | x}</title>
 		<link>${request.relative_url('index.html')}</link>
-		<language>en-us</language>
 		<description>${markdown.markdown(tracklist.subtitle) | x}</description>
 		% for fn, info in sorted(tracklist.items()):
 		<item>
 			<title>${info.artist | x} - ${info.title | x}</title>
 			<itunes:author>${info.artist | x}</itunes:author>
-			<enclosure url="${request.application_url}/${urllib.quote(fn)}" length="${info.size}" type="audio/mpeg" />
-			<guid>${request.application_url}/${urllib.quote(fn)}</guid>
+			<enclosure url="${request.relative_url(urllib.quote(fn))}" length="${info.size}" type="audio/mpeg" />
+			<guid>${request.relative_url(urllib.quote(fn))}</guid>
 			<itunes:duration>${info.duration}</itunes:duration>
 		</item>
 		% endfor
