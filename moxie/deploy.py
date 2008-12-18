@@ -41,7 +41,7 @@ def static():
     # Parse the command-line.
 
     parser = optparse.OptionParser(usage='Usage: %prog [options] [directories ...]',
-                                   description='Moxie Makes Mixtapes!')
+                                   description='moxie makes mixtapes!')
     parser.add_option('-f', '--force', help='overwrite existing files', action='store_true')
     parser.add_option('-v', '--verbose', help='explain what is being done', action='store_true')
     parser.add_option('-u', '--url', help='the directory\'s base URL', action='store')
