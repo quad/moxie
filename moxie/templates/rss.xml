@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<%! import urllib, urlparse %>
+<%! import urllib, urlparse, markdown %>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
 	<channel>
 		<title>${tracklist.title}</title>
-		<link></link>
+		<link>${request.relative_url('index.html') | x}</link>
 		<language>en-us</language>
-		<description>${markdown(tracklist.subtitle)}</description>
+		<description>${markdown.markdown(tracklist.subtitle) | x}</description>
 		% for fn, info in sorted(tracklist.items()):
 		<item>
-			<title>${info.artist | h} - ${info.title | x}</title>
+			<title>${info.artist | x} - ${info.title | x}</title>
 			<itunes:author>${info.artist | x}</itunes:author>
-			<enclosure url="${fn}" length="${info.size | x}" type="audio/mpeg" />
-			<itunes:duration>${info.duration | h}</itunes:duration>
+			<enclosure url="${request.relative_url(fn) | x}" length="${info.size | x}" type="audio/mpeg" />
+			<itunes:duration>${info.duration | x}</itunes:duration>
 		</item>
 		% endfor
 	</channel>
