@@ -2,10 +2,10 @@
 <%! import urllib, urlparse %>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
 	<channel>
-		<title>A Moxie Mixtape!</title>
+		<title>${tracklist.title}</title>
 		<link></link>
 		<language>en-us</language>
-		<description></description>
+		<description>${tracklist.subtitle}</description>
 		% for fn, info in sorted(tracklist.items()):
 		<item>
 			<title>${info.artist | h} - ${info.title | x}</title>
