@@ -115,7 +115,7 @@ Terminal diarrhea throughout this.
 Now get to work. xoxo
 
 [mt]: http://muxtape.com/ "Muxtape"
-[mx]: http://pypi.python.org/pypi/Moxie "Python Package Index : Moxie"
+[mx]: http://pypi.python.org/pypi/moxie "Python Package Index : moxie"
 [st]: http://peak.telecommunity.com/DevCenter/EasyInstall "EasyInstall"
 [packaging]: http://www.b-list.org/weblog/2008/dec/14/packaging/ "James Bennett : On Packaging"
 [pip]: http://pip.openplans.org/ "pip documentation"
