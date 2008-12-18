@@ -33,3 +33,10 @@ log_events:
   - Scott Robinson <scott@quadhome.com>
   - created
   - ""
+- - 2008-12-18 04:03:55.769816 Z
+  - Scott Robinson <scott@quadhome.com>
+  - commented
+  - |-
+    Be sure to mention about the need for scons if someone is a developer.
+    
+    In the README.
