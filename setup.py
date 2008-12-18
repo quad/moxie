@@ -11,10 +11,12 @@ from setuptools import setup, find_packages
 setup(
     name = 'moxie',
     version = '8.12',
+    author = 'Moxie Hackers',
+    author_email = 'moxie-hackers@googlegroups.com',
     maintainer = 'Scott Robinson',
     maintainer_email = 'scott@quadhome.com',
+    url = 'http://github.com/quad/moxie',
     description = 'Makes mixtapes!',
-    download_url = 'http://github.com/quad/moxie',
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: Console',
