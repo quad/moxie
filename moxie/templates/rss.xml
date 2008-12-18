@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <%! import urllib, urlparse, markdown %>
-<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
 	<channel>
+		<atom:link href="${request.application_url}/rss" rel="self" type="application/rss+xml" />
 		<title>${tracklist.title | x}</title>
 		<link>${request.application_url}/index.html</link>
 		<language>en-us</language>
@@ -10,7 +11,8 @@
 		<item>
 			<title>${info.artist | x} - ${info.title | x}</title>
 			<itunes:author>${info.artist | x}</itunes:author>
-			<enclosure url="${request.application_url}/${fn}" length="${info.size}" type="audio/mpeg" />
+			<enclosure url="${request.application_url}/${urllib.quote(fn)}" length="${info.size}" type="audio/mpeg" />
+			<guid>${request.application_url}/${urllib.quote(fn)}</guid>
 			<itunes:duration>${info.duration}</itunes:duration>
 		</item>
 		% endfor
