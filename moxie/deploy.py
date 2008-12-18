@@ -4,6 +4,7 @@ import logging
 import optparse
 import os
 import shutil
+import urlparse
 import webbrowser
 
 from wsgiref.simple_server import make_server
@@ -42,6 +43,7 @@ def static():
     parser = optparse.OptionParser()
     parser.add_option('-f', '--force', help='overwrite existing files', action='store_true')
     parser.add_option('-v', '--verbose', help='explain what is being done', action='store_true')
+    parser.add_option('-u', '--url', help='the directory\'s base URL', action='store')
     (options, args) = parser.parse_args()
 
     # Set logging verbosity.
@@ -62,8 +64,12 @@ def static():
 
     # Generate the dynamic files.
 
+    if not options.url:
+        log.warn('No base URL specified (--url). Expect weirdness!')
+        options.url = '/'
+
     for uri, func in moxie.web.uri.uris(app):
-        req = webob.Request.blank('/' + uri)
+        req = webob.Request.blank(urlparse.urljoin(options.url, uri))
         res = req.get_response(app)
 
         fn = uri if uri else 'index.html'
