@@ -31,22 +31,22 @@ No one's perfect. :-) We got you covered.
         prefuse73-megachoppedsuite.mp3
         Rihanna feat. Jay-Z - Umbrella (Instrumental).mp3
 
-    Oh jeez, whose list is that?
+    Oh jeez, whose is that?
 
- 3. Try it out!
+ 3. Test it out...
 
         $ moxie-test
         http://127.0.0.1:8080/
 
     Almost perfect! Except, that text at the top could be improved.
 
- 4. Make a `README` file!
+ 4. Make a `README` file:
 
         $ cat > README
         One Red Mixtape
         Made by [this guy](http://oneredpaperclip.blogspot.com/)!
 
-    A title! And a subtitle! Two lines!
+    A title. And a subtitle!
     
     Did I mention you can use [Markdown][md] with the subtitle? I probably
     should have.
@@ -59,7 +59,7 @@ No one's perfect. :-) We got you covered.
                 background-color: black;
         }
 
-    How post-ironic: a black and white mixtape entitled _One Red Mixtape_.
+    How post-ironic: a black and white mixtape entitled "One _Red_ Mixtape."
 
  6. `moxie-static` to wrap that sucker up.
 
@@ -73,7 +73,7 @@ No one's perfect. :-) We got you covered.
         Wrote expressInstall.swf
         Wrote swfobject.js
 
- 7. I donno. Put it on a web server someplace!
+ 7. I donno. Put it on a web server someplace?
 
 Hey, that was helpful. But I'm a hacker!
 ----------------------------------------
@@ -112,7 +112,11 @@ Terminal diarrhea throughout this.
         (moxie)$ ditz status
         unassigned  0/ 1 bugfix,    0/ 2 features,  0/ 0 tasks 
 
-Now get to work. xoxo
+Now get to work.
+
+xoxo
+
+- la moxie comunidad hacker
 
 [mt]: http://muxtape.com/ "Muxtape"
 [mx]: http://pypi.python.org/pypi/moxie "Python Package Index : moxie"
