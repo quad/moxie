@@ -5,8 +5,8 @@ type: :feature
 component: moxie
 release: "8.10"
 reporter: Scott Robinson <scott@quadhome.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-09-14 23:20:44.096372 Z
 references: []
 
@@ -29,3 +29,7 @@ log_events:
     Furthermore, I think there is a URL schema of http://www.mnot.net/python/RSS.py?version=blahlblah
     
     So we can lock to it properly.
+- - 2008-12-18 14:51:10.778190 Z
+  - cd bugs/ <thefaulkner@gmail.com>
+  - closed with disposition fixed
+  - So many commits for something so simple...  FIXED.
