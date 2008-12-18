@@ -116,7 +116,7 @@ Now get to work.
 
 xoxo
 
-- la moxie comunidad hacker
+-- la moxie comunidad hacker
 
 [mt]: http://muxtape.com/ "Muxtape"
 [mx]: http://pypi.python.org/pypi/moxie "Python Package Index : moxie"
