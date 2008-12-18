@@ -82,5 +82,4 @@ class app(selector.Selector):
     @uri('xspf', 'xspf.xml')
     def xspf(self, request, template):
         return {'content_type': 'application/xspf+xml',
-                'body': template.render(tracklist = self.music,
-                                        request = request)}
+                'body': template.render(tracklist = self.music)}
