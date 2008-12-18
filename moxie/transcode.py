@@ -14,7 +14,7 @@ class Transcoder:
         self.fn_sink = os.path.abspath(fn_sink)
 
         assert(os.path.exists(self.fn_source))
-        assert(os.path.exists(self.fn_sink))
+        assert(not os.path.exists(self.fn_sink))
 
         self.pipeline = self._setup_pipeline()
 
