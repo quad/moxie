@@ -11,12 +11,16 @@ from setuptools import setup, find_packages
 setup(
     name = 'moxie',
     version = '8.12',
-    author = 'Moxie Hackers',
-    author_email = 'moxie-hackers@googlegroups.com',
-    maintainer = 'Scott Robinson',
-    maintainer_email = 'scott@quadhome.com',
-    url = 'http://github.com/quad/moxie',
     description = 'Makes mixtapes!',
+    url = 'http://github.com/quad/moxie',
+
+    author = 'Scott Robinson',
+    author_email = 'scott@quadhome.com',
+
+    maintainer = 'Moxie Hackers',
+    maintainer_email = 'moxie-hackers@googlegroups.com',
+
+    license = 'GPLv3',
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: Console',
@@ -28,9 +32,7 @@ setup(
     ],
 
     packages = find_packages(),
-    package_data = {
-        'moxie': ['templates/*', 'static/*'],
-    },
+    include_package_data = True,
 
     install_requires = [
         'flup', # BSD
