@@ -1,6 +1,7 @@
 from __future__ import with_statement
 
 import logging
+import optparse
 import os
 import shutil
 
@@ -23,23 +24,38 @@ def local(bindaddr = '127.0.0.1', port = 8080):
 def static():
     """Deploy a set of static files to a directory."""
 
+    # Parse the command-line.
+
+    parser = optparse.OptionParser()
+    parser.add_option('-f', '--force', help='overwrite existing files', action='store_true')
+    (options, args) = parser.parse_args()
+
+    # Look for the music!
+
     app = moxie.web.app()
 
     if not app.music:
-        return logging.error('No music found.')
+        return logging.fatal('No music found.')
 
-    # Dynamic files.
+    # Generate the dynamic files.
+
     for uri, func in moxie.web.uri.uris(app):
         req = webob.Request.blank('/' + uri)
         res = req.get_response(app)
 
         fn = uri if uri else 'index.html'
 
-        with file(fn, 'w') as f:
-            f.write(res.body)
+        if os.path.exists(fn) and not options.force:
+            logging.warn("Skipping %s (file exists)" % fn)
+        else:
+            with file(fn, 'w') as f:
+                f.write(res.body)
 
-    # Static files.
+    # Generate the static files.
     for fn in pkg_resources.resource_listdir(__name__, 'static/'):
         with pkg_resources.resource_stream(__name__, os.path.join('static', fn)) as f_in:
-            with file(fn, 'w') as f_out:
-                shutil.copyfileobj(f_in, f_out)
+            if os.path.exists(fn) and not options.force:
+                logging.warn("Skipping %s (file exists)" % fn)
+            else:
+                with file(fn, 'w') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
