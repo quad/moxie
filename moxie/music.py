@@ -1,4 +1,5 @@
 import glob
+import os
 import os.path
 
 import mutagen
@@ -41,6 +42,7 @@ class TrackInfo:
             self.duration = '?:??'
             self.length = 0
             self.title = 'No Title'
+            self.size = 0
 
     def _load(self, filename):
         short_tags = full_tags = mutagen.File(filename)
@@ -53,3 +55,4 @@ class TrackInfo:
         self.duration = "%u:%.2d" % (full_tags.info.length / 60, full_tags.info.length % 60)
         self.length = full_tags.info.length
         self.title = short_tags['title'][0]
+        self.size = os.stat(filename).st_size
