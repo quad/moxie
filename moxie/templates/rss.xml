@@ -10,7 +10,7 @@
 		<item>
 			<title>${info.artist | h} - ${info.title | x}</title>
 			<itunes:author>${info.artist | x}</itunes:author>
-			<enclosure url="${fn}" length="" type="audio/mpeg" />
+			<enclosure url="${fn}" length="${info.size | x}" type="audio/mpeg" />
 			<guid>${fn}</guid>
 			<pubDate></pubDate>
 			<itunes:duration>${info.duration | h}</itunes:duration>
