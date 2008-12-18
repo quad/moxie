@@ -1,7 +1,6 @@
 import os.path
 
 import mako.lookup
-import markdown
 import selector
 import static
 import webob
@@ -78,8 +77,7 @@ class app(selector.Selector):
 
     @uri('', 'index.html')
     def index(self, request, template):
-        return template.render(markdown = markdown.markdown,
-                               tracklist = self.music)
+        return template.render(tracklist = self.music)
 
     @uri('xspf', 'xspf.xml')
     def xspf(self, request, template):
