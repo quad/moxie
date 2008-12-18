@@ -22,7 +22,7 @@ setup(
         'flup',
         'Mako',
         'Markdown >= 1.7',
-        'mutagen >= 1.14',
+        'mutagen >= 1.15',
         'selector',
         'static',
         'WebOb',
