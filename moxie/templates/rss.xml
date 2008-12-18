@@ -3,15 +3,15 @@
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
 	<channel>
 		<title>${tracklist.title}</title>
-		<link>${request.relative_url('index.html') | x}</link>
+		<link>${request.application_url}/index.html</link>
 		<language>en-us</language>
-		<description>${markdown.markdown(tracklist.subtitle) | x}</description>
+		<description>${markdown.markdown(tracklist.subtitle)}</description>
 		% for fn, info in sorted(tracklist.items()):
 		<item>
-			<title>${info.artist | x} - ${info.title | x}</title>
+			<title>${info.artist | h} - ${info.title | h}</title>
 			<itunes:author>${info.artist | x}</itunes:author>
-			<enclosure url="${request.relative_url(fn) | x}" length="${info.size | x}" type="audio/mpeg" />
-			<itunes:duration>${info.duration | x}</itunes:duration>
+			<enclosure url="${request.application_url}/${fn | u}" length="${info.size}" type="audio/mpeg" />
+			<itunes:duration>${info.duration}</itunes:duration>
 		</item>
 		% endfor
 	</channel>
