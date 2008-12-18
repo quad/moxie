@@ -84,7 +84,7 @@ Oh ho! Well, just a couple recommendations:
  * [git][g] for `git://github.com/quad/moxie.git`
  * [lame][l] to make test data.
  * [MTASC][m] so you can compile **The Flash**.
- * [nose][n] for all those unittests we _forget_ to write.
+ * [nose][n] for all those unittests we forget to write.
  * [SCons][sc] is better than make.
  * [virtualenv][ve]. This is our Opinionated Requirement.
 
