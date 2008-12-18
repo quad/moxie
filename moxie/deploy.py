@@ -4,6 +4,7 @@ import logging
 import optparse
 import os
 import shutil
+import webbrowser
 
 from wsgiref.simple_server import make_server
 
@@ -12,12 +13,24 @@ import webob
 
 import moxie.web
 
+log = logging.getLogger(__name__)
+
+def _setup_logging():
+    _log_handler = logging.StreamHandler()
+    _log_handler.setFormatter(logging.Formatter("%(message)s"))
+    _log_handler.setLevel(logging.INFO)
+
+    log.addHandler(_log_handler)
+
 def local(bindaddr = '127.0.0.1', port = 8080):
     """Deploy a test web server."""
 
     server = make_server(bindaddr, port, moxie.web.app())
 
-    print 'http://%s:%u/' % (bindaddr, port)
+    url = 'http://%s:%u/' % (bindaddr, port)
+
+    print url
+    webbrowser.open(url)
 
     server.serve_forever()
 
@@ -28,14 +41,24 @@ def static():
 
     parser = optparse.OptionParser()
     parser.add_option('-f', '--force', help='overwrite existing files', action='store_true')
+    parser.add_option('-v', '--verbose', help='explain what is being done', action='store_true')
     (options, args) = parser.parse_args()
+
+    # Set logging verbosity.
+
+    _setup_logging()
+
+    if options.verbose:
+        log.setLevel(logging.INFO)
+    else:
+        log.setLevel(logging.WARN)
 
     # Look for the music!
 
     app = moxie.web.app()
 
     if not app.music:
-        return logging.fatal('No music found.')
+        return log.fatal('Aborting: no music.')
 
     # Generate the dynamic files.
 
@@ -46,16 +69,18 @@ def static():
         fn = uri if uri else 'index.html'
 
         if os.path.exists(fn) and not options.force:
-            logging.warn("Skipping %s (file exists)" % fn)
+            log.warn("Skipping %s (file exists)" % fn)
         else:
             with file(fn, 'w') as f:
                 f.write(res.body)
+                log.info("Wrote %s" % fn)
 
     # Generate the static files.
     for fn in pkg_resources.resource_listdir(__name__, 'static/'):
         with pkg_resources.resource_stream(__name__, os.path.join('static', fn)) as f_in:
             if os.path.exists(fn) and not options.force:
-                logging.warn("Skipping %s (file exists)" % fn)
+                log.warn("Skipping %s (file exists)" % fn)
             else:
                 with file(fn, 'w') as f_out:
                     shutil.copyfileobj(f_in, f_out)
+                    log.info("Wrote %s" % fn)
