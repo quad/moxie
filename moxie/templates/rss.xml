@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%! import urllib, urlparse %>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+	<channel>
+		<title>A Moxie Mixtape!</title>
+		<link></link>
+		<language>en-us</language>
+		<description></description>
+		% for fn, info in sorted(tracklist.items()):
+		<item>
+			<title>${info.artist | h} - ${info.title | x}</title>
+			<itunes:author>${info.artist | x}</itunes:author>
+			<enclosure url="${fn}" length="" type="audio/mpeg" />
+			<guid>${fn}</guid>
+			<pubDate></pubDate>
+			<itunes:duration>${info.duration | h}</itunes:duration>
+		</item>
+		% endfor
+	</channel>
+</rss>

@@ -80,3 +80,9 @@ class app(selector.Selector):
         return {'content_type': 'application/xspf+xml',
                 'body': template.render(tracklist = self.music,
                                         request = request)}
+    @uri('rss', 'rss.xml')
+    def xspf(self, request, template):
+        return {'content_type': 'application/rss+xml',
+                'body': template.render(tracklist = self.music,
+                                        request = request)}
+		
