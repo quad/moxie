@@ -72,12 +72,13 @@ def static():
 
         # Generate the dynamic files.
 
-        if not options.url:
+        if options.url:
+            options.url = options.url.strip('/')
+        else:
             log.warn('No base URL specified (--url). Expect weirdness!')
-            options.url = '/'
 
         for uri, func in moxie.web.uri.uris(app):
-            req = webob.Request.blank(urlparse.urljoin(options.url, uri))
+            req = webob.Request.blank('/' + uri, base_url=options.url)
             res = req.get_response(app)
 
             fn = os.path.join(d, uri if uri else 'index.html')
