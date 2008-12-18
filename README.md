@@ -82,6 +82,7 @@ Oh ho! Well, just a couple recommendations:
 
  * [Ditz][d], a fine issue tracker.
  * [git][g] for `git://github.com/quad/moxie.git`
+ * [lame][l] to make test data.
  * [MTASC][m] so you can compile **The Flash**.
  * [nose][n] for all those unittests we _forget_ to write.
  * [SCons][sc] is better than make.
@@ -98,6 +99,7 @@ Right?
 
         (moxie)$ cd src/
         (moxie)$ ./setup.py develop
+        (moxie)$ scons
         (moxie)$ ./setup.py test
 
 Terminal diarrhea throughout this.
@@ -120,6 +122,7 @@ Now get to work. xoxo
 [md]: http://daringfireball.net/projects/markdown/ "Daring Fireball: Markdown"
 [d]: http://ditz.rubyforge.org/ "Ditz"
 [g]: http://git.or.cz/ "Git - Fast Version Control System"
+[l]: http://lame.sourceforge.net/ "LAME MP3 Encoder"
 [m]: http://www.mtasc.org/ "Motion-Twin"
 [n]: http://somethingaboutorange.com/mrl/projects/nose/ "nose: a discovery-based unittest extension"
 [sc]: http://www.scons.org/ "SCons: A software construction tool"
