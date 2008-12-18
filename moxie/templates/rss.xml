@@ -10,7 +10,7 @@
 		<item>
 			<title>${info.artist | h} - ${info.title | h}</title>
 			<itunes:author>${info.artist | x}</itunes:author>
-			<enclosure url="${request.application_url}/${fn | u}" length="${info.size}" type="audio/mpeg" />
+			<enclosure url="${request.application_url}/${fn}" length="${info.size}" type="audio/mpeg" />
 			<itunes:duration>${info.duration}</itunes:duration>
 		</item>
 		% endfor
