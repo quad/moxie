@@ -40,7 +40,7 @@ No one's perfect. :-) We got you covered.
 
     Almost perfect! Except, that text at the top could be improved.
 
- 4. Make a <code>README</code> file!
+ 4. Make a `README` file!
 
         $ cat > README
         One Red Mixtape
@@ -48,10 +48,10 @@ No one's perfect. :-) We got you covered.
 
     A title! And a subtitle! Two lines!
     
-    Did I mention you can use [Markdown][md] on the subtitle? I probably should
-    have.
+    Did I mention you can use [Markdown][md] with the subtitle? I probably
+    should have.
 
- 5. Use <code>local.css</code> if you don't like red. 
+ 5. Use `local.css` if you don't like red. 
 
         $ cat > local.css
         div#header {
@@ -59,7 +59,9 @@ No one's perfect. :-) We got you covered.
                 background-color: black;
         }
 
- 6. <code>moxie-static</code> to wrap that sucker up.
+    How post-ironic: a black and white mixtape entitled _One Red Mixtape_.
+
+ 6. `moxie-static` to wrap that sucker up.
 
         $ moxie-static --verbose
         Wrote index.html
@@ -78,6 +80,6 @@ Hey, that was helpful. But I'm a hacker!
 
 [muxtape]: http://muxtape.com/ "Muxtape"
 [moxie]: http://pypi.python.org/pypi/Moxie "Python Package Index : Moxie"
-[setuptools]:
+[setuptools]: http://peak.telecommunity.com/DevCenter/EasyInstall "EasyInstal"
 [packaging]: http://www.b-list.org/weblog/2008/dec/14/packaging/ "James Bennett : On Packaging"
 [md]: http://daringfireball.net/projects/markdown/ "Daring Fireball: Markdown"
