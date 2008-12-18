@@ -5,7 +5,7 @@
 		<title>${tracklist.title}</title>
 		<link></link>
 		<language>en-us</language>
-		<description>${tracklist.subtitle}</description>
+		<description>${markdown(tracklist.subtitle)}</description>
 		% for fn, info in sorted(tracklist.items()):
 		<item>
 			<title>${info.artist | h} - ${info.title | x}</title>
