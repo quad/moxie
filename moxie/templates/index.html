@@ -5,6 +5,7 @@
 		<link rel="alternate" type="application/xspf+xml" href="xspf" />
 		<link rel="alternate" type="application/rss+xml" title="Moxie RSS Feed" href="rss" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="stylesheet" type="text/css" href="local.css" />
 		<script type="text/javascript" src="swfobject.js"></script>
 		<script type="text/javascript" src="jquery-1.2.6.min.js"></script>
 		<script type="text/javascript" src="moxie.js"></script>
@@ -17,7 +18,7 @@
 	<body>
 		<div id="header">
 			<h1>${tracklist.title}</h1>
-			<h2>${markdown(tracklist.subtitle)}</h2>
+			${markdown(tracklist.subtitle)}
 		</div>
 
 		<noscript>

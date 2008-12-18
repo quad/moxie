@@ -3,15 +3,27 @@
 try:
     import pygst
     pygst.require('0.10')
-    import gst
 except ImportError:
-    logging.error('GStreamer bindings need to be installed: http://pygstdocs.berlios.de/')
+    logging.info('GStreamer bindings should be installed: http://pygstdocs.berlios.de/')
 
 from setuptools import setup, find_packages
 
 setup(
     name = 'moxie',
-    version = '8.10',
+    version = '8.12',
+    maintainer = 'Scott Robinson',
+    maintainer_email = 'scott@quadhome.com',
+    description = 'Makes mixtapes!',
+    download_url = 'http://github.com/quad/moxie',
+    classifiers = [
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'Environment :: Web Environment',
+        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'Topic :: Internet :: WWW/HTTP',
+        'Topic :: Multimedia :: Sound/Audio :: Players :: MP3',
+        'Topic :: Utilities',
+    ],
 
     packages = find_packages(),
     package_data = {
@@ -19,13 +31,13 @@ setup(
     },
 
     install_requires = [
-        'flup',
-        'Mako',
-        'Markdown >= 1.7',
-        'mutagen >= 1.14',
-        'selector',
-        'static',
-        'WebOb',
+        'flup', # BSD
+        'Mako', # MIT
+        'Markdown >= 1.7', # BSD
+        'mutagen >= 1.15', # GPLv2
+        'selector', # LGPLv2.1
+        'static', # LGPLv2.1
+        'WebOb', # MIT
     ],
     dependency_links = [
         # mutagen

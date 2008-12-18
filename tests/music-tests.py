@@ -26,7 +26,8 @@ class TrackListTests(unittest.TestCase):
 
         tracks = TrackList(DATA)
 
-        assert tracks.header == None
+        assert tracks.title == "A Moxie Mixtape!"
+        assert tracks.subtitle == "Make a README"
 
         for fn in glob.glob(os.path.join(DATA, '*.mp3')):
             assert os.path.basename(fn) in tracks
@@ -44,7 +45,7 @@ class TrackListHeaderTest(unittest.TestCase):
         self.dirname = tempfile.mkdtemp()
         self.headername = os.path.join(self.dirname, TrackList.HEADER)
 
-        self.header = "# Hello!"
+        self.header = "Hello!"
 
         with file(self.headername, 'w') as f:
             f.write(self.header)
@@ -58,7 +59,8 @@ class TrackListHeaderTest(unittest.TestCase):
 
         tracks = TrackList(self.dirname)
 
-        assert tracks.header == self.header
+        assert tracks.title == self.header
+        assert tracks.subtitle == ''
         assert len(tracks) == 0
 
 class TrackInfoNegativeTests(unittest.TestCase):

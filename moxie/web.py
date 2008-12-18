@@ -1,3 +1,5 @@
+import os.path
+
 import mako.lookup
 import markdown
 import selector
@@ -69,6 +71,10 @@ class app(selector.Selector):
 
         for fn in self.music:
             self.add(fn, GET = music_app)
+
+        # Special-case for user CSS customizations.
+        if os.path.exists(os.path.join(directory, 'local.css')):
+            self.add('local.css', GET = music_app)
 
     @uri('', 'index.html')
     def index(self, request, template):
