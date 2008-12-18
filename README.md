@@ -109,7 +109,7 @@ Terminal diarrhea throughout this.
 
 **IT WORKS!**
 
-        $ ditz status
+        (moxie)$ ditz status
         unassigned  0/ 1 bugfix,    0/ 2 features,  0/ 0 tasks 
 
 Now get to work. xoxo
