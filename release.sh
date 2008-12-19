@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh -e
 
 git clean -df
 
@@ -8,8 +8,9 @@ fi
 virtualenv release-moxie
 . release-moxie/bin/activate
 
-scons
+./setup.py develop -q
 
-nosetests
+scons -Q
 
+./setup.py test -q
 ./setup.py sdist bdist_egg
