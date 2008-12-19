@@ -31,7 +31,7 @@ setup(
         'Topic :: Utilities',
     ],
 
-    packages = find_packages(),
+    packages = ['moxie'],
     include_package_data = True,
 
     install_requires = [
