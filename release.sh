@@ -10,6 +10,6 @@ virtualenv release-moxie
 
 scons
 
-./setup test
+nosetests
 
-./setup sdist bdist_egg
+./setup.py sdist bdist_egg
