@@ -12,7 +12,7 @@ import moxie.music
 class uri(object):
     """A decorator for instance functions to attach a .uri_path and associate a template."""
 
-    TEMPLATES = mako.lookup.TemplateLookup(directories = [pkg_resources.resource_filename(__name__, 'templates/')],
+    TEMPLATES = mako.lookup.TemplateLookup(directories = [pkg_resources.resource_filename(__name__, 'templates')],
                                            filesystem_checks = True)
 
     def __init__(self, path, template):
@@ -60,9 +60,9 @@ class app(selector.Selector):
             self.add(path, GET = func)
 
         # Register the static URIs.
-        static_app = static.Cling(pkg_resources.resource_filename(__name__, 'static/'))
+        static_app = static.Cling(pkg_resources.resource_filename(__name__, 'static'))
 
-        for fn in pkg_resources.resource_listdir(__name__, 'static/'):
+        for fn in pkg_resources.resource_listdir(__name__, 'static'):
             self.add(fn, GET = static_app)
 
         # Register the music.

@@ -1,5 +1,6 @@
 from __future__ import with_statement
 
+import contextlib
 import logging
 import optparse
 import os
@@ -92,8 +93,10 @@ def static():
 
         # Generate the static files.
 
-        for bfn in pkg_resources.resource_listdir(__name__, 'static/'):
-            with pkg_resources.resource_stream(__name__, os.path.join('static', bfn)) as f_in:
+        for bfn in pkg_resources.resource_listdir(__name__, 'static'):
+            stream = pkg_resources.resource_stream(__name__, os.path.join('static', bfn))
+
+            with contextlib.closing(stream) as f_in:
                 fn = os.path.join(d, bfn)
 
                 if os.path.exists(fn) and not options.force:
