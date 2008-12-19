@@ -50,9 +50,9 @@ class TrackInfo:
         if isinstance(full_tags, mutagen.mp3.MP3):
             short_tags = mutagen.easyid3.EasyID3(filename)
 
-        self.album = short_tags['album'][0]
-        self.artist = short_tags['artist'][0]
+        self.album = short_tags.get('album', ['No Album'])[0]
+        self.artist = short_tags.get('artist', ['No Artist'])[0]
         self.duration = "%u:%.2d" % (full_tags.info.length / 60, full_tags.info.length % 60)
         self.length = full_tags.info.length
-        self.title = short_tags['title'][0]
+        self.title = short_tags.get('title', ['No Title'])[0]
         self.size = os.stat(filename).st_size
