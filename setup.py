@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'moxie',
-    version = '8.12',
+    version = '8.12.1',
     description = 'Makes mixtapes!',
     url = 'http://github.com/quad/moxie',
 
