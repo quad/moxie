@@ -2,7 +2,7 @@
 
 git clean -df
 
-if [ -d "release-moxie" ];
+if [ -d "release-moxie" ]; then
 	rm -rf release-moxie
 fi
 virtualenv release-moxie
