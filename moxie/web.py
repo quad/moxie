@@ -13,7 +13,10 @@ class uri(object):
     """A decorator for instance functions to attach a .uri_path and associate a template."""
 
     TEMPLATES = mako.lookup.TemplateLookup(directories = [pkg_resources.resource_filename(__name__, 'templates')],
-                                           filesystem_checks = True)
+                                           filesystem_checks = True,
+                                           default_filters = ['decode.utf8'],
+                                           input_encoding = 'utf-8',
+                                           output_encoding = 'utf-8')
 
     def __init__(self, path, template):
         self.uri_path = path
