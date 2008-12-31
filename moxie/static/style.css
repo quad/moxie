@@ -83,7 +83,7 @@ span.position {
 }
 
 li.playing span.position {
-	color: limegreen;
+	color: #32CD32;
 }
 
 li.paused span.position {
