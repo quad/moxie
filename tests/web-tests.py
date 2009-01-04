@@ -63,7 +63,33 @@ class MoxieTests(unittest.TestCase):
     def test_file_exposure(self):
         """Expose files?"""
 
-        req = webob.Request.blank('/' + self.app.music.HEADER)
+        req = webob.Request.blank('/null')
         res = req.get_response(self.app)
 
         assert res.status == '404 Not Found'
+
+    def test_no_local_css(self):
+        """No Local CSS"""
+
+        req = webob.Request.blank('/local.css')
+        res = req.get_response(self.app)
+
+        assert res.status == '404 Not Found'
+
+class CSSTest(unittest.TestCase):
+    def setUp(self):
+        self.css_fn = os.path.join(DATA, 'local.css')
+        file(self.css_fn, 'w').close()
+
+        self.app = moxie.web.app(DATA)
+
+    def tearDown(self):
+        os.unlink(self.css_fn)
+
+    def test_local_css(self):
+        """Local CSS"""
+
+        req = webob.Request.blank('/local.css')
+        res = req.get_response(self.app)
+
+        assert res.status == '200 OK'
