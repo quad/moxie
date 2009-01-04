@@ -34,21 +34,20 @@ class TrackInfo:
     """Metadata for audio files."""
 
     def __init__(self, filename):
-        try:
-            self._load(filename)
-        except mutagen.id3.error:
-            self.album = 'No Album'
-            self.artist = 'No Artist'
-            self.duration = '?:??'
-            self.length = 0
-            self.title = 'No Title'
-            self.size = 0
+        self.album = 'No Album'
+        self.artist = 'No Artist'
+        self.duration = '?:??'
+        self.length = 0
+        self.title = 'No Title'
+        self.size = 0
+
+        self._load(filename)
 
     def _load(self, filename):
         short_tags = full_tags = mutagen.File(filename)
 
         if isinstance(full_tags, mutagen.mp3.MP3):
-            short_tags = mutagen.easyid3.EasyID3(filename)
+            short_tags = mutagen.mp3.MP3(filename, ID3 = mutagen.easyid3.EasyID3)
 
         self.album = short_tags.get('album', ['No Album'])[0]
         self.artist = short_tags.get('artist', ['No Artist'])[0]

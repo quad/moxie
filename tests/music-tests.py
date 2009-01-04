@@ -87,19 +87,23 @@ class TrackInfoDataTests(unittest.TestCase):
     V2_MP3   = os.path.join(DATA, 'null-v2.mp3')
 
     def setUp(self):
-        print "No such file or directory? Run 'scons'."
+        scons_err = 'Run scons to generate test data: %s.'
+
+        assert os.path.exists(self.NULL_MP3), scons_err % self.NULL_MP3
+        assert os.path.exists(self.V1_MP3), scons_err % self.V1_MP3
+        assert os.path.exists(self.V2_MP3), scons_err % self.V2_MP3
 
     def test_v1(self):
         """An ID3v1 tagged file."""
 
         info = TrackInfo(self.V1_MP3)
-        self.check_info(info)
+        self.check_tags(info)
 
     def test_v2(self):
         """An ID3v2 tagged file."""
 
         info = TrackInfo(self.V2_MP3)
-        self.check_info(info)
+        self.check_tags(info)
 
     def test_none(self):
         """An untagged file."""
@@ -108,12 +112,22 @@ class TrackInfoDataTests(unittest.TestCase):
 
         assert info.album == 'No Album'
         assert info.artist == 'No Artist'
-        assert info.duration == '?:??'
-        assert info.length == 0
         assert info.title == 'No Title'
 
-    def check_info(self, info):
+    @raises(IOError)
+    def test_nonexistant(self):
+        """A non-existent file."""
+
+        TrackInfo(os.path.join(DATA, 'xyzzy'))
+
+    def check_tags(self, info):
         assert info.album == 'Null Album'
         assert info.artist == 'Null Artist'
-        assert info.duration == '0:00'
         assert info.title == 'Null Title'
+
+        self.check_info(info)
+
+    def check_info(self, info):
+        assert info.duration == '0:00'
+        assert info.length < 1
+        assert info.size
