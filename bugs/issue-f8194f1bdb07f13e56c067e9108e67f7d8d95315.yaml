@@ -5,8 +5,8 @@ type: :bugfix
 component: moxie
 release: 
 reporter: Scott Robinson <scott@quadhome.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-10-20 04:53:13.611586 Z
 references: []
 
@@ -16,3 +16,7 @@ log_events:
   - Scott Robinson <scott@quadhome.com>
   - created
   - ""
+- - 2009-05-10 21:34:43.350093 Z
+  - Scott Robinson <scott@quadhome.com>
+  - closed with disposition fixed
+  - Mutagen handles VBR MP3s with proper headers. Fixed the Transcoder to actually attach said headers.
