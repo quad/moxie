@@ -26,7 +26,7 @@ class Transcoder:
         self.loop = gobject.MainLoop()
 
     def _setup_pipeline(self):
-        p_str = 'decodebin name=in ! audioconvert ! lame vbr=4 vbr-quality=6 ! id3v2mux name=out'
+        p_str = 'decodebin name=in ! audioconvert ! lame vbr=4 vbr-quality=6 ! xingmux ! id3v2mux name=out'
         p = gst.parse_launch(p_str)
 
         source = gst.element_factory_make('filesrc')
