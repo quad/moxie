@@ -2,9 +2,10 @@
 
 try:
     import pygst
-    pygst.require('0.10')
 except ImportError:
-    logging.info('GStreamer bindings should be installed: http://pygstdocs.berlios.de/')
+    raise Warning('GStreamer bindings should be installed: http://pygstdocs.berlios.de/')
+else:
+    pygst.require('0.10')
 
 from setuptools import setup, find_packages
 
