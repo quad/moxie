@@ -3,7 +3,8 @@
 try:
     import pygst
 except ImportError:
-    raise Warning('GStreamer bindings should be installed: http://pygstdocs.berlios.de/')
+    print 'GStreamer bindings should be installed: http://pygstdocs.berlios.de/'
+    print 'Continuing... will use ffmpeg and lame pipeline transcoder'
 else:
     pygst.require('0.10')
 
