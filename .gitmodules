@@ -1,0 +1,3 @@
+[submodule "SoundManager2"]
+	path = SoundManager2
+	url = http://github.com/scottschiller/SoundManager2
