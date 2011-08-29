@@ -1,1 +1,5 @@
 .ditz-config
+*.pyc
+.*.swp
+.sconsign.dblite
+moxie.egg-info
