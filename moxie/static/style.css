@@ -12,11 +12,16 @@ body {
 }
 
 div#header {
-	padding: 1ex 0;
+	padding: 1ex 0.5em;
+	margin: 0;
 }
 
-div#header h1, p {
-	margin: 0 0.5em;
+div#header * {
+	margin: 0;
+}
+
+div#header p {
+	padding: 0 1em;
 }
 
 ul.songs {
@@ -60,14 +65,16 @@ noscript div {
 
 /* Colors */
 
-div#header h1 {
+div#header {
 	font-family: Verdana, Geneva, sans-serif;
+}
+
+div#header h1 {
 	font-size: x-large;
 }
 
-div#header h2 {
-	font-weight: normal;
-	font-size: medium;
+div#header p {
+	font-size: small;
 }
 
 div#header a {
