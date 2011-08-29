@@ -44,6 +44,11 @@ span.time {
 	float: right;
 }
 
+a.title {
+	color: black;
+	text-decoration: none;
+}
+
 noscript div {
 	display: block;
 	background-color: #FFFA67;
