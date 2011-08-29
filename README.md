@@ -63,16 +63,16 @@ No one's perfect. :-) We got you covered.
  6. `moxie-static` to wrap that sucker up.
 
         $ moxie-static --verbose --url http://mixtape.quadhome.com/
-	Using current directory...
-	Wrote ./index.html
-	Wrote ./index.rss
-	Wrote ./index.xspf
-	Wrote ./.moxie.js.swp
-	Wrote ./jquery-1.6.2.min.js
-	Wrote ./moxie.js
-	Wrote ./soundmanager2-nodebug-jsmin.js
-	Wrote ./soundmanager2.swf
-	Wrote ./style.css
+        Using current directory...
+        Wrote ./index.html
+        Wrote ./index.rss
+        Wrote ./index.xspf
+        Wrote ./.moxie.js.swp
+        Wrote ./jquery-1.6.2.min.js
+        Wrote ./moxie.js
+        Wrote ./soundmanager2-nodebug-jsmin.js
+        Wrote ./soundmanager2.swf
+        Wrote ./style.css
 
 
  7. I donno. Put it on a web server someplace?
