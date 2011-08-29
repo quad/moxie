@@ -48,7 +48,6 @@ soundManager.onready(function () {
 					e.addClass("playing");
 					e.removeClass("paused");
 
-					// Update the title with the track name.
 					document.title = $.trim(e.find(".title").text()) + " | " + original_title;
 				}
 			},
@@ -56,11 +55,11 @@ soundManager.onready(function () {
 				e.addClass("paused");
 				e.removeClass("playing");
 			},
-			onjustbeforefinish: function () {
+			onbeforefinish: function () {
 				var next_sound = next_e.data("sound");
 
 				if (next_sound) {
-					next_sound.load();
+					setTimeout(function () { next_sound.load(); }, 0);
 				}
 			},
 			onstop: function () {
@@ -78,7 +77,7 @@ soundManager.onready(function () {
 				var next_sound = next_e.data("sound");
 
 				if (next_sound) {
-					next_sound.play();
+					setTimeout(function () { next_sound.play(); }, 0);
 				}
 			}
 		}));
