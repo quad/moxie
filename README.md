@@ -31,7 +31,7 @@ No one's perfect. :-) We got you covered.
         prefuse73-megachoppedsuite.mp3
         Rihanna feat. Jay-Z - Umbrella (Instrumental).mp3
 
-    Oh jeez, whose is that?
+    Oh jeez, whose are those?
 
  3. Test it out...
 
@@ -48,8 +48,7 @@ No one's perfect. :-) We got you covered.
 
     A title. And a subtitle!
     
-    Did I mention you can use [Markdown][md] with the subtitle? I probably
-    should have.
+    Did I mention you can use [Markdown][md] with the subtitle? I probably should have.
 
  5. Use `local.css` if you don't like red. 
 
@@ -63,15 +62,18 @@ No one's perfect. :-) We got you covered.
 
  6. `moxie-static` to wrap that sucker up.
 
-        $ moxie-static --verbose
-        Wrote index.html
-        Wrote xspf
-        Wrote MusicPlayer.swf
-        Wrote style.css
-        Wrote jquery-1.2.6.min.js
-        Wrote moxie.js
-        Wrote expressInstall.swf
-        Wrote swfobject.js
+        $ moxie-static --verbose --url http://mixtape.quadhome.com/
+	Using current directory...
+	Wrote ./index.html
+	Wrote ./index.rss
+	Wrote ./index.xspf
+	Wrote ./.moxie.js.swp
+	Wrote ./jquery-1.6.2.min.js
+	Wrote ./moxie.js
+	Wrote ./soundmanager2-nodebug-jsmin.js
+	Wrote ./soundmanager2.swf
+	Wrote ./style.css
+
 
  7. I donno. Put it on a web server someplace?
 
@@ -83,13 +85,11 @@ Oh ho! Well, just a couple recommendations:
  * [Ditz][d], a fine issue tracker.
  * [git][g] for `git://github.com/quad/moxie.git`
  * [lame][l] to make test data.
- * [MTASC][m] so you can compile **The Flash**.
  * [nose][n] for all those unittests we forget to write.
  * [SCons][sc] is better than make.
  * [virtualenv][ve]. This is our Opinionated Requirement.
 
-I'm hesitant to ask; but, you know to use `apt`/`emerge`/`yum` and friends.
-Right?
+I'm hesitant to ask; but, you know to use `apt`/`emerge`/`yum` and friends. Right?
 
         $ git clone git://github.com/quad/moxie.git src
 
@@ -127,7 +127,6 @@ xoxo
 [d]: http://ditz.rubyforge.org/ "Ditz"
 [g]: http://git.or.cz/ "Git - Fast Version Control System"
 [l]: http://lame.sourceforge.net/ "LAME MP3 Encoder"
-[m]: http://www.mtasc.org/ "Motion-Twin"
 [n]: http://somethingaboutorange.com/mrl/projects/nose/ "nose: a discovery-based unittest extension"
 [sc]: http://www.scons.org/ "SCons: A software construction tool"
 [ve]: http://pypi.python.org/pypi/virtualenv "Python Package Index : virtualenv"
