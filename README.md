@@ -67,7 +67,6 @@ No one's perfect. :-) We got you covered.
         Wrote ./index.html
         Wrote ./index.rss
         Wrote ./index.xspf
-        Wrote ./.moxie.js.swp
         Wrote ./jquery-1.6.2.min.js
         Wrote ./moxie.js
         Wrote ./soundmanager2-nodebug-jsmin.js
