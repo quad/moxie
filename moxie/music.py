@@ -1,3 +1,4 @@
+import codecs
 import glob
 import os
 import os.path
@@ -19,11 +20,12 @@ class TrackList(dict):
 
         try:
             header = [line.strip()
-                      for line in file(os.path.join(directory, self.HEADER)).readlines()]
+                      for line in codecs.open(os.path.join(directory, self.HEADER)).readlines()]
         except IOError:
             self.title = "A Moxie Mixtape!"
             self.subtitle = "Make a README"
         else:
+            print header
             self.title = header[0]
             self.subtitle = '\n'.join(header[1:])
 

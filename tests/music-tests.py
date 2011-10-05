@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import with_statement
 
 import glob
@@ -45,7 +47,7 @@ class TrackListHeaderTest(unittest.TestCase):
         self.dirname = tempfile.mkdtemp()
         self.headername = os.path.join(self.dirname, TrackList.HEADER)
 
-        self.header = "Hello!"
+        self.header = u"Hello! 嘴上无毛，办事不牢".encode('utf-8')
 
         with file(self.headername, 'w') as f:
             f.write(self.header)
