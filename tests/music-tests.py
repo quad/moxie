@@ -47,10 +47,10 @@ class TrackListHeaderTest(unittest.TestCase):
         self.dirname = tempfile.mkdtemp()
         self.headername = os.path.join(self.dirname, TrackList.HEADER)
 
-        self.header = u"Hello! 嘴上无毛，办事不牢".encode('utf-8')
+        self.header = u"Hello! 嘴上无毛，办事不牢"
 
         with file(self.headername, 'w') as f:
-            f.write(self.header)
+            f.write(self.header.encode('utf-8'))
 
     def tearDown(self):
         os.unlink(self.headername)

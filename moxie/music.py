@@ -20,12 +20,11 @@ class TrackList(dict):
 
         try:
             header = [line.strip()
-                      for line in codecs.open(os.path.join(directory, self.HEADER)).readlines()]
+                      for line in codecs.open(os.path.join(directory, self.HEADER), encoding='utf-8').readlines()]
         except IOError:
             self.title = "A Moxie Mixtape!"
             self.subtitle = "Make a README"
         else:
-            print header
             self.title = header[0]
             self.subtitle = '\n'.join(header[1:])
 

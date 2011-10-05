@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import glob
 import os.path
 import unittest
@@ -90,6 +92,25 @@ class CSSTest(unittest.TestCase):
         """Local CSS"""
 
         req = webob.Request.blank('/local.css')
+        res = req.get_response(self.app)
+
+        assert res.status == '200 OK'
+
+class UnicodeTest(unittest.TestCase):
+    def setUp(self):
+        self.readme_fn = os.path.join(DATA, 'README')
+        with file(self.readme_fn, 'w') as f:
+            f.write(u'Hello! 嘴上无毛，办事不牢'.encode('utf-8'))
+
+        self.app = moxie.web.app(DATA)
+
+    def tearDown(self):
+        os.unlink(self.readme_fn)
+
+    def test_utf8_readme(self):
+        """UTF-8 README"""
+
+        req = webob.Request.blank('/')
         res = req.get_response(self.app)
 
         assert res.status == '200 OK'
