@@ -1,5 +1,7 @@
 import subprocess
 
+from mutagen.easyid3 import EasyID3
+
 from moxie.music import TrackInfo
 from moxie.transcode.base import Transcoder
 
@@ -13,15 +15,21 @@ class FFmpeg(subprocess.Popen):
         subprocess.Popen.__init__(self, params, stdout=subprocess.PIPE)
 
 class LAME(subprocess.Popen):
-    def __init__(self, in_fd, track_info, out_fn):
+    def __init__(self, in_fd, out_fn):
         params = ['lame']
         params += ['--quiet']
         params += ['-V6']
-        params += ['--tt', track_info.title]
-        params += ['--ta', track_info.artist]
-        params += ['--tl', track_info.album]
+        params += ['--tt', 'null']
+        params += ['--ta', 'null']
+        params += ['--tl', 'null']
         params += ['-', out_fn]
         subprocess.Popen.__init__(self, params, stdin=in_fd)
+
+class ID3(EasyID3):
+    def apply(self, track_info):
+        self['title'] = track_info.title
+        self['artist'] = track_info.artist
+        self['album'] = track_info.album
 
 class FFLame(Transcoder):
     """FFMpeg and LAME based transcoder from variable formats to streamable MP3s."""
@@ -35,7 +43,7 @@ class FFLame(Transcoder):
 
     def run(self):
         ffmpeg = FFmpeg(self.fn_source)
-        lame = LAME(ffmpeg.stdout, self.info, self.fn_sink)
+        lame = LAME(ffmpeg.stdout, self.fn_sink)
         ffmpeg.stdout.close()
 
         errors = []
@@ -45,6 +53,10 @@ class FFLame(Transcoder):
 
         if ffmpeg.wait():
             errors.append('FFMPEG') 
+
+        id3 = ID3(self.fn_sink)
+        id3.apply(self.info)
+        id3.save()
 
         if errors:
             print "%s -> %s FAILED (%s)" % (self.fn_source, self.fn_sink, ', '.join(errors))
