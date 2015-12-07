@@ -126,6 +126,6 @@ xoxo
 [d]: http://ditz.rubyforge.org/ "Ditz"
 [g]: http://git.or.cz/ "Git - Fast Version Control System"
 [l]: http://lame.sourceforge.net/ "LAME MP3 Encoder"
-[n]: http://somethingaboutorange.com/mrl/projects/nose/ "nose: a discovery-based unittest extension"
+[n]: http://nose.readthedocs.org/ "nose: a discovery-based unittest extension"
 [sc]: http://www.scons.org/ "SCons: A software construction tool"
 [ve]: http://pypi.python.org/pypi/virtualenv "Python Package Index : virtualenv"
