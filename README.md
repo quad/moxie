@@ -85,7 +85,6 @@ Oh ho! Well, just a couple recommendations:
  * [git][g] for `git://github.com/quad/moxie.git`
  * [lame][l] to make test data.
  * [nose][n] for all those unittests we forget to write.
- * [SCons][sc] is better than make.
  * [virtualenv][ve]. This is our Opinionated Requirement.
 
 I'm hesitant to ask; but, you know to use `apt`/`emerge`/`yum` and friends. Right?
@@ -98,7 +97,6 @@ I'm hesitant to ask; but, you know to use `apt`/`emerge`/`yum` and friends. Righ
 
         (moxie)$ cd src/
         (moxie)$ ./setup.py develop
-        (moxie)$ scons
         (moxie)$ ./setup.py test
 
 Terminal diarrhea throughout this.
@@ -127,5 +125,4 @@ xoxo
 [g]: http://git.or.cz/ "Git - Fast Version Control System"
 [l]: http://lame.sourceforge.net/ "LAME MP3 Encoder"
 [n]: http://nose.readthedocs.org/ "nose: a discovery-based unittest extension"
-[sc]: http://www.scons.org/ "SCons: A software construction tool"
 [ve]: http://pypi.python.org/pypi/virtualenv "Python Package Index : virtualenv"

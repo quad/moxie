@@ -1,1 +1,0 @@
-SConscript('tests/data/SConscript')

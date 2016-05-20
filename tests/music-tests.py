@@ -88,13 +88,6 @@ class TrackInfoDataTests(unittest.TestCase):
     V1_MP3   = os.path.join(DATA, 'null-v1.mp3')
     V2_MP3   = os.path.join(DATA, 'null-v2.mp3')
 
-    def setUp(self):
-        scons_err = 'Run scons to generate test data: %s.'
-
-        assert os.path.exists(self.NULL_MP3), scons_err % self.NULL_MP3
-        assert os.path.exists(self.V1_MP3), scons_err % self.V1_MP3
-        assert os.path.exists(self.V2_MP3), scons_err % self.V2_MP3
-
     def test_v1(self):
         """An ID3v1 tagged file."""
 

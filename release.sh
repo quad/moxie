@@ -10,7 +10,5 @@ virtualenv release-moxie
 
 ./setup.py develop -q
 
-scons -Q
-
 ./setup.py test -q
 ./setup.py sdist bdist_egg
