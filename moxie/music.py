@@ -1,11 +1,9 @@
+import ConfigParser
+import StringIO
 import codecs
 import glob
-import os
 import os.path
-
-import mutagen
-import mutagen.easyid3
-import mutagen.id3
+import subprocess
 
 class TrackList(dict):
     """A dictionary with keys as MP3 files and values as TrackInfo instances."""
@@ -45,14 +43,24 @@ class TrackInfo:
         self._load(filename)
 
     def _load(self, filename):
-        short_tags = full_tags = mutagen.File(filename)
+        if not os.path.isfile(filename):
+            raise IOError(filename)
 
-        if isinstance(full_tags, mutagen.mp3.MP3):
-            short_tags = mutagen.mp3.MP3(filename, ID3 = mutagen.easyid3.EasyID3)
+        output = subprocess.check_output([
+            'ffprobe',
+            '-loglevel', '8',
+            '-show_format',
+            '-print_format', 'ini',
+            filename])
 
-        self.album = short_tags.get('album', ['No Album'])[0]
-        self.artist = short_tags.get('artist', ['No Artist'])[0]
-        self.duration = "%u:%.2d" % (full_tags.info.length / 60, full_tags.info.length % 60)
-        self.length = full_tags.info.length
-        self.title = short_tags.get('title', ['No Title'])[0]
-        self.size = os.stat(filename).st_size
+        probe = ConfigParser.SafeConfigParser()
+        probe.readfp(StringIO.StringIO(output))
+
+        if probe.has_section('format.tags'):
+            self.album = probe.get('format.tags', 'album') or 'No Album'
+            self.artist = probe.get('format.tags', 'artist') or 'No Artist'
+            self.title = probe.get('format.tags', 'title') or 'No Title'
+
+        self.length = probe.getfloat('format', 'duration')
+        self.duration = "%u:%.2d" % (self.length / 60, self.length % 60)
+        self.size = probe.getint('format', 'size')

@@ -40,14 +40,9 @@ setup(
         'flup', # BSD
         'Mako', # MIT
         'Markdown >= 1.7', # BSD
-        'mutagen >= 1.15', # GPLv2
         'selector', # LGPLv2.1
         'static', # LGPLv2.1
         'WebOb', # MIT
-    ],
-    dependency_links = [
-        # mutagen
-        "http://code.google.com/p/quodlibet/downloads/list",
     ],
 
     entry_points = {
