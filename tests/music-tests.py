@@ -66,12 +66,18 @@ class TrackListHeaderTest(unittest.TestCase):
 class TrackInfoNegativeTests(unittest.TestCase):
     """TrackInfo tests on non-existent data."""
 
-    def test_not_found(self):
-        """Non-existent MP3."""
+    def test_invalid(self):
+        """An invalid file."""
 
-        fn = tempfile.mktemp()
+        with tempfile.NamedTemporaryFile() as fn, \
+                self.assertRaises(IOError):
+            TrackInfo(fn.name)
+
+    def test_nonexistant(self):
+        """A non-existent file."""
+
         with self.assertRaises(IOError):
-            TrackInfo(fn)
+            TrackInfo(os.path.join(DATA, 'xyzzy'))
 
     def test_invalid_directory(self):
         """A 'mp3' that is a directory."""

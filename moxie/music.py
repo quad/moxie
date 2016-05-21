@@ -43,15 +43,15 @@ class TrackInfo:
         self._load(filename)
 
     def _load(self, filename):
-        if not os.path.isfile(filename):
+        try:
+            output = subprocess.check_output([
+                'ffprobe',
+                '-loglevel', '8',
+                '-show_format',
+                '-print_format', 'ini',
+                filename])
+        except subprocess.CalledProcessError:
             raise IOError(filename)
-
-        output = subprocess.check_output([
-            'ffprobe',
-            '-loglevel', '8',
-            '-show_format',
-            '-print_format', 'ini',
-            filename])
 
         probe = ConfigParser.SafeConfigParser()
         probe.readfp(StringIO.StringIO(output))
