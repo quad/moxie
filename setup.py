@@ -44,5 +44,5 @@ setup(
         ]
     },
 
-    test_suite = 'nose.collector',
+    test_suite = 'tests',
 )

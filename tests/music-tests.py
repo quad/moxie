@@ -7,8 +7,6 @@ import os.path
 import tempfile
 import unittest
 
-from nose.tools import raises
-
 from tests import DATA
 
 from moxie.music import TrackList, TrackInfo
@@ -16,12 +14,12 @@ from moxie.music import TrackList, TrackInfo
 class TrackListTests(unittest.TestCase):
     """TrackListTest tests."""
 
-    @raises(IOError)
     def test_not_found(self):
         """A directory that doesn't exist."""
 
         fn = tempfile.mktemp()
-        TrackList(fn)
+        with self.assertRaises(IOError):
+            TrackList(fn)
 
     def test_simple(self):
         """Load a simple directory."""
@@ -68,18 +66,18 @@ class TrackListHeaderTest(unittest.TestCase):
 class TrackInfoNegativeTests(unittest.TestCase):
     """TrackInfo tests on non-existent data."""
 
-    @raises(IOError)
     def test_not_found(self):
         """Non-existent MP3."""
 
         fn = tempfile.mktemp()
-        TrackInfo(fn)
+        with self.assertRaises(IOError):
+            TrackInfo(fn)
 
-    @raises(IOError)
     def test_invalid_directory(self):
         """A 'mp3' that is a directory."""
 
-        TrackInfo(DATA)
+        with self.assertRaises(IOError):
+            TrackInfo(DATA)
 
 class TrackInfoDataTests(unittest.TestCase):
     """TrackInfo tests on prepared data."""
@@ -105,15 +103,15 @@ class TrackInfoDataTests(unittest.TestCase):
 
         info = TrackInfo(self.NULL_MP3)
 
-        assert info.album == 'No Album'
+        self.assertEqual(info.album, 'No Album')
         assert info.artist == 'No Artist'
         assert info.title == 'No Title'
 
-    @raises(IOError)
     def test_nonexistant(self):
         """A non-existent file."""
 
-        TrackInfo(os.path.join(DATA, 'xyzzy'))
+        with self.assertRaises(IOError):
+            TrackInfo(os.path.join(DATA, 'xyzzy'))
 
     def check_tags(self, info):
         assert info.album == 'Null Album'
