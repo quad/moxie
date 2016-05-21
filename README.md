@@ -10,15 +10,9 @@ Ok, that's cool. I'm not a programmer though...
 
 No one's perfect. :-) We got you covered.
 
- 1. Use [setuptools][st]!
-
-        $ easy_install moxie
-
-    [Some people][packaging] prefer [pip][pip]. You might be one of those people.
+ 1. Use [pip][pip]!
 
         $ pip install moxie
-
-    We swing both ways.
 
  2. Make a directory full of MP3s!
 
@@ -47,10 +41,10 @@ No one's perfect. :-) We got you covered.
         Made by [this guy](http://oneredpaperclip.blogspot.com/)!
 
     A title. And a subtitle!
-    
+
     Did I mention you can use [Markdown][md] with the subtitle? I probably should have.
 
- 5. Use `local.css` if you don't like red. 
+ 5. Use `local.css` if you don't like red.
 
         $ cat > local.css
         div#header {
@@ -73,7 +67,6 @@ No one's perfect. :-) We got you covered.
         Wrote ./soundmanager2.swf
         Wrote ./style.css
 
-
  7. I donno. Put it on a web server someplace?
 
 Hey, that was helpful. But I'm a hacker!
@@ -81,10 +74,8 @@ Hey, that was helpful. But I'm a hacker!
 
 Oh ho! Well, just a couple recommendations:
 
- * [Ditz][d], a fine issue tracker.
  * [git][g] for `git://github.com/quad/moxie.git`
  * [lame][l] to make test data.
- * [nose][n] for all those unittests we forget to write.
  * [virtualenv][ve]. This is our Opinionated Requirement.
 
 I'm hesitant to ask; but, you know to use `apt`/`emerge`/`yum` and friends. Right?
@@ -93,7 +84,7 @@ I'm hesitant to ask; but, you know to use `apt`/`emerge`/`yum` and friends. Righ
 
         $ virtualenv moxie
 
-        $ . moxie/bin/activate 
+        $ . moxie/bin/activate
 
         (moxie)$ cd src/
         (moxie)$ ./setup.py develop
@@ -106,8 +97,8 @@ Terminal diarrhea throughout this.
 
 **IT WORKS!**
 
-        (moxie)$ ditz status
-        unassigned  0/ 1 bugfix,    0/ 2 features,  0/ 0 tasks 
+        (moxie)$ ls BUGS.md
+        BUGS.md
 
 Now get to work.
 
@@ -117,12 +108,8 @@ xoxo
 
 [mt]: http://muxtape.com/ "Muxtape"
 [mx]: http://pypi.python.org/pypi/moxie "Python Package Index : moxie"
-[st]: http://peak.telecommunity.com/DevCenter/EasyInstall "EasyInstall"
-[packaging]: http://www.b-list.org/weblog/2008/dec/14/packaging/ "James Bennett : On Packaging"
 [pip]: http://pip.openplans.org/ "pip documentation"
 [md]: http://daringfireball.net/projects/markdown/ "Daring Fireball: Markdown"
-[d]: http://ditz.rubyforge.org/ "Ditz"
 [g]: http://git.or.cz/ "Git - Fast Version Control System"
 [l]: http://lame.sourceforge.net/ "LAME MP3 Encoder"
-[n]: http://nose.readthedocs.org/ "nose: a discovery-based unittest extension"
 [ve]: http://pypi.python.org/pypi/virtualenv "Python Package Index : virtualenv"
