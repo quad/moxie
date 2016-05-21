@@ -29,7 +29,6 @@ setup(
     include_package_data = True,
 
     install_requires = [
-        'flup', # BSD
         'Mako', # MIT
         'Markdown >= 1.7', # BSD
         'selector', # LGPLv2.1
