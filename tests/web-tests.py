@@ -24,8 +24,8 @@ class MoxieTests(unittest.TestCase):
 
         uris = [uri for uri, func in moxie.web.uri.uris(self.app)]
 
-        assert '' in uris
-        assert len(uris) > 1
+        self.assertIn('', uris)
+        self.assertGreater(len(uris), 1)
 
     def test_dynamic(self):
         """Dynamic requests."""
@@ -36,7 +36,7 @@ class MoxieTests(unittest.TestCase):
             req = webob.Request.blank('/' + uri)
             res = req.get_response(self.app)
 
-            assert res.status == '200 OK'
+            self.assertEqual(res.status, '200 OK')
 
     def test_static(self):
         """Static requests."""
@@ -47,7 +47,7 @@ class MoxieTests(unittest.TestCase):
             req = webob.Request.blank('/' + fn)
             res = req.get_response(self.app)
 
-            assert res.status == '200 OK'
+            self.assertEqual(res.status, '200 OK')
 
     def test_music(self):
         """Music requests."""
@@ -60,7 +60,7 @@ class MoxieTests(unittest.TestCase):
             req = webob.Request.blank('/' + urllib.quote(fn))
             res = req.get_response(self.app)
 
-            assert res.status == '200 OK'
+            self.assertEqual(res.status, '200 OK')
 
     def test_file_exposure(self):
         """Expose files?"""
@@ -68,7 +68,7 @@ class MoxieTests(unittest.TestCase):
         req = webob.Request.blank('/null')
         res = req.get_response(self.app)
 
-        assert res.status == '404 Not Found'
+        self.assertEqual(res.status, '404 Not Found')
 
     def test_no_local_css(self):
         """No Local CSS"""
@@ -76,7 +76,7 @@ class MoxieTests(unittest.TestCase):
         req = webob.Request.blank('/local.css')
         res = req.get_response(self.app)
 
-        assert res.status == '404 Not Found'
+        self.assertEqual(res.status, '404 Not Found')
 
 class CSSTest(unittest.TestCase):
     def setUp(self):
@@ -94,7 +94,7 @@ class CSSTest(unittest.TestCase):
         req = webob.Request.blank('/local.css')
         res = req.get_response(self.app)
 
-        assert res.status == '200 OK'
+        self.assertEqual(res.status, '200 OK')
 
 class UnicodeTest(unittest.TestCase):
     def setUp(self):
@@ -113,4 +113,4 @@ class UnicodeTest(unittest.TestCase):
         req = webob.Request.blank('/')
         res = req.get_response(self.app)
 
-        assert res.status == '200 OK'
+        self.assertEqual(res.status, '200 OK')

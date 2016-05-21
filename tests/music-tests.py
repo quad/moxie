@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import with_statement
-
 import glob
 import os.path
 import tempfile
@@ -15,22 +13,22 @@ class TrackListTests(unittest.TestCase):
     """TrackListTest tests."""
 
     def test_not_found(self):
-        """A directory that doesn't exist."""
+        """A file that doesn't exist."""
 
-        fn = tempfile.mktemp()
-        with self.assertRaises(IOError):
-            TrackList(fn)
+        with tempfile.NamedTemporaryFile() as fn, \
+                self.assertRaises(IOError):
+            TrackList(fn.name)
 
     def test_simple(self):
         """Load a simple directory."""
 
         tracks = TrackList(DATA)
 
-        assert tracks.title == "A Moxie Mixtape!"
-        assert tracks.subtitle == "Make a README"
+        self.assertEqual(tracks.title, "A Moxie Mixtape!")
+        self.assertEqual(tracks.subtitle, "Make a README")
 
         for fn in glob.glob(os.path.join(DATA, '*.mp3')):
-            assert os.path.basename(fn) in tracks
+            self.assertIn(os.path.basename(fn), tracks)
 
     def test_filename_purity(self):
         """TrackList uses filenames as keys."""
@@ -38,7 +36,7 @@ class TrackListTests(unittest.TestCase):
         tracks = TrackList(DATA)
 
         for fn in tracks:
-            assert fn == os.path.basename(fn)
+            self.assertEqual(fn, os.path.basename(fn))
 
 class TrackListHeaderTest(unittest.TestCase):
     def setUp(self):
@@ -59,9 +57,9 @@ class TrackListHeaderTest(unittest.TestCase):
 
         tracks = TrackList(self.dirname)
 
-        assert tracks.title == self.header
-        assert tracks.subtitle == ''
-        assert len(tracks) == 0
+        self.assertEqual(tracks.title, self.header)
+        self.assertEqual(tracks.subtitle, '')
+        self.assertEqual(len(tracks), 0)
 
 class TrackInfoNegativeTests(unittest.TestCase):
     """TrackInfo tests on non-existent data."""
@@ -110,23 +108,17 @@ class TrackInfoDataTests(unittest.TestCase):
         info = TrackInfo(self.NULL_MP3)
 
         self.assertEqual(info.album, 'No Album')
-        assert info.artist == 'No Artist'
-        assert info.title == 'No Title'
-
-    def test_nonexistant(self):
-        """A non-existent file."""
-
-        with self.assertRaises(IOError):
-            TrackInfo(os.path.join(DATA, 'xyzzy'))
+        self.assertEqual(info.artist, 'No Artist')
+        self.assertEqual(info.title, 'No Title')
 
     def check_tags(self, info):
-        assert info.album == 'Null Album'
-        assert info.artist == 'Null Artist'
-        assert info.title == 'Null Title'
+        self.assertEqual(info.album, 'Null Album')
+        self.assertEqual(info.artist, 'Null Artist')
+        self.assertEqual(info.title, 'Null Title')
 
         self.check_info(info)
 
     def check_info(self, info):
-        assert info.duration == '0:00'
-        assert info.length < 1
-        assert info.size
+        self.assertEqual(info.duration, '0:00')
+        self.assertLess(info.length, 1)
+        self.assertGreater(info.size, 0)
