@@ -1,13 +1,5 @@
 #!/usr/bin/env python
 
-try:
-    import pygst
-except ImportError:
-    print 'GStreamer bindings should be installed: http://pygstdocs.berlios.de/'
-    print 'Continuing... will use ffmpeg and lame pipeline transcoder'
-else:
-    pygst.require('0.10')
-
 from setuptools import setup, find_packages
 
 setup(
