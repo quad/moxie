@@ -1,4 +1,7 @@
+import collections
 import os.path
+import tempfile
+import urlparse
 
 import mako.lookup
 import selector
@@ -49,6 +52,39 @@ class uri(object):
 
             if hasattr(func, 'uri_path'):
                 yield func.uri_path, func
+
+TEMPLATES = {
+        'index.html': 'index.html',
+        'index.xspf': 'xspf.xml',
+        'index.rss': 'rss.xml',
+}
+
+class FakeRequest:
+    def __init__(self, base_url):
+        self.base_url = base_url
+
+    def relative_url(self, relative_url):
+        return urlparse.urljoin(self.base_url, relative_url)
+
+def deploy(base_url, source_directory, target_directory):
+    tracklist = moxie.music.TrackList(source_directory)
+
+    # Templates
+    for output_filename, template_name in TEMPLATES.iteritems():
+        with file(os.path.join(target_directory, output_filename), 'w') as f:
+            body = uri.TEMPLATES.get_template(template_name).render(
+                    tracklist = tracklist,
+                    request = FakeRequest(base_url))
+            f.write(body)
+
+    # Static
+    static_directory = pkg_resources.resource_filename(__name__, 'static')
+
+    for fn in pkg_resources.resource_listdir(__name__, 'static'):
+        pass
+
+    # Music
+    # User CSS
 
 class app(selector.Selector):
     """WSGI application for Moxie."""

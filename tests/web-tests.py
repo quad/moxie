@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import contextlib
 import glob
 import os.path
+import shutil
+import tempfile
 import unittest
 import urllib
 
@@ -95,6 +98,21 @@ class CSSTest(unittest.TestCase):
         res = req.get_response(self.app)
 
         self.assertEqual(res.status, '200 OK')
+
+@contextlib.contextmanager
+def tempdir():
+    dn = tempfile.mkdtemp()
+    try:
+        yield dn
+    finally:
+        shutil.rmtree(dn)
+
+class DeployTest(unittest.TestCase):
+    def test_template(self):
+        with tempdir() as output_directory:
+            moxie.web.deploy('/', DATA, output_directory)
+
+            self.assertTrue(os.path.isfile(os.path.join(output_directory, 'index.html')))
 
 class UnicodeTest(unittest.TestCase):
     def setUp(self):
