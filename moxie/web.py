@@ -89,6 +89,8 @@ def deploy(base_url, source_directory, target_directory):
         shutil.copy(os.path.join(source_directory, fn), target_directory)
 
     # User CSS
+    if os.path.exists(os.path.join(source_directory, 'local.css')):
+        shutil.copy(os.path.join(source_directory, 'local.css'), target_directory)
 
 class app(selector.Selector):
     """WSGI application for Moxie."""

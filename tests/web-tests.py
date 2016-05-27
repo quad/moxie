@@ -126,6 +126,24 @@ class DeployTest(unittest.TestCase):
 
             self.assertTrue(os.path.isfile(os.path.join(output_directory, 'null-v1.mp3')))
 
+    def test_no_local_css(self):
+        with tempdir() as output_directory:
+            moxie.web.deploy('/', DATA, output_directory)
+
+            self.assertFalse(os.path.isfile(os.path.join(output_directory, 'local.css')))
+
+    def test_local_css(self):
+        try:
+            css_fn = os.path.join(DATA, 'local.css')
+            file(css_fn, 'w').close()
+
+            with tempdir() as output_directory:
+                moxie.web.deploy('/', DATA, output_directory)
+
+                self.assertTrue(os.path.isfile(os.path.join(output_directory, 'local.css')))
+        finally:
+            os.unlink(css_fn)
+
 class UnicodeTest(unittest.TestCase):
     def setUp(self):
         self.readme_fn = os.path.join(DATA, 'README')
