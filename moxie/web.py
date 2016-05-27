@@ -85,6 +85,9 @@ def deploy(base_url, source_directory, target_directory):
         shutil.copy(os.path.join(static_directory, fn), target_directory)
 
     # Music
+    for fn in tracklist:
+        shutil.copy(os.path.join(source_directory, fn), target_directory)
+
     # User CSS
 
 class app(selector.Selector):

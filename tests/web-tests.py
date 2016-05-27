@@ -120,6 +120,12 @@ class DeployTest(unittest.TestCase):
 
             self.assertTrue(os.path.isfile(os.path.join(output_directory, 'moxie.js')))
 
+    def test_music(self):
+        with tempdir() as output_directory:
+            moxie.web.deploy('/', DATA, output_directory)
+
+            self.assertTrue(os.path.isfile(os.path.join(output_directory, 'null-v1.mp3')))
+
 class UnicodeTest(unittest.TestCase):
     def setUp(self):
         self.readme_fn = os.path.join(DATA, 'README')
