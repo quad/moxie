@@ -1,5 +1,6 @@
 import collections
 import os.path
+import shutil
 import tempfile
 import urlparse
 
@@ -81,7 +82,7 @@ def deploy(base_url, source_directory, target_directory):
     static_directory = pkg_resources.resource_filename(__name__, 'static')
 
     for fn in pkg_resources.resource_listdir(__name__, 'static'):
-        pass
+        shutil.copy(os.path.join(static_directory, fn), target_directory)
 
     # Music
     # User CSS
