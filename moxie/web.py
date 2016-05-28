@@ -1,11 +1,11 @@
-import collections
+import contextlib
 import os.path
 import shutil
 import tempfile
 import urlparse
+import wsgiref
 
 import mako.lookup
-import selector
 import static
 import webob
 
@@ -92,33 +92,28 @@ def deploy(base_url, source_directory, target_directory):
     if os.path.exists(os.path.join(source_directory, 'local.css')):
         shutil.copy(os.path.join(source_directory, 'local.css'), target_directory)
 
-class app(selector.Selector):
+@contextlib.contextmanager
+def tempdir():
+    dn = tempfile.mkdtemp()
+    try:
+        yield dn
+    finally:
+        shutil.rmtree(dn)
+
+class app:
     """WSGI application for Moxie."""
 
     def __init__(self, directory = '.'):
-        selector.Selector.__init__(self, consume_path = False, prefix = '/')
-
+        self.directory = directory
         self.music = moxie.music.TrackList(directory)
 
-        # Register the dynamic URIs.
-        for path, func in uri.uris(self):
-            self.add(path, GET = func)
+    def __call__(self, environ, start_response):
+        with tempdir() as temporary_directory:
+            base_url = wsgiref.util.application_uri(environ)
+            deploy(base_url, self.directory, temporary_directory)
 
-        # Register the static URIs.
-        static_app = static.Cling(pkg_resources.resource_filename(__name__, 'static'))
-
-        for fn in pkg_resources.resource_listdir(__name__, 'static'):
-            self.add(fn, GET = static_app)
-
-        # Register the music.
-        music_app = static.Cling(directory)
-
-        for fn in self.music:
-            self.add(fn, GET = music_app)
-
-        # Special-case for user CSS customizations.
-        if os.path.exists(os.path.join(directory, 'local.css')):
-            self.add('local.css', GET = music_app)
+            static_app = static.Cling(temporary_directory)
+            return static_app(environ, start_response)
 
     @uri('', 'index.html')
     def index(self, request, template):
@@ -128,9 +123,9 @@ class app(selector.Selector):
     def xspf(self, request, template):
         return {'content_type': 'application/xspf+xml',
                 'body': template.render(tracklist = self.music)}
- 
+
     @uri('index.rss', 'rss.xml')
     def rss(self, request, template):
         return {'content_type': 'application/rss+xml',
                 'body': template.render(tracklist = self.music,
-                                        request = request)}		
+                                        request = request)}
