@@ -1,20 +1,25 @@
 OUT_DIR = build
+SRC_DIR = src
 
-all: bootstrap \
-	${OUT_DIR}
+all: \
+	${OUT_DIR} \
+	${OUT_DIR}/index.html \
+	${OUT_DIR}/moxie.css
 
 ${OUT_DIR}:
 	mkdir -p "${OUT_DIR}"
 
-.PHONY: bootstrap devd watch
+${OUT_DIR}/index.html: ${SRC_DIR}/index.html
+	cp "$?" "$@"
 
-bootstrap:
-	./bootstrap
+${OUT_DIR}/moxie.css: ${SRC_DIR}/moxie.css
+	cp "$?" "$@"
+
+.PHONY: devd watch
 
 serve: all
 	devd --notimestamps --livereload --watch="${OUT_DIR}" \
-		/="${OUT_DIR}/" \
-		/static/=./test/
+		/="${OUT_DIR}/"
 
 watch: all
-	watchexec -e elm,html,css,json -i "\*/${OUT_DIR}/\*" make
+	watchexec -e html,css -i "\*/${OUT_DIR}/\*" make

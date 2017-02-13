@@ -14,6 +14,9 @@ We're not there yet; but, we'll get you covered in time.
 
 Oh ho!
 
+        $ ./bootstrap
+        OK
+
         $ make serve
         Listening on http://devd.io:8000 (127.0.0.1:8000)
 

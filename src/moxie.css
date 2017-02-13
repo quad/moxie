@@ -1,0 +1,103 @@
+/* Variables */
+
+div#header {
+	color: white;
+	background-color: red;
+}
+
+/* Statics */
+
+body {
+	margin: 0;
+}
+
+div#header {
+	padding: 1ex 0.5em;
+	margin: 0;
+}
+
+div#header * {
+	margin: 0;
+}
+
+div#header p {
+	padding: 0 1em;
+}
+
+ul.songs {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+li.song {
+	display: block;
+	padding: 0.5ex 0.5em;
+	border-bottom: thin solid #D0D0D0;
+	cursor: pointer;
+}
+
+li.song:hover {
+	background-color: #F0F0F0;
+}
+
+li.playing {
+	background-color: #E5E5E5;
+}
+
+span.time {
+	float: right;
+}
+
+a.title {
+	color: black;
+	text-decoration: none;
+}
+
+noscript div {
+	display: block;
+	background-color: #FFFA67;
+	margin: 1ex 0;
+	padding: 0.5ex 0.5em;
+	text-align: center;
+	border: thin dotted black;
+}
+
+/* Colors */
+
+div#header {
+	font-family: Verdana, Geneva, sans-serif;
+}
+
+div#header h1 {
+	font-size: x-large;
+}
+
+div#header p {
+	font-size: small;
+}
+
+div#header a {
+	color: inherit;
+}
+
+div#header a:visited {
+	font-style: italic;
+}
+
+ul.songs {
+	font-family: Helvetica, "Microsoft Sans Serif", Arial, sans-serif;
+	font-size: xx-large;
+}
+
+span.position {
+	font-size: x-large;
+}
+
+li.playing span.position {
+	color: #32CD32;
+}
+
+li.paused span.position {
+	color: gray;
+}
