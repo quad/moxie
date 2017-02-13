@@ -14,7 +14,8 @@ We're not there yet; but, we'll get you covered in time.
 
 Oh ho!
 
-We're not here yet either.
+        $ make serve
+        Listening on http://devd.io:8000 (127.0.0.1:8000)
 
 xoxo
 
