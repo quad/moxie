@@ -17,9 +17,9 @@ ${OUT_DIR}/moxie.css: ${SRC_DIR}/moxie.css
 
 .PHONY: devd watch
 
-serve: all
+serve:
 	devd --notimestamps --livereload --watch="${OUT_DIR}" \
 		/="${OUT_DIR}/"
 
-watch: all
+watch:
 	watchexec -e html,css -i "\*/${OUT_DIR}/\*" make
