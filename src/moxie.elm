@@ -78,16 +78,17 @@ tracks_view tracks =
   ul [class "songs"] tracks
 
 track_view : Int -> Track -> Html.Html Msg
-track_view index track =
+track_view index {artist, title} =
   let
     number = toString (index + 1)
     track_id = "track_" ++ number
+    name = artist ++ " - " ++ title
   in
     li
       [ class "song"
       , id track_id
       ]
-      [ a [class "title", href "#"] [text "name"]
+      [ a [class "title", href "#"] [text name]
       , span [class "time"]
         [ span [class "position"] [text "0:00"]
         , span [class "duration"] [text "0:00"]
