@@ -2,6 +2,9 @@ module Moxie exposing (..)
 
 import Html exposing (a, div, h1, li, text, span, ul, program)
 import Html.Attributes exposing (class, href, id)
+import Http
+import Json.Decode as Json
+import Json.Decode exposing (field)
 import List exposing (indexedMap)
 
 
@@ -42,7 +45,7 @@ type alias Track =
 
 
 type Msg
-    = None
+    = Index (Result Http.Error ( Header, List Track ))
 
 
 main : Program Never Model Msg
@@ -78,8 +81,45 @@ init =
               }
             ]
       }
-    , Cmd.none
+    , getIndexJson
     )
+
+
+getIndexJson : Cmd Msg
+getIndexJson =
+    Http.get "index.json" decodeIndexJson
+        |> Http.send Index
+
+
+decodeIndexJson : Json.Decoder ( Header, List Track )
+decodeIndexJson =
+    let
+        decodeURL =
+            Json.map URL Json.string
+
+        decodeTime =
+            Json.map Time Json.float
+
+        decodeHeader =
+            Json.map3 Header
+                (field "title" Json.string)
+                (field "subtitle" Json.string)
+                (field "url" decodeURL)
+
+        decodeTracks =
+            field "tracks" (Json.list decodeTrack)
+
+        decodeTrack =
+            Json.map5 Track
+                (field "artist" Json.string)
+                (field "title" Json.string)
+                (field "duration" decodeTime)
+                (field "url" decodeURL)
+                (Json.succeed Stopped)
+    in
+        Json.map2 (,)
+            decodeHeader
+            decodeTracks
 
 
 view : Model -> Html.Html Msg
@@ -176,7 +216,12 @@ minutes_and_seconds (Time time) =
 
 update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        Index (Ok ( header, tracks )) ->
+            ( { model | header = header, tracks = tracks }, Cmd.none )
+
+        Index (Err _) ->
+            ( model, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
