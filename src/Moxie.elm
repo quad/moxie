@@ -4,9 +4,9 @@ import Html exposing (a, div, h1, li, text, span, ul, program)
 import Html.Attributes exposing (class, href, id)
 import List exposing (indexedMap)
 
-type Duration = Duration Float
+type Time = Time Float
 type URL = URL String
-type PlayState = Playing Track Duration | Paused Track Duration | Stopped
+type PlayState = Playing Track Time | Paused Track Time | Stopped
 
 type alias Model =
   { header : Header
@@ -22,7 +22,7 @@ type alias Header =
 type alias Track =
   { artist : String
   , title : String
-  , duration : Duration
+  , time : Time
   , url : URL
   , playing: PlayState
   }
@@ -42,13 +42,13 @@ init =
     , tracks =
       [ { artist = "track 1",
           title = "title 1",
-          duration = Duration 0.0,
+          time = Time 0.0,
           url = URL "#1",
           playing = Stopped
         },
         { artist = "track 2",
           title = "title 2",
-          duration = Duration 61.0,
+          time = Time 61.0,
           url = URL "#2",
           playing = Stopped
         }
@@ -80,13 +80,13 @@ tracks_view tracks =
   ul [class "songs"] tracks
 
 track_view : Int -> Track -> Html.Html Msg
-track_view index {artist, title, url, duration} =
+track_view index {artist, title, url, time} =
   let
     number = toString (index + 1)
     track_id = "track_" ++ number
     name = artist ++ " - " ++ title
     (URL url_) = url
-    duration_ = minutes_and_seconds duration
+    time_ = minutes_and_seconds time
   in
     li
       [ class "song"
@@ -95,22 +95,22 @@ track_view index {artist, title, url, duration} =
       [ a [class "title", href url_] [text name]
       , span [class "time"]
         [ span [class "position"] [text "0:00"]
-        , span [class "duration"] [text duration_]
+        , span [class "time"] [text time_]
         ]
       ]
 
-minutes_and_seconds : Duration -> String
-minutes_and_seconds (Duration duration) =
+minutes_and_seconds : Time -> String
+minutes_and_seconds (Time time) =
   let
     seconds =
-      floor duration % 60
+      floor time % 60
         |> toString
         |> String.padLeft 2 '0'
     minutes =
-      floor duration // 60
+      floor time // 60
         |> toString
   in
-    if duration >= 60 then
+    if time >= 60 then
       minutes ++ ":" ++ seconds
     else
       ":" ++ seconds
