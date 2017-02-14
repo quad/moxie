@@ -1,3 +1,5 @@
+module Moxie exposing (..)
+
 import Html exposing (a, div, h1, li, text, span, ul, program)
 import Html.Attributes exposing (class, href, id)
 import List exposing (indexedMap)
@@ -78,12 +80,13 @@ tracks_view tracks =
   ul [class "songs"] tracks
 
 track_view : Int -> Track -> Html.Html Msg
-track_view index {artist, title, url} =
+track_view index {artist, title, url, duration} =
   let
     number = toString (index + 1)
     track_id = "track_" ++ number
     name = artist ++ " - " ++ title
     (URL url_) = url
+    duration_ = minutes_and_seconds duration
   in
     li
       [ class "song"
@@ -92,9 +95,25 @@ track_view index {artist, title, url} =
       [ a [class "title", href url_] [text name]
       , span [class "time"]
         [ span [class "position"] [text "0:00"]
-        , span [class "duration"] [text "0:00"]
+        , span [class "duration"] [text duration_]
         ]
       ]
+
+minutes_and_seconds : Duration -> String
+minutes_and_seconds (Duration duration) =
+  let
+    seconds =
+      floor duration % 60
+        |> toString
+        |> String.padLeft 2 '0'
+    minutes =
+      floor duration // 60
+        |> toString
+  in
+    if duration >= 60 then
+      minutes ++ ":" ++ seconds
+    else
+      ":" ++ seconds
 
 update : Msg -> Model -> (Model, Cmd msg)
 update msg model =
