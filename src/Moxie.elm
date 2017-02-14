@@ -89,27 +89,27 @@ track_view : Int -> Track -> Html.Html Msg
 track_view index {artist, title, url, duration, status} =
   let
     number = toString (index + 1)
-    track_id = "track_" ++ number
-    name = artist ++ " - " ++ title
     (URL url_) = url
-    duration_ = minutes_and_seconds duration
-    time = minutes_and_seconds
-      <| case status of
-        Playing d ->
-          d
-        Paused d ->
-          d
-        Stopped ->
-          Time 0.0
+    (track_class, time) = case status of
+      Playing d ->
+        ("song playing", d)
+      Paused d ->
+        ("song paused", d)
+      Stopped ->
+        ("song", Time 0.0)
+    track_id = "track_" ++ number
+    track_name = artist ++ " - " ++ title
+    track_time = minutes_and_seconds time
+    track_duration = minutes_and_seconds duration
   in
     li
-      [ class "song"
+      [ class track_class
       , id track_id
       ]
-      [ a [class "title", href url_] [text name]
+      [ a [class "title", href url_] [text track_name]
       , span [class "time"]
-        [ span [class "position"] [text time]
-        , span [class "duration"] [text duration_]
+        [ span [class "position"] [text track_time]
+        , span [class "duration"] [text track_duration]
         ]
       ]
 
