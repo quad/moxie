@@ -6,7 +6,7 @@ import List exposing (indexedMap)
 
 type Time = Time Float
 type URL = URL String
-type PlayState = Playing Track Time | Paused Track Time | Stopped
+type Status = Playing Track Time | Paused Track Time | Stopped
 
 type alias Model =
   { header : Header
@@ -22,9 +22,9 @@ type alias Header =
 type alias Track =
   { artist : String
   , title : String
-  , time : Time
+  , duration : Time
   , url : URL
-  , playing: PlayState
+  , status: Status
   }
 
 type Msg = None
@@ -42,15 +42,15 @@ init =
     , tracks =
       [ { artist = "track 1",
           title = "title 1",
-          time = Time 0.0,
+          duration = Time 0.0,
           url = URL "#1",
-          playing = Stopped
+          status = Stopped
         },
         { artist = "track 2",
           title = "title 2",
-          time = Time 61.0,
+          duration = Time 61.0,
           url = URL "#2",
-          playing = Stopped
+          status = Stopped
         }
       ]
     }
@@ -80,13 +80,13 @@ tracks_view tracks =
   ul [class "songs"] tracks
 
 track_view : Int -> Track -> Html.Html Msg
-track_view index {artist, title, url, time} =
+track_view index {artist, title, url, duration} =
   let
     number = toString (index + 1)
     track_id = "track_" ++ number
     name = artist ++ " - " ++ title
     (URL url_) = url
-    time_ = minutes_and_seconds time
+    duration_ = minutes_and_seconds duration
   in
     li
       [ class "song"
@@ -95,7 +95,7 @@ track_view index {artist, title, url, time} =
       [ a [class "title", href url_] [text name]
       , span [class "time"]
         [ span [class "position"] [text "0:00"]
-        , span [class "time"] [text time_]
+        , span [class "duration"] [text duration_]
         ]
       ]
 
