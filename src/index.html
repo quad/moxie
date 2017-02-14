@@ -8,7 +8,34 @@
     </head>
     <body>
         <script>
-            Elm.Moxie.fullscreen();
+            var app = Elm.Moxie.fullscreen();
+
+            app.ports.play.subscribe(function(index) {
+                document.querySelectorAll('audio').forEach(function(audio, i) {
+                    if (i == index) {
+                        audio.currentTime = 0;
+                        audio.play();
+                    } else {
+                        audio.pause();
+                    }
+                });
+            });
+
+            app.ports.pause.subscribe(function() {
+                document.querySelectorAll('audio').forEach(function(audio) {
+                    audio.pause();
+                });
+            });
+
+            app.ports.resume.subscribe(function(index) {
+                document.querySelectorAll('audio').forEach(function(audio, i) {
+                    if (i == index) {
+                        audio.play();
+                    } else {
+                        audio.pause();
+                    }
+                });
+            });
         </script>
     </body>
 </html>

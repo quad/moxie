@@ -1,4 +1,4 @@
-module Moxie exposing (..)
+port module Moxie exposing (..)
 
 import Html exposing (a, audio, div, h1, li, text, span, ul, program)
 import Html.Attributes exposing (class, href, id, src)
@@ -251,7 +251,7 @@ update msg model =
                                         { track | status = Stopped }
                             )
               }
-            , Cmd.none
+            , play i
             )
 
         Pause i ->
@@ -268,7 +268,7 @@ update msg model =
                                         { track | status = Stopped }
                             )
               }
-            , Cmd.none
+            , pause ()
             )
 
         Resume i ->
@@ -285,8 +285,17 @@ update msg model =
                                         { track | status = Stopped }
                             )
               }
-            , Cmd.none
+            , resume i
             )
+
+
+port play : Int -> Cmd msg
+
+
+port pause : () -> Cmd msg
+
+
+port resume : Int -> Cmd msg
 
 
 subscriptions : Model -> Sub Msg
