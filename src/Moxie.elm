@@ -1,7 +1,8 @@
 module Moxie exposing (..)
 
-import Html exposing (a, div, h1, li, text, span, ul, program)
-import Html.Attributes exposing (class, href, id)
+import Html exposing (a, audio, div, h1, li, text, span, ul, program)
+import Html.Attributes exposing (class, href, id, src)
+import Html.Events exposing (onWithOptions, defaultOptions)
 import Http
 import Json.Decode as Json
 import Json.Decode exposing (field)
@@ -46,6 +47,9 @@ type alias Track =
 
 type Msg
     = Index (Result Http.Error ( Header, List Track ))
+    | Play Int
+    | Pause Int
+    | Resume Int
 
 
 main : Program Never Model Msg
@@ -153,19 +157,19 @@ track_view index { artist, title, url, duration, status } =
         number =
             toString (index + 1)
 
-        (URL url_) =
+        (URL track_url) =
             url
 
-        ( track_class, time ) =
+        ( track_class, time, onClick_msg ) =
             case status of
                 Playing t ->
-                    ( "song playing", t )
+                    ( "song playing", t, Pause index )
 
                 Paused t ->
-                    ( "song paused", t )
+                    ( "song paused", t, Resume index )
 
                 Stopped ->
-                    ( "song", Time 0.0 )
+                    ( "song", Time 0, Play index )
 
         track_id =
             "track_" ++ number
@@ -182,12 +186,14 @@ track_view index { artist, title, url, duration, status } =
         li
             [ class track_class
             , id track_id
+            , onClickPreventDefault onClick_msg
             ]
-            [ a [ class "title", href url_ ] [ text track_name ]
+            [ a [ class "title", href track_url ] [ text track_name ]
             , span [ class "time" ]
                 [ span [ class "position" ] [ text track_time ]
                 , span [ class "duration" ] [ text track_duration ]
                 ]
+            , audio [ src track_url ] []
             ]
 
 
@@ -214,6 +220,14 @@ minutes_and_seconds (Time time) =
             ":" ++ seconds
 
 
+onClickPreventDefault : a -> Html.Attribute a
+onClickPreventDefault message =
+    onWithOptions
+        "click"
+        { defaultOptions | preventDefault = True }
+        (Json.succeed message)
+
+
 update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
     case msg of
@@ -222,6 +236,57 @@ update msg model =
 
         Index (Err _) ->
             ( model, Cmd.none )
+
+        Play i ->
+            ( { model
+                | tracks =
+                    model.tracks
+                        |> indexedMap
+                            (\idx track ->
+                                case ( idx == i, track.status ) of
+                                    ( True, Stopped ) ->
+                                        { track | status = Playing <| Time 0 }
+
+                                    ( _, _ ) ->
+                                        { track | status = Stopped }
+                            )
+              }
+            , Cmd.none
+            )
+
+        Pause i ->
+            ( { model
+                | tracks =
+                    model.tracks
+                        |> indexedMap
+                            (\idx track ->
+                                case ( idx == i, track.status ) of
+                                    ( True, Playing (Time time) ) ->
+                                        { track | status = Paused <| Time time }
+
+                                    ( _, _ ) ->
+                                        { track | status = Stopped }
+                            )
+              }
+            , Cmd.none
+            )
+
+        Resume i ->
+            ( { model
+                | tracks =
+                    model.tracks
+                        |> indexedMap
+                            (\idx track ->
+                                case ( idx == i, track.status ) of
+                                    ( True, Paused (Time time) ) ->
+                                        { track | status = Playing <| Time time }
+
+                                    ( _, _ ) ->
+                                        { track | status = Stopped }
+                            )
+              }
+            , Cmd.none
+            )
 
 
 subscriptions : Model -> Sub Msg
