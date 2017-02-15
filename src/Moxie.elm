@@ -2,7 +2,7 @@ port module Moxie exposing (..)
 
 import Html exposing (a, audio, div, h1, li, text, span, ul, program)
 import Html.Attributes exposing (class, href, id, src)
-import Html.Events exposing (onWithOptions, defaultOptions)
+import Html.Events exposing (on, onWithOptions, defaultOptions)
 import Http
 import Json.Decode as Json
 import Json.Decode exposing (field)
@@ -11,6 +11,11 @@ import List exposing (indexedMap)
 
 type Time
     = Time Float
+
+
+decodeTime : Json.Decoder Time
+decodeTime =
+    Json.map Time Json.float
 
 
 type URL
@@ -50,6 +55,7 @@ type Msg
     | Play Int
     | Pause Int
     | Resume Int
+    | Progress Int Time
 
 
 main : Program Never Model Msg
@@ -100,9 +106,6 @@ decodeIndexJson =
     let
         decodeURL =
             Json.map URL Json.string
-
-        decodeTime =
-            Json.map Time Json.float
 
         decodeHeader =
             Json.map3 Header
@@ -193,8 +196,16 @@ track_view index { artist, title, url, duration, status } =
                 [ span [ class "position" ] [ text track_time ]
                 , span [ class "duration" ] [ text track_duration ]
                 ]
-            , audio [ src track_url ] []
+            , audio [ src track_url, onTimeUpdate <| Progress index ] []
             ]
+
+
+onTimeUpdate : (Time -> value) -> Html.Attribute value
+onTimeUpdate message =
+    decodeTime
+        |> Json.at [ "target", "currentTime" ]
+        |> Json.map message
+        |> on "timeupdate"
 
 
 minutes_and_seconds : Time -> String
@@ -286,6 +297,26 @@ update msg model =
                             )
               }
             , resume i
+            )
+
+        Progress i t ->
+            ( { model
+                | tracks =
+                    model.tracks
+                        |> indexedMap
+                            (\idx track ->
+                                case ( idx == i, track.status ) of
+                                    ( True, Playing _ ) ->
+                                        { track | status = Playing t }
+
+                                    ( True, Paused _ ) ->
+                                        { track | status = Paused t }
+
+                                    ( _, _ ) ->
+                                        track
+                            )
+              }
+            , Cmd.none
             )
 
 
