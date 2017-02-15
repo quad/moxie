@@ -56,6 +56,7 @@ type Msg
     | Pause Int
     | Resume Int
     | Progress Int Time
+    | End Int
 
 
 main : Program Never Model Msg
@@ -166,13 +167,13 @@ track_view index { artist, title, url, duration, status } =
         ( track_class, time, onClick_msg ) =
             case status of
                 Playing t ->
-                    ( "song playing", t, Pause index )
+                    ( "song playing", Just t, Pause index )
 
                 Paused t ->
-                    ( "song paused", t, Resume index )
+                    ( "song paused", Just t, Resume index )
 
                 Stopped ->
-                    ( "song", Time 0, Play index )
+                    ( "song", Nothing, Play index )
 
         track_id =
             "track_" ++ number
@@ -181,7 +182,12 @@ track_view index { artist, title, url, duration, status } =
             artist ++ " - " ++ title
 
         track_time =
-            minutes_and_seconds time
+            case time of
+                Just t ->
+                    minutes_and_seconds t
+
+                Nothing ->
+                    ""
 
         track_duration =
             minutes_and_seconds duration
@@ -196,7 +202,7 @@ track_view index { artist, title, url, duration, status } =
                 [ span [ class "position" ] [ text track_time ]
                 , span [ class "duration" ] [ text track_duration ]
                 ]
-            , audio [ src track_url, onTimeUpdate <| Progress index ] []
+            , audio [ src track_url, onTimeUpdate <| Progress index, onEnded <| End index ] []
             ]
 
 
@@ -206,6 +212,13 @@ onTimeUpdate message =
         |> Json.at [ "target", "currentTime" ]
         |> Json.map message
         |> on "timeupdate"
+
+
+onEnded : a -> Html.Attribute a
+onEnded message =
+    message
+        |> Json.succeed
+        |> on "ended"
 
 
 minutes_and_seconds : Time -> String
@@ -317,6 +330,23 @@ update msg model =
                             )
               }
             , Cmd.none
+            )
+
+        End i ->
+            ( { model
+                | tracks =
+                    model.tracks
+                        |> indexedMap
+                            (\idx track ->
+                                case ( idx == i + 1, track.status ) of
+                                    ( True, Stopped ) ->
+                                        { track | status = Playing <| Time 0 }
+
+                                    ( _, _ ) ->
+                                        { track | status = Stopped }
+                            )
+              }
+            , play <| i + 1
             )
 
 
