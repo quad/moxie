@@ -15,8 +15,14 @@
                 document.title = title;
             });
 
+            each = function(arr, fn) {
+                for (var i = 0; i < arr.length; i++) {
+                    fn(arr[i], i);
+                }
+            };
+
             app.ports.play.subscribe(function(index) {
-                document.querySelectorAll('audio').forEach(function(audio, i) {
+                each(document.querySelectorAll('audio'), function(audio, i) {
                     if (i == index) {
                         audio.addEventListener('canplay', function() {
                             audio.play();
@@ -30,13 +36,13 @@
             });
 
             app.ports.pause.subscribe(function() {
-                document.querySelectorAll('audio').forEach(function(audio) {
+                each(document.querySelectorAll('audio'), function(audio) {
                     audio.pause();
                 });
             });
 
             app.ports.resume.subscribe(function(index) {
-                document.querySelectorAll('audio').forEach(function(audio, i) {
+                each(document.querySelectorAll('audio'), function(audio, i) {
                     if (i == index) {
                         audio.play();
                     } else {
