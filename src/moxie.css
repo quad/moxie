@@ -41,7 +41,6 @@ body {
 }
 
 #title {
-    margin: 0;
     font-size: calc(1em + 2vh);
 }
 
@@ -51,7 +50,6 @@ body {
 }
 
 #songs {
-    margin: 0;
     padding: 0;
 }
 
