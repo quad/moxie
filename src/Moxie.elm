@@ -71,26 +71,7 @@ init =
             , subtitle = "model.header.subtitle"
             , url = URL "#"
             }
-      , tracks =
-            [ { artist = "track 1"
-              , title = "title 1"
-              , duration = Time 123.4
-              , url = URL "#1"
-              , status = Playing <| Time 12.34
-              }
-            , { artist = "track 2"
-              , title = "title 2"
-              , duration = Time 61.0
-              , url = URL "#2"
-              , status = Paused <| Time 1.234
-              }
-            , { artist = "track 3"
-              , title = "title 3"
-              , duration = Time 0
-              , url = URL "#3"
-              , status = Stopped
-              }
-            ]
+      , tracks = []
       }
     , getIndexJson
     )
