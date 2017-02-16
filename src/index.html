@@ -14,8 +14,11 @@
             app.ports.play.subscribe(function(index) {
                 document.querySelectorAll('audio').forEach(function(audio, i) {
                     if (i == index) {
-                        audio.currentTime = 0;
-                        audio.play();
+                        audio.addEventListener('canplay', function() {
+                            audio.play();
+                        }, {once: true});
+
+                        audio.load();
                     } else {
                         audio.pause();
                     }
