@@ -35,4 +35,4 @@ serve:
 		/static/="${MP3_DIR}"
 
 watch:
-	watchexec -e elm,html,css -i "\*/${OUT_DIR}/\*" make
+	watchexec -e elm,html,css,json -i "\*/${OUT_DIR}/\*" make
