@@ -19,15 +19,17 @@ div {
     position: absolute;
     top: calc(50% - (25vh / 2));
     left: calc(50% - (25vh / 2));
-    animation: rotate-square 1s infinite ease-in-out;
+    animation: 1s infinite ease-in-out rotate-square;
 }
 
 @keyframes rotate-square {
     0% {
         transform: perspective(50vh) rotateX(0deg) rotateY(0deg);
-    } 50% {
+    }
+    50% {
         transform: perspective(50vh) rotateX(-180.1deg) rotateY(0deg);
-    } 100% {
+    }
+    100% {
         transform: perspective(50vh) rotateX(-180deg) rotateY(-179.9deg);
     }
 }
