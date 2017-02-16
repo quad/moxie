@@ -1,7 +1,7 @@
 port module Moxie exposing (..)
 
 import Html exposing (a, audio, div, h1, li, text, span, ul, program)
-import Html.Attributes exposing (class, href, id, src)
+import Html.Attributes exposing (class, href, id, preload, src)
 import Html.Events exposing (on, onWithOptions, defaultOptions)
 import Http
 import Json.Decode as Json
@@ -202,7 +202,7 @@ track_view index { artist, title, url, duration, status } =
                 [ span [ class "position" ] [ text track_time ]
                 , span [ class "duration" ] [ text track_duration ]
                 ]
-            , audio [ src track_url, onTimeUpdate <| Progress index, onEnded <| End index ] []
+            , audio [ src track_url, preload "none", onTimeUpdate <| Progress index, onEnded <| End index ] []
             ]
 
 
