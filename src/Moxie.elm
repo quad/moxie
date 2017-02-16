@@ -114,12 +114,17 @@ decodeIndexJson =
 
 view : Model -> Html.Html Msg
 view { header, tracks } =
-    div []
-        [ header_view header
-        , tracks
-            |> indexedMap track_view
-            |> tracks_view
-        ]
+    case tracks of
+        [] ->
+            div [ class "initing" ] []
+
+        _ :: _ ->
+            div []
+                [ header_view header
+                , tracks
+                    |> indexedMap track_view
+                    |> tracks_view
+                ]
 
 
 header_view : Header -> Html.Html Msg
