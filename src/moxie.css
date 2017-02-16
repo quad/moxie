@@ -50,6 +50,10 @@ body {
     margin-left: 1vw;
 }
 
+.loading .position:after {
+    content: "\2026/";
+}
+
 .playing {
     background-color: #E5E5E5;
 }

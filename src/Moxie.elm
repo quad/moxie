@@ -23,7 +23,8 @@ type URL
 
 
 type Status
-    = Playing Time
+    = Loading
+    | Playing Time
     | Paused Time
     | Stopped
 
@@ -147,6 +148,9 @@ track_view index { artist, title, url, duration, status } =
 
         ( track_class, time, onClick_msg ) =
             case status of
+                Loading ->
+                    ( "song loading", Nothing, Pause index )
+
                 Playing t ->
                     ( "song playing", Just t, Pause index )
 
@@ -250,7 +254,7 @@ update msg model =
                             (\idx track ->
                                 case ( idx == i, track.status ) of
                                     ( True, Stopped ) ->
-                                        { track | status = Playing <| Time 0 }
+                                        { track | status = Loading }
 
                                     ( _, _ ) ->
                                         { track | status = Stopped }
@@ -300,6 +304,9 @@ update msg model =
                         |> indexedMap
                             (\idx track ->
                                 case ( idx == i, track.status ) of
+                                    ( True, Loading ) ->
+                                        { track | status = Playing t }
+
                                     ( True, Playing _ ) ->
                                         { track | status = Playing t }
 
