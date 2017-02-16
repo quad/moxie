@@ -149,7 +149,7 @@ track_view index { artist, title, url, duration, status } =
         ( track_class, time, onClick_msg ) =
             case status of
                 Loading ->
-                    ( "song loading", Nothing, Pause index )
+                    ( "song playing loading", Nothing, Pause index )
 
                 Playing t ->
                     ( "song playing", Just t, Pause index )

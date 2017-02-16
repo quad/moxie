@@ -38,6 +38,11 @@ body {
     padding: 0.5vh 1vw;
     cursor: pointer;
     display: flex;
+    transition: background-color ease 250ms;
+}
+
+.song:hover {
+    background-color: #E5E5E5;
 }
 
 .name {
@@ -50,8 +55,13 @@ body {
     margin: auto 0 auto 1vw;
 }
 
-.loading .position:after {
-    content: "\2026/";
+.position {
+    color: #E5E5E5;
+    transition: color ease 250ms;
+}
+
+.loading .position:before {
+    content: "\2026";
 }
 
 .playing {
