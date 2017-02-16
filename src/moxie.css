@@ -47,7 +47,7 @@ body {
 
 .time {
     text-align: right;
-    margin-left: 1vw;
+    margin: auto 0 auto 1vw;
 }
 
 .loading .position:after {
