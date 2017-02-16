@@ -11,6 +11,10 @@
         <script>
             var app = Elm.Moxie.fullscreen();
 
+            app.ports.title.subscribe(function(title) {
+                document.title = title;
+            });
+
             app.ports.play.subscribe(function(index) {
                 document.querySelectorAll('audio').forEach(function(audio, i) {
                     if (i == index) {

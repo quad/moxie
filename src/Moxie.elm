@@ -256,7 +256,7 @@ update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
     case msg of
         Index (Ok ( header, tracks )) ->
-            ( { model | header = header, tracks = tracks }, Cmd.none )
+            ( { model | header = header, tracks = tracks }, title header.title )
 
         Index (Err _) ->
             ( model, Cmd.none )
@@ -348,6 +348,9 @@ update msg model =
               }
             , play <| i + 1
             )
+
+
+port title : String -> Cmd msg
 
 
 port play : Int -> Cmd msg
