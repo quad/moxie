@@ -15,40 +15,22 @@
                 document.title = title;
             });
 
-            each = function(arr, fn) {
-                for (var i = 0; i < arr.length; i++) {
-                    fn(arr[i], i);
-                }
-            };
+            app.ports.rewind.subscribe(function(index) {
+                var audio = document.querySelectorAll('audio')[index];
+
+                audio.fastSeek(0);
+            });
 
             app.ports.play.subscribe(function(index) {
-                each(document.querySelectorAll('audio'), function(audio, i) {
-                    if (i == index) {
-                        audio.addEventListener('canplay', function() {
-                            audio.play();
-                        }, {once: true});
+                var audio = document.querySelectorAll('audio')[index];
 
-                        audio.load();
-                    } else {
-                        audio.pause();
-                    }
-                });
+                audio.play();
             });
 
-            app.ports.pause.subscribe(function() {
-                each(document.querySelectorAll('audio'), function(audio) {
-                    audio.pause();
-                });
-            });
+            app.ports.pause.subscribe(function(index) {
+                var audio = document.querySelectorAll('audio')[index];
 
-            app.ports.resume.subscribe(function(index) {
-                each(document.querySelectorAll('audio'), function(audio, i) {
-                    if (i == index) {
-                        audio.play();
-                    } else {
-                        audio.pause();
-                    }
-                });
+                audio.pause();
             });
         </script>
     </body>

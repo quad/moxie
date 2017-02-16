@@ -215,7 +215,8 @@ minutes_and_seconds : Time -> String
 minutes_and_seconds (Time time) =
     let
         t =
-            floor time
+            max 0 time
+                |> floor
 
         seconds =
             t
@@ -242,6 +243,30 @@ onClickPreventDefault message =
         (Json.succeed message)
 
 
+ffi : List Track -> Cmd msg
+ffi tracks =
+    let
+        update =
+            \i t ->
+                case t.status of
+                    Loading ->
+                        [ rewind i, play i ]
+
+                    Playing _ ->
+                        [ play i ]
+
+                    Paused _ ->
+                        [ pause i ]
+
+                    Stopped ->
+                        [ pause i ]
+    in
+        tracks
+            |> indexedMap update
+            |> List.concat
+            |> Cmd.batch
+
+
 update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
     case msg of
@@ -252,107 +277,100 @@ update msg model =
             ( model, Cmd.none )
 
         Play i ->
-            ( { model
-                | tracks =
-                    model.tracks
-                        |> indexedMap
-                            (\idx track ->
-                                case ( idx == i, track.status ) of
-                                    ( True, Stopped ) ->
-                                        { track | status = Loading }
+            let
+                set =
+                    \idx t ->
+                        if idx == i then
+                            { t | status = Loading }
+                        else
+                            { t | status = Stopped }
 
-                                    ( _, _ ) ->
-                                        { track | status = Stopped }
-                            )
-              }
-            , play i
-            )
+                m =
+                    { model | tracks = indexedMap set model.tracks }
+            in
+                ( m, ffi m.tracks )
 
         Pause i ->
-            ( { model
-                | tracks =
-                    model.tracks
-                        |> indexedMap
-                            (\idx track ->
-                                case ( idx == i, track.status ) of
-                                    ( True, Playing (Time time) ) ->
-                                        { track | status = Paused <| Time time }
+            let
+                set =
+                    \idx t ->
+                        case ( idx == i, t.status ) of
+                            ( True, Playing (Time time) ) ->
+                                { t | status = Paused <| Time time }
 
-                                    ( _, _ ) ->
-                                        { track | status = Stopped }
-                            )
-              }
-            , pause ()
-            )
+                            ( _, _ ) ->
+                                { t | status = Stopped }
+
+                m =
+                    { model | tracks = indexedMap set model.tracks }
+            in
+                ( m, ffi m.tracks )
 
         Resume i ->
-            ( { model
-                | tracks =
-                    model.tracks
-                        |> indexedMap
-                            (\idx track ->
-                                case ( idx == i, track.status ) of
-                                    ( True, Paused (Time time) ) ->
-                                        { track | status = Playing <| Time time }
+            let
+                set =
+                    \idx t ->
+                        case ( idx == i, t.status ) of
+                            ( True, Paused (Time time) ) ->
+                                { t | status = Playing <| Time time }
 
-                                    ( _, _ ) ->
-                                        { track | status = Stopped }
-                            )
-              }
-            , resume i
-            )
+                            ( _, _ ) ->
+                                { t | status = Stopped }
+
+                m =
+                    { model | tracks = indexedMap set model.tracks }
+            in
+                ( m, ffi m.tracks )
 
         Progress i t ->
-            ( { model
-                | tracks =
-                    model.tracks
-                        |> indexedMap
-                            (\idx track ->
-                                case ( idx == i, track.status ) of
-                                    ( True, Loading ) ->
-                                        { track | status = Playing t }
+            let
+                set =
+                    \idx tr ->
+                        case ( idx == i, tr.status ) of
+                            ( True, Loading ) ->
+                                { tr | status = Playing t }
 
-                                    ( True, Playing _ ) ->
-                                        { track | status = Playing t }
+                            ( True, Playing _ ) ->
+                                { tr | status = Playing t }
 
-                                    ( True, Paused _ ) ->
-                                        { track | status = Paused t }
+                            ( True, Paused _ ) ->
+                                { tr | status = Paused t }
 
-                                    ( _, _ ) ->
-                                        track
-                            )
-              }
-            , Cmd.none
-            )
+                            ( _, _ ) ->
+                                tr
+
+                m =
+                    { model | tracks = indexedMap set model.tracks }
+            in
+                ( m, Cmd.none )
 
         End i ->
-            ( { model
-                | tracks =
-                    model.tracks
-                        |> indexedMap
-                            (\idx track ->
-                                case ( idx == i + 1, track.status ) of
-                                    ( True, Stopped ) ->
-                                        { track | status = Playing <| Time 0 }
+            let
+                set =
+                    \idx t ->
+                        case ( idx == (i + 1), t.status ) of
+                            ( True, Stopped ) ->
+                                { t | status = Loading }
 
-                                    ( _, _ ) ->
-                                        { track | status = Stopped }
-                            )
-              }
-            , play <| i + 1
-            )
+                            ( _, _ ) ->
+                                { t | status = Stopped }
+
+                m =
+                    { model | tracks = indexedMap set model.tracks }
+            in
+                ( m, ffi m.tracks )
 
 
 port title : String -> Cmd msg
 
 
+port rewind : Int -> Cmd msg
+
+
 port play : Int -> Cmd msg
 
 
-port pause : () -> Cmd msg
-
-
-port resume : Int -> Cmd msg
+port pause : Int -> Cmd msg
 
 
 subscriptions : Model -> Sub Msg
