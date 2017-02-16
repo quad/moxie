@@ -1,103 +1,71 @@
-/* Variables */
-
-div#header {
-	color: white;
-	background-color: red;
+@font-face {
+    font-family: "Inconsolata";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Inconsolata"), url("inconsolata-v12.woff2") format("woff2");
 }
-
-/* Statics */
 
 body {
-	margin: 0;
+    color: #333;
+    background: snow;
+    margin: auto;
+    max-width: 90%;
+    font-family: "Inconsolata", monospace;
+    font-size: calc(1em + 1vh);
 }
 
-div#header {
-	padding: 1ex 0.5em;
-	margin: 0;
+#header {
+    border-bottom: thin dotted black;
+    padding: 0 1vw;
 }
 
-div#header * {
-	margin: 0;
+#title {
+    margin: 0;
+    font-size: calc(1em + 2vh);
 }
 
-div#header p {
-	padding: 0 1em;
+#subtitle {
+    display: block;
+    text-decoration: none;
 }
 
-ul.songs {
-	display: block;
-	margin: 0;
-	padding: 0;
+#songs {
+    margin: 0;
+    padding: 0;
 }
 
-li.song {
-	display: block;
-	padding: 0.5ex 0.5em;
-	border-bottom: thin solid #D0D0D0;
-	cursor: pointer;
+.song {
+    padding: 0.5vh 1vw;
+    cursor: pointer;
+    display: flex;
 }
 
-li.song:hover {
-	background-color: #F0F0F0;
+.name {
+    text-decoration: none;
+    flex: auto;
 }
 
-li.playing {
-	background-color: #E5E5E5;
+.time {
+    text-align: right;
+    margin-left: 1vw;
 }
 
-span.time {
-	float: right;
+.playing {
+    background-color: #E5E5E5;
 }
 
-a.title {
-	color: black;
-	text-decoration: none;
+.playing .position {
+    color: #33CC33;
 }
 
-noscript div {
-	display: block;
-	background-color: #FFFA67;
-	margin: 1ex 0;
-	padding: 0.5ex 0.5em;
-	text-align: center;
-	border: thin dotted black;
+.playing .position:after {
+    content: "/";
 }
 
-/* Colors */
-
-div#header {
-	font-family: Verdana, Geneva, sans-serif;
+.paused .position {
+    color: gray;
 }
 
-div#header h1 {
-	font-size: x-large;
-}
-
-div#header p {
-	font-size: small;
-}
-
-div#header a {
-	color: inherit;
-}
-
-div#header a:visited {
-	font-style: italic;
-}
-
-ul.songs {
-	font-family: Helvetica, "Microsoft Sans Serif", Arial, sans-serif;
-	font-size: xx-large;
-}
-
-span.position {
-	font-size: x-large;
-}
-
-li.playing span.position {
-	color: #32CD32;
-}
-
-li.paused span.position {
-	color: gray;
+.paused .position:after {
+    content: "/";
 }

@@ -145,14 +145,14 @@ header_view { title, subtitle, url } =
     case url of
         URL url ->
             div [ id "header" ]
-                [ h1 [] [ text title ]
-                , a [ href url ] [ text subtitle ]
+                [ h1 [ id "title" ] [ text title ]
+                , a [ id "subtitle", href url ] [ text subtitle ]
                 ]
 
 
 tracks_view : List (Html.Html msg) -> Html.Html msg
 tracks_view tracks =
-    ul [ class "songs" ] tracks
+    ul [ id "songs" ] tracks
 
 
 track_view : Int -> Track -> Html.Html Msg
@@ -197,7 +197,7 @@ track_view index { artist, title, url, duration, status } =
             , id track_id
             , onClickPreventDefault onClick_msg
             ]
-            [ a [ class "title", href track_url ] [ text track_name ]
+            [ a [ class "name", href track_url ] [ text track_name ]
             , span [ class "time" ]
                 [ span [ class "position" ] [ text track_time ]
                 , span [ class "duration" ] [ text track_duration ]
