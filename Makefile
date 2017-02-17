@@ -6,7 +6,8 @@ all: \
 	${OUT_DIR} \
 	${OUT_DIR}/index.html \
 	${OUT_DIR}/moxie.css \
-	${OUT_DIR}/inconsolata-v12.woff2 \
+	${OUT_DIR}/inconsolata.woff2 \
+	${OUT_DIR}/inconsolata.ttf \
 	${OUT_DIR}/moxie.js \
 	${OUT_DIR}/index.json
 
@@ -19,7 +20,10 @@ ${OUT_DIR}/index.html: ${SRC_DIR}/index.html
 ${OUT_DIR}/moxie.css: ${SRC_DIR}/moxie.css
 	cp "$?" "$@"
 
-${OUT_DIR}/inconsolata-v12.woff2: ${SRC_DIR}/inconsolata-v12.woff2
+${OUT_DIR}/inconsolata.woff2: ${SRC_DIR}/inconsolata.woff2
+	cp "$?" "$@"
+
+${OUT_DIR}/inconsolata.ttf: ${SRC_DIR}/inconsolata.ttf
 	cp "$?" "$@"
 
 ${OUT_DIR}/moxie.js: ${SRC_DIR}/Moxie.elm
