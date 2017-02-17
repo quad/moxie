@@ -13,6 +13,6 @@ die_install() {
 
 yarn install
 
-node_modules/.bin/elm-package install --yes
+yarn run -- elm-package install --yes
 
 echo OK
