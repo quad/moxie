@@ -18,7 +18,11 @@
             app.ports.rewind.subscribe(function(index) {
                 var audio = document.querySelectorAll('audio')[index];
 
-                audio.fastSeek(0);
+                if (audio.fastSeek) {
+                    audio.fastSeek(0);
+                } else {
+                    audio.currentTime = 0;
+                }
             });
 
             app.ports.play.subscribe(function(index) {
