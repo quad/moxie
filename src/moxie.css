@@ -50,6 +50,10 @@ body {
     font-size: calc(1em + 1vw);
 }
 
+a {
+    text-decoration: none;
+}
+
 #header {
     border-bottom: thin dotted black;
     padding: 0 1vw;
@@ -61,7 +65,6 @@ body {
 
 #subtitle {
     display: block;
-    text-decoration: none;
 }
 
 #songs {
@@ -80,7 +83,6 @@ body {
 }
 
 .name {
-    text-decoration: none;
     flex: auto;
 }
 
