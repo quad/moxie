@@ -47,7 +47,7 @@ body {
     margin: auto;
     max-width: 90%;
     font-family: "Inconsolata", monospace;
-    font-size: calc(1em + 1vh);
+    font-size: calc(1em + 1vw);
 }
 
 #header {
@@ -56,7 +56,7 @@ body {
 }
 
 #title {
-    font-size: calc(1em + 2vh);
+    font-size: calc(1em + 2vw);
 }
 
 #subtitle {
