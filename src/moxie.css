@@ -71,15 +71,26 @@ a {
     padding: 0;
 }
 
+#songs a {
+    color: inherit;
+}
+
 .song {
     padding: 0.5vh 1vw;
     cursor: pointer;
     display: flex;
+    transition: color ease 250ms;
     transition: background-color ease 250ms;
 }
 
 .song:hover {
-    background-color: #E5E5E5;
+    color: snow;
+    background-color: #333;
+}
+
+.playing {
+    color: snow;
+    background-color: #333;
 }
 
 .name {
@@ -91,29 +102,12 @@ a {
     margin: auto 0 auto 1vw;
 }
 
-.position {
-    color: #E5E5E5;
-    transition: color ease 250ms;
-}
-
 .loading .position:before {
     content: "\2026";
 }
 
-.playing {
-    background-color: #E5E5E5;
-}
-
-.playing .position {
-    color: #33CC33;
-}
-
 .playing .position:after {
     content: "/";
-}
-
-.paused .position {
-    color: gray;
 }
 
 .paused .position:after {
