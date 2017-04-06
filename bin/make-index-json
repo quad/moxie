@@ -1,0 +1,91 @@
+#!/usr/bin/env node
+
+const childProcess = require('child_process')
+const fs = require('fs')
+const path = require('path')
+
+const commander = require('commander')
+const glob = require('glob')
+
+const manifest = filename => {
+  const data = JSON.parse(fs.readFileSync(filename))
+
+  return {
+    title: data.title || 'A Moxie Mixtape!',
+    subtitle: data.subtitle || 'Make a manifest.json',
+    url: data.url || 'http://github.com/quad/moxie',
+  }
+}
+
+const ffprobe = filename =>
+  childProcess.execFileSync('ffprobe', [
+    '-hide_banner',
+    '-v',
+    'warning',
+    '-show_format',
+    '-of',
+    'json',
+    filename,
+  ])
+
+const tag = filename => {
+  const results = JSON.parse(ffprobe(filename))
+
+  return {
+    basename: path.basename(filename),
+    artist: results.format.tags.artist,
+    title: results.format.tags.title,
+    duration: parseFloat(results.format.duration),
+  }
+}
+
+const extract = directory => {
+  const manifestFilename = path.join(directory, 'manifest.json')
+
+  return [
+    manifest(manifestFilename),
+    glob.sync(path.join(directory, '*.mp3')).map(tag),
+  ]
+}
+
+const transform = prefix =>
+  ([manifest, tags]) => ({
+    title: manifest.title,
+    subtitle: manifest.subtitle,
+    url: manifest.url,
+    tracks: tags.map(t => ({
+      url: path.join(prefix, t.basename),
+      artist: t.artist,
+      title: t.title,
+      duration: t.duration,
+    })),
+  })
+
+const write = filename =>
+  data => fs.writeFileSync(filename, JSON.stringify(data))
+
+const program = commander
+  .usage('<source directory>')
+  .description('Make an index.json for moxie from a directory with .mp3 files and an (optional) manifest.json')
+  .option('-p, --prefix [path]', 'prefix references with [path]', '')
+  .option('-o, --output [file]', 'output to [file]', 'index.json')
+  .parse(process.argv)
+
+if (!program.args.length) {
+  program.help()
+}
+
+const sourceDirectory = program.args[0]
+
+if (!fs.existsSync(sourceDirectory) || !fs.lstatSync(sourceDirectory).isDirectory()) {
+  console.error(`${sourceDirectory} is not a directory`)
+  process.exit(1)
+}
+
+Promise.resolve(extract(sourceDirectory))
+  .then(transform(program.prefix))
+  .then(write(program.output))
+  .catch(r => {
+    console.error(r)
+    process.exit(1)
+  })
