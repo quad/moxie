@@ -1,5 +1,6 @@
 OUT_DIR = build
 SRC_DIR = src
+BIN_DIR = bin
 MP3_DIR = static
 
 all: \
@@ -30,7 +31,7 @@ ${OUT_DIR}/moxie.js: ${SRC_DIR}/Moxie.elm
 	yarn run elm-make -- "$?" --output="$@" --warn
 
 ${OUT_DIR}/index.json: ${MP3_DIR}/manifest.json ${MP3_DIR}/*.mp3
-	./make-index-json.py --output="$@" --prefix=static ${MP3_DIR}
+	${BIN_DIR}/make-index-json --output="$@" --prefix=static ${MP3_DIR}
 
 .PHONY: test devd watch
 
