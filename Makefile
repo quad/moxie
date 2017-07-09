@@ -33,7 +33,11 @@ ${OUT_DIR}/moxie.js: ${SRC_DIR}/Moxie.elm
 ${OUT_DIR}/index.json: ${MP3_DIR}/manifest.json ${MP3_DIR}/*.mp3
 	${BIN_DIR}/make-index-json --output="$@" --prefix=static ${MP3_DIR}
 
-.PHONY: test devd watch
+.PHONY: clean test devd watch
+
+clean:
+	rm -rf node_modules elm-stuff tests/elm-stuff
+	rm -rf ${OUT_DIR}
 
 test:
 	yarn run elm-test
