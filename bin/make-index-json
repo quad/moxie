@@ -44,7 +44,7 @@ const extract = directory => {
 
   return [
     manifest(manifestFilename),
-    glob.sync(path.join(directory, '*.mp3')).map(tag),
+    glob.sync(path.join(directory, '*.+(mp3|m4a)')).map(tag),
   ]
 }
 
