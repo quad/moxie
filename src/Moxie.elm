@@ -1,7 +1,7 @@
 port module Moxie exposing (..)
 
 import Html exposing (a, audio, div, h1, li, text, span, ul, program)
-import Html.Attributes exposing (class, href, id, preload, src)
+import Html.Attributes exposing (class, href, id, preload, rel, src, target)
 import Html.Events exposing (on, onWithOptions, defaultOptions)
 import Http
 import Json.Decode as Json
@@ -133,7 +133,9 @@ header_view { title, subtitle, url } =
         URL url ->
             div [ id "header" ]
                 [ h1 [ id "title" ] [ text title ]
-                , a [ id "subtitle", href url ] [ text subtitle ]
+                , a [ id "subtitle" , href url
+                    , rel "noopener" , target "_blank"
+                    ] [ text subtitle ]
                 ]
 
 
