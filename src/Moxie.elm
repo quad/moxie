@@ -1,6 +1,6 @@
-port module Moxie exposing (Time(..), minutes_and_seconds, pause, play, port_title, rewind)
+port module Moxie exposing (Time(..), minutes_and_seconds, pause, play, rewind)
 
-import Browser exposing (element)
+import Browser exposing (document)
 import Html exposing (a, audio, div, h1, li, span, text, ul)
 import Html.Attributes exposing (class, href, id, preload, rel, src, target)
 import Html.Events exposing (on, preventDefaultOn)
@@ -60,7 +60,7 @@ type Msg
 
 
 main =
-    element { init = init, view = view, update = update, subscriptions = subscriptions }
+    document { init = init, view = view, update = update, subscriptions = subscriptions }
 
 
 init : () -> ( Model, Cmd Msg )
@@ -109,17 +109,21 @@ decodeIndexJson =
 
 
 view { header, tracks } =
-    case tracks of
-        [] ->
-            div [ class "initing" ] []
+    { title = header.title
+    , body =
+        [ case tracks of
+            [] ->
+                div [ class "initing" ] []
 
-        _ :: _ ->
-            div []
-                [ header_view header
-                , tracks
-                    |> indexedMap track_view
-                    |> tracks_view
-                ]
+            _ :: _ ->
+                div []
+                    [ header_view header
+                    , tracks
+                        |> indexedMap track_view
+                        |> tracks_view
+                    ]
+        ]
+    }
 
 
 header_view { title, subtitle, url } =
@@ -260,7 +264,7 @@ ffi tracks =
 update msg model =
     case msg of
         Index (Ok ( header, tracks )) ->
-            ( { model | header = header, tracks = tracks }, port_title header.title )
+            ( { model | header = header, tracks = tracks }, Cmd.none )
 
         Index (Err _) ->
             ( model, Cmd.none )
@@ -349,9 +353,6 @@ update msg model =
                     { model | tracks = indexedMap set model.tracks }
             in
             ( m, ffi m.tracks )
-
-
-port port_title : String -> Cmd msg
 
 
 port rewind : Int -> Cmd msg
