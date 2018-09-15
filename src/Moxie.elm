@@ -1,11 +1,11 @@
-port module Moxie exposing (..)
+port module Moxie exposing (Time(..), minutes_and_seconds, pause, play, port_title, rewind)
 
-import Html exposing (a, audio, div, h1, li, text, span, ul, program)
+import Browser exposing (element)
+import Html exposing (a, audio, div, h1, li, span, text, ul)
 import Html.Attributes exposing (class, href, id, preload, rel, src, target)
-import Html.Events exposing (on, onWithOptions, defaultOptions)
+import Html.Events exposing (on, preventDefaultOn)
 import Http
-import Json.Decode as Json
-import Json.Decode exposing (field)
+import Json.Decode as Json exposing (field)
 import List exposing (indexedMap)
 
 
@@ -13,7 +13,6 @@ type Time
     = Time Float
 
 
-decodeTime : Json.Decoder Time
 decodeTime =
     Json.map Time Json.float
 
@@ -60,13 +59,12 @@ type Msg
     | End Int
 
 
-main : Program Never Model Msg
 main =
-    program { init = init, view = view, update = update, subscriptions = subscriptions }
+    element { init = init, view = view, update = update, subscriptions = subscriptions }
 
 
-init : ( Model, Cmd Msg )
-init =
+init : () -> ( Model, Cmd Msg )
+init _ =
     ( { header =
             { title = "model.header.title"
             , subtitle = "model.header.subtitle"
@@ -78,13 +76,11 @@ init =
     )
 
 
-getIndexJson : Cmd Msg
 getIndexJson =
     Http.get "index.json" decodeIndexJson
         |> Http.send Index
 
 
-decodeIndexJson : Json.Decoder ( Header, List Track )
 decodeIndexJson =
     let
         decodeURL =
@@ -107,12 +103,11 @@ decodeIndexJson =
                 (field "url" decodeURL)
                 (Json.succeed Stopped)
     in
-        Json.map2 (,)
-            decodeHeader
-            decodeTracks
+    Json.map2 (\a b -> ( a, b ))
+        decodeHeader
+        decodeTracks
 
 
-view : Model -> Html.Html Msg
 view { header, tracks } =
     case tracks of
         [] ->
@@ -127,28 +122,29 @@ view { header, tracks } =
                 ]
 
 
-header_view : Header -> Html.Html Msg
 header_view { title, subtitle, url } =
     case url of
-        URL url ->
+        URL u ->
             div [ id "header" ]
                 [ h1 [ id "title" ] [ text title ]
-                , a [ id "subtitle" , href url
-                    , rel "noopener" , target "_blank"
-                    ] [ text subtitle ]
+                , a
+                    [ id "subtitle"
+                    , href u
+                    , rel "noopener"
+                    , target "_blank"
+                    ]
+                    [ text subtitle ]
                 ]
 
 
-tracks_view : List (Html.Html msg) -> Html.Html msg
 tracks_view tracks =
     ul [ id "songs" ] tracks
 
 
-track_view : Int -> Track -> Html.Html Msg
 track_view index { artist, title, url, duration, status } =
     let
         number =
-            toString (index + 1)
+            String.fromInt (index + 1)
 
         (URL track_url) =
             url
@@ -184,21 +180,20 @@ track_view index { artist, title, url, duration, status } =
         track_duration =
             minutes_and_seconds duration
     in
-        li
-            [ class track_class
-            , id track_id
-            , onClickPreventDefault onClick_msg
+    li
+        [ class track_class
+        , id track_id
+        , onClick onClick_msg
+        ]
+        [ a [ class "name", href track_url ] [ text track_name ]
+        , span [ class "time" ]
+            [ span [ class "position" ] [ text track_time ]
+            , span [ class "duration" ] [ text track_duration ]
             ]
-            [ a [ class "name", href track_url ] [ text track_name ]
-            , span [ class "time" ]
-                [ span [ class "position" ] [ text track_time ]
-                , span [ class "duration" ] [ text track_duration ]
-                ]
-            , audio [ src track_url, preload "none", onTimeUpdate <| Progress index, onEnded <| End index ] []
-            ]
+        , audio [ src track_url, preload "none", onTimeUpdate <| Progress index, onEnded <| End index ] []
+        ]
 
 
-onTimeUpdate : (Time -> value) -> Html.Attribute value
 onTimeUpdate message =
     decodeTime
         |> Json.at [ "target", "currentTime" ]
@@ -206,14 +201,12 @@ onTimeUpdate message =
         |> on "timeupdate"
 
 
-onEnded : a -> Html.Attribute a
 onEnded message =
     message
         |> Json.succeed
         |> on "ended"
 
 
-minutes_and_seconds : Time -> String
 minutes_and_seconds (Time time) =
     let
         t =
@@ -221,35 +214,32 @@ minutes_and_seconds (Time time) =
                 |> floor
 
         seconds =
-            t
-                % 60
-                |> toString
+            modBy 60 t
+                |> String.fromInt
                 |> String.padLeft 2 '0'
 
         minutes =
             t
                 // 60
-                |> toString
+                |> String.fromInt
     in
-        if time >= 60 then
-            minutes ++ ":" ++ seconds
-        else
-            ":" ++ seconds
+    if time >= 60 then
+        minutes ++ ":" ++ seconds
+
+    else
+        ":" ++ seconds
 
 
-onClickPreventDefault : a -> Html.Attribute a
-onClickPreventDefault message =
-    onWithOptions
+onClick message =
+    preventDefaultOn
         "click"
-        { defaultOptions | preventDefault = True }
-        (Json.succeed message)
+        (Json.succeed ( message, True ))
 
 
-ffi : List Track -> Cmd msg
 ffi tracks =
-    let
-        update =
-            \i t ->
+    tracks
+        |> indexedMap
+            (\i t ->
                 case t.status of
                     Loading ->
                         [ rewind i, play i ]
@@ -262,18 +252,15 @@ ffi tracks =
 
                     Stopped ->
                         [ pause i ]
-    in
-        tracks
-            |> indexedMap update
-            |> List.concat
-            |> Cmd.batch
+            )
+        |> List.concat
+        |> Cmd.batch
 
 
-update : Msg -> Model -> ( Model, Cmd msg )
 update msg model =
     case msg of
         Index (Ok ( header, tracks )) ->
-            ( { model | header = header, tracks = tracks }, title header.title )
+            ( { model | header = header, tracks = tracks }, port_title header.title )
 
         Index (Err _) ->
             ( model, Cmd.none )
@@ -284,13 +271,14 @@ update msg model =
                     \idx t ->
                         if idx == i then
                             { t | status = Loading }
+
                         else
                             { t | status = Stopped }
 
                 m =
                     { model | tracks = indexedMap set model.tracks }
             in
-                ( m, ffi m.tracks )
+            ( m, ffi m.tracks )
 
         Pause i ->
             let
@@ -306,7 +294,7 @@ update msg model =
                 m =
                     { model | tracks = indexedMap set model.tracks }
             in
-                ( m, ffi m.tracks )
+            ( m, ffi m.tracks )
 
         Resume i ->
             let
@@ -322,7 +310,7 @@ update msg model =
                 m =
                     { model | tracks = indexedMap set model.tracks }
             in
-                ( m, ffi m.tracks )
+            ( m, ffi m.tracks )
 
         Progress i t ->
             let
@@ -344,7 +332,7 @@ update msg model =
                 m =
                     { model | tracks = indexedMap set model.tracks }
             in
-                ( m, Cmd.none )
+            ( m, Cmd.none )
 
         End i ->
             let
@@ -360,10 +348,10 @@ update msg model =
                 m =
                     { model | tracks = indexedMap set model.tracks }
             in
-                ( m, ffi m.tracks )
+            ( m, ffi m.tracks )
 
 
-port title : String -> Cmd msg
+port port_title : String -> Cmd msg
 
 
 port rewind : Int -> Cmd msg
@@ -375,6 +363,5 @@ port play : Int -> Cmd msg
 port pause : Int -> Cmd msg
 
 
-subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none

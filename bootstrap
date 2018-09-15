@@ -13,6 +13,4 @@ die_install() {
 
 yarn install
 
-yarn run -- elm-package install --yes
-
 echo OK

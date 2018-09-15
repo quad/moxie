@@ -1,11 +1,11 @@
-module Tests exposing (..)
+module Tests exposing (all)
 
 import Char exposing (isDigit)
 import Expect
 import Fuzz exposing (float, floatRange)
+import Moxie exposing (Time, minutes_and_seconds)
 import Random exposing (maxInt)
 import Test exposing (..)
-import Moxie exposing (Time, minutes_and_seconds)
 
 
 all : Test
