@@ -1,12 +1,14 @@
 port module Moxie exposing (Time(..), minutes_and_seconds, pause, play, rewind)
 
 import Browser exposing (document)
+import Browser.Events exposing (onKeyPress)
 import Html exposing (a, audio, div, h1, li, span, text, ul)
 import Html.Attributes exposing (class, href, id, preload, rel, src, target)
 import Html.Events exposing (on, preventDefaultOn)
 import Http
 import Json.Decode as Json exposing (field)
-import List exposing (indexedMap)
+import List exposing (foldl, indexedMap)
+import Maybe exposing (withDefault)
 
 
 type Time
@@ -57,6 +59,7 @@ type Msg
     | Resume Int
     | Progress Int Time
     | End Int
+    | KeyPress String
 
 
 main =
@@ -354,6 +357,69 @@ update msg model =
             in
             ( m, ffi m.tracks )
 
+        KeyPress s ->
+            case String.uncons s of
+                Just ( ' ', _ ) ->
+                    let
+                        pp_msg =
+                            \( index, track ) right ->
+                                case ( ( index, track.status ), right ) of
+                                    ( _, Just a ) ->
+                                        Just a
+
+                                    ( ( i, Loading ), Nothing ) ->
+                                        Just (Pause i)
+
+                                    ( ( i, Playing _ ), Nothing ) ->
+                                        Just (Pause i)
+
+                                    ( ( i, Paused _ ), Nothing ) ->
+                                        Just (Resume i)
+
+                                    ( ( i, Stopped ), Nothing ) ->
+                                        Nothing
+
+                        playpause_msg =
+                            model.tracks
+                                |> indexedMap Tuple.pair
+                                |> foldl pp_msg Nothing
+                                |> withDefault (Play 0)
+                    in
+                    update playpause_msg model
+
+                Just ( '1', _ ) ->
+                    update (Play 0) model
+
+                Just ( '2', _ ) ->
+                    update (Play 1) model
+
+                Just ( '3', _ ) ->
+                    update (Play 2) model
+
+                Just ( '4', _ ) ->
+                    update (Play 3) model
+
+                Just ( '5', _ ) ->
+                    update (Play 4) model
+
+                Just ( '6', _ ) ->
+                    update (Play 5) model
+
+                Just ( '7', _ ) ->
+                    update (Play 6) model
+
+                Just ( '8', _ ) ->
+                    update (Play 7) model
+
+                Just ( '9', _ ) ->
+                    update (Play 8) model
+
+                Just ( '0', _ ) ->
+                    update (Play 9) model
+
+                _ ->
+                    ( model, Cmd.none )
+
 
 port rewind : Int -> Cmd msg
 
@@ -364,5 +430,9 @@ port play : Int -> Cmd msg
 port pause : Int -> Cmd msg
 
 
-subscriptions model =
-    Sub.none
+subscriptions _ =
+    let
+        keyDecoder =
+            field "key" Json.string
+    in
+    onKeyPress (Json.map KeyPress keyDecoder)
