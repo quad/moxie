@@ -9,7 +9,7 @@
     </head>
     <body>
         <script>
-            var app = Elm.Moxie.fullscreen();
+            var app = Elm.Moxie.init();
 
             app.ports.rewind.subscribe(function(index) {
                 var audio = document.querySelectorAll('audio')[index];

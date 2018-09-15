@@ -28,7 +28,7 @@ ${OUT_DIR}/inconsolata.ttf: ${SRC_DIR}/inconsolata.ttf
 	cp "$?" "$@"
 
 ${OUT_DIR}/moxie.js: ${SRC_DIR}/Moxie.elm
-	yarn run elm-make -- "$?" --output="$@" --warn
+	yarn run elm make "$?" --output="$@"
 
 ${OUT_DIR}/index.json: ${MP3_DIR}/manifest.json ${MP3_DIR}/*.mp3
 	${BIN_DIR}/make-index-json --output="$@" --prefix=static ${MP3_DIR}
