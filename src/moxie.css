@@ -39,6 +39,7 @@ div {
     font-style: normal;
     font-weight: 400;
     src: local("Inconsolata"), url(inconsolata.woff2) format("woff2"), url(inconsolata.ttf) format("truetype");
+    font-display: swap;
 }
 
 body {
